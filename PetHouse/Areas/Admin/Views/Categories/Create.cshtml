@@ -1,0 +1,102 @@
+﻿@model PetHouse.Models.Category
+
+@{
+	ViewData["Title"] = "Tạo danh mục mới";
+}
+
+@*<h1>Create</h1>
+
+<h4>Category</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<input asp-for="Description" class="form-control" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CategoryIcon" class="control-label"></label>
+				<input asp-for="CategoryIcon" class="form-control" />
+				<span asp-validation-for="CategoryIcon" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ParentId" class="control-label"></label>
+				<input asp-for="ParentId" class="form-control" />
+				<span asp-validation-for="ParentId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CreateDate" class="control-label"></label>
+				<input asp-for="CreateDate" class="form-control" />
+				<span asp-validation-for="CreateDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="UpdateDate" class="control-label"></label>
+				<input asp-for="UpdateDate" class="form-control" />
+				<span asp-validation-for="UpdateDate" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="isParent" /> Danh mục con)
+				</label>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>*@
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Tạo mới sản phẩm</h3>
+			<div class="tile-body">
+				<form asp-action="Create" class="row" enctype="multipart/form-data">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group col-md-5">
+						<label asp-for="Name" class="control-label">Tên Danh mục</label>
+						<input asp-for="Name" class="form-control" type="text">
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-2">
+						<br />
+						<br />
+						<label class="form-check-label ml-3">
+							<input class="form-check-input" asp-for="isParent" /> <p class="fw-bold">Danh mục cha</p>
+						</label>
+					</div>
+					<div class="form-group col-md-3 ">
+						<label asp-for="ParentId" class="control-label">Danh mục cha</label>
+						<select asp-for="ParentId" class="form-control" asp-items="ViewBag.PCategory"></select>
+						<span asp-validation-for="ParentId" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Icon</label>											
+						<input asp-for="CategoryImg" accept="image/*"/>
+						<span asp-validation-for="CategoryImg" class="text-danger"></span>
+
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Mô tả sản phẩm</label>
+						<textarea asp-for="Description" class="form-control"></textarea>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<button class="btn btn-save ml-3 mr-3" type="submit">Lưu lại</button>
+					<a class="btn btn-cancel" asp-action="Index">Hủy bỏ</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
