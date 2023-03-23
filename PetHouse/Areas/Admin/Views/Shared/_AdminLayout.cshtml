@@ -66,15 +66,20 @@
 			</li>
 			<li>
 				<a class="app-menu__item" asp-area="Admin" asp-controller="Categories" asp-action="Index">
-					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý Danh Mục</span>
+					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý Danh Mục</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="table-data-product.html">
+				<a class="app-menu__item" asp-area="Admin" asp-controller="Brands" asp-action="Index">
+					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý thương hiệu</span>
+				</a>
+			</li>
+			<li>
+				<a class="app-menu__item" asp-area="Admin" asp-controller="Products" asp-action="Index">
 					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý sản phẩm</span>
 				</a>
 			</li>
-			<li>
+			@*<li>
 				<a class="app-menu__item" href="table-data-oder.html">
 					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
 				</a>
@@ -99,7 +104,7 @@
 				<a class="app-menu__item" href="#">
 					<i class="app-menu__icon bx bx-cog"></i><span class="app-menu__label">Quản lí nhập hàng</span>
 				</a>
-			</li>
+			</li>*@
 		</ul>
 	</aside>
 	<main class="app-content">
@@ -218,6 +223,5 @@
 		}
 	</script>
 	@await Component.InvokeAsync("Notyf")
-	@await RenderSectionAsync("Scripts", required:false)
 </body>
 </html>

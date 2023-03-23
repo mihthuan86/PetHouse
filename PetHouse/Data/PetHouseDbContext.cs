@@ -29,6 +29,7 @@ namespace PetHouse.Data
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Import).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ImportId);
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Product).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ProductId);
 
+			modelBuilder.Entity<ProductImage>().HasOne(m => m.Product).WithMany(am => am.Images);
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Brand> Brands { get; set; }

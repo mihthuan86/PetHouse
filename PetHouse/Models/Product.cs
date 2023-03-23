@@ -15,9 +15,10 @@ namespace PetHouse.Models
 		public string Description { get; set; }
         public int CategoryId { get; set; }
 		public int BrandId { get; set; }
-		
-        public decimal Price { get; set; }
-		
+        public bool isDelete { get; set; }
+        public double OrderPrice { get; set; }
+        public double ImnportPrice { get; set; }
+
 		public int Quantity { get; set; }
 		
         public bool Status { get; set; }

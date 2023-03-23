@@ -7,7 +7,7 @@ namespace PetHouse.Models
 		public int ImportId { get; set; }
 		public int ProductId { get; set; }
 		public int Quantity { get; set; }
-		public decimal Price { get;}
+		public double Price { get;}
 		public Import Import { set; get; }
 		public Product Product { set; get; }
 	}
