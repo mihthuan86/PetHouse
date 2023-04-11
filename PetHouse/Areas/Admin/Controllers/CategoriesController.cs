@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Data;
+using PetHouse.Data.Setting;
 using PetHouse.Models;
 
 namespace PetHouse.Areas.Admin.Controllers
@@ -22,11 +23,12 @@ namespace PetHouse.Areas.Admin.Controllers
 		}
 
 		// GET: Admin/Categories
-		public async Task<IActionResult> Index()
+		public IActionResult Index(int? pageNumber)
 		{
-			return _context.Categories != null ?
-						View(await _context.Categories.ToListAsync()) :
-						Problem("Entity set 'PetHouseDbContext.Categories'  is null.");
+			int pageSize = 5;
+			var products = _context.Categories.OrderByDescending(x=>x.CreateDate).AsQueryable();
+			var paginatedProducts = PaginatedList<Category>.Create(products, pageNumber ?? 1, pageSize);
+			return View(paginatedProducts);
 		}
 
 		// GET: Admin/Categories/Details/5
@@ -69,7 +71,7 @@ namespace PetHouse.Areas.Admin.Controllers
 				}
 				category.UpdateDate = null;
 				category.CreateDate = DateTime.Now;
-				category.isDelete = false;
+				category.Status = 1;
 				_context.Add(category);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
@@ -158,13 +160,13 @@ namespace PetHouse.Areas.Admin.Controllers
 			var category = await _context.Categories.FindAsync(id);
 			if (category != null)
 			{
-				category.isDelete = true;
+				category.Status = -1;
 				if (category.isParent)
 				{
 					var cateChildren = await _context.Categories.Where(cate => cate.ParentId == id).ToListAsync();
 					foreach (var cate in cateChildren)
 					{
-						cate.isDelete = true;
+						cate.Status = -1;
 					}
 					_context.UpdateRange(cateChildren);
 				}
@@ -182,13 +184,13 @@ namespace PetHouse.Areas.Admin.Controllers
 			var category = await _context.Categories.FindAsync(id);
 			if (category != null)
 			{
-				category.isDelete = false;
+				category.Status = 1;
 				if (!category.isParent)
 				{
 					var cateParent = await _context.Categories.FirstOrDefaultAsync(cate => cate.Id == category.ParentId);
 					if (cateParent != null)
 					{
-						cateParent.isDelete = false;
+						cateParent.Status = 1;
 						_context.Update(cateParent);
 					}
 				}

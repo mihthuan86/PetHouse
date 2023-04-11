@@ -1,0 +1,30 @@
+﻿@model List<Category>
+
+<div class="">
+	<ul class="danhmuc">
+		<li>
+			<span class="tt"><i class="bi bi-list"></i> DANH MỤC SẢN PHẨM</span>
+
+			<ul>
+				@foreach (var item in Model)
+				{
+					if (item.isParent)
+					{
+						<li>
+							<a href="">@item.Name</a>
+							<ul>
+								@foreach (var items in Model)
+								{
+									if (items.ParentId == item.Id)
+									{
+										<li><a href="">@items.Name</a></li>
+									}
+								}
+							</ul>
+						</li>
+					}
+				}
+			</ul>
+		</li>
+	</ul>
+</div>

@@ -21,7 +21,7 @@ namespace PetHouse.Data.Repository
         public async Task Delete(int Id)
         {
             var cate = await _context.Categories.FirstOrDefaultAsync(ct=>ct.Id == Id);
-            cate.isDelete = true;
+            cate.Status = -1;
             _context.Update(cate);
             await _context.SaveChangesAsync();
         }

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PetHouse.Models.Supplier>
+
+@{
+	ViewData["Title"] = "Quản lý nhà cung cấp";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+
+				<div class="row element-button">
+					<div class="col-sm-2">
+
+						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
+							<i class="fas fa-plus"></i>
+							Tạo nhà cung cấp mới
+						</a>
+					</div>
+				</div>
+				<table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+					   id="sampleTable">
+					<thead>
+						<tr>
+
+							<th>ID</th>
+							<th>Tên nhà cung cấp</th>
+							<th>Địa chỉ</th>
+							<th>Số điện thoại</th>
+							<th>Email</th>
+							<th>Ngày tạo</th>
+							<th>Ngày sửa</th>
+							<th width="100px">Trạng thái</th>
+							<th>Tính năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td>@item.Name</td>
+								<td>@item.Address</td>
+								<td>@item.PhoneNumber</td>
+								<td>@item.Email</td>
+								<td>@item.CreateDate</td>
+								<td>@item.UpdateDate</td>
+								
+								<td class="table-td-center">									
+									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary btn-sm edit" title="Sửa">
+										<i class="fas fa-edit"></i>
+									</a>
+									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
+										<i class="fas fa-edit"></i>
+									</a>
+								</td>
+							</tr>
+						}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

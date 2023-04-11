@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PetHouse.Models.Brand>
 
 @{
-    ViewData["Title"] = "Quản lý nhãn hiệu";
+    ViewData["Title"] = "Quản lý thương hiệu";
 }
 
 <div class="row">
@@ -40,7 +40,7 @@
 								<td>@item.CreateDate</td>
 								<td>@item.UpdateDate</td>
 								@{
-									if (item.isDelete)
+									if (item.Status==-1)
 									{
 										<td><span class="badge bg-danger">Block</span></td>
 									}
@@ -51,7 +51,7 @@
 								}
 								<td class="table-td-center">
 									@{
-										if (!item.isDelete)
+										if (item.Status==1)
 										{
 											<a id="@item.Id" onclick="toDelete(this)" class="btn btn-primary btn-sm trash" title="Xóa">
 												<i class="fas fa-trash-alt"></i>

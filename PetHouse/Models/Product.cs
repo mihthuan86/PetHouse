@@ -15,13 +15,14 @@ namespace PetHouse.Models
 		public string Description { get; set; }
         public int CategoryId { get; set; }
 		public int BrandId { get; set; }
-        public bool isDelete { get; set; }
         public double OrderPrice { get; set; }
-        public double ImnportPrice { get; set; }
-
+        public string ProductImgAvt { get; set; }
+		[NotMapped]
+		public IFormFile ImgFile { get; set; }
+		[Column(TypeName ="xml")]
+		public string ImgDetails { get; set; }
 		public int Quantity { get; set; }
-		
-        public bool Status { get; set; }
+        public int Status { get; set; }
 		public DateTime CreateDate { get; set; }
 		public DateTime? UpdateDate { get; set; }
 
@@ -29,10 +30,10 @@ namespace PetHouse.Models
 		[ForeignKey("CategoryId")]
 		public Category Category { get; set; }
 		[ForeignKey("BrandId")]
-		public Brand Brand { get; set; }	
-		public virtual IEnumerable<ProductImage> Images { get; set; }
+		public Brand Brand { get; set; }			
 		public virtual IEnumerable<OrderDetail> OrderDetails { get; set; }
 		public virtual IEnumerable<ImportDetail> ImportDetails { get; set; }
+
 
 
 	}

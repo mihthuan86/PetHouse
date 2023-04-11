@@ -11,12 +11,12 @@ namespace PetHouse.Models
 		public string UserId { get; set; }
 		public DateTime ImportDate { get; set; }
 		public int PaymentStatus { get; set; }
-
+		public int Status { get; set; }
 		[ForeignKey(nameof(SupplierId))]
 		public Supplier Supplier { get; set; }
 		[ForeignKey(nameof(UserId))]
 		public User User { get; set; }
-		public virtual ICollection<ImportDetail> ImportDetails { get; set; }
+		public virtual IEnumerable<ImportDetail> ImportDetails { get; set; }
 
 	}
 }

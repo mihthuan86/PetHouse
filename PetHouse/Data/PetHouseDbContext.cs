@@ -28,23 +28,20 @@ namespace PetHouse.Data
 			});
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Import).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ImportId);
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Product).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ProductId);
-
-			modelBuilder.Entity<ProductImage>().HasOne(m => m.Product).WithMany(am => am.Images);
+			
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Brand> Brands { get; set; }
 		public DbSet<Category> Categories { get; set; }
-		public DbSet<Feedback> Feedbacks { get; set; }
+		public DbSet<Review> Reviews { get; set; }
 		public DbSet<Menu> Menus { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 
 		public DbSet<Post> Posts { get; set; }
-		public DbSet<Product> Products { get; set; }
-		public DbSet<ProductImage> ProductImages { get; set; }
-
+		public DbSet<Product> Products { get; set; }		
 		public DbSet<Supplier> Suppliers { get; set; }
-		public DbSet<Import> imports { get; set; }
+		public DbSet<Import> Imports { get; set; }
 		public DbSet<ImportDetail> ImportDetails { get; set; }
 
 	}

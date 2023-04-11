@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetHouse.Data;
 using PetHouse.Models;
 using System.Diagnostics;
 
@@ -6,15 +7,16 @@ namespace PetHouse.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly PetHouseDbContext _context;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(PetHouseDbContext context)
 		{
-			_logger = logger;
+			_context = context;
 		}
 
 		public IActionResult Index()
 		{
+			ViewBag.Categories = _context.Categories.ToList();
 			return View();
 		}
 
@@ -22,7 +24,11 @@ namespace PetHouse.Controllers
 		{
 			return View();
 		}
-
+		public IActionResult Service()
+		{
+			ViewBag.Categories = _context.Categories.ToList();
+			return View();
+		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

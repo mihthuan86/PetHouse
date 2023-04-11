@@ -9,9 +9,9 @@ namespace PetHouse.Models
 		public string FullName { get; set; }
 		[MaxLength(250)]
 		public string Address { get; set; }
+        public int Status { get; set; }
 		public DateTime CreateDate { get; set; }
 		public DateTime? UpdateDate { get; set; }
 		public virtual IEnumerable<Order> Orders { get; set; }
-
-	}
+    }
 }

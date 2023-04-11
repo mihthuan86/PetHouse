@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using PetHouse.Models;
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class BrandsController : Controller
     {
         private readonly PetHouseDbContext _context;
@@ -63,7 +65,7 @@ namespace PetHouse.Areas.Admin.Controllers
             {
                 brand.CreateDate = DateTime.Now;
                 brand.UpdateDate = null;
-                brand.isDelete = false;
+                brand.Status = 1;
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -152,7 +154,7 @@ namespace PetHouse.Areas.Admin.Controllers
             var brand = await _context.Brands.FindAsync(id);
             if (brand != null)
             {
-                brand.isDelete = true;
+                brand.Status = -1;
                 _context.Brands.Update(brand);
             }
             
@@ -168,7 +170,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			var brand = await _context.Brands.FindAsync(id);
 			if (brand != null)
 			{
-				brand.isDelete = false;
+				brand.Status = 1;
 				_context.Brands.Update(brand);
 			}
 

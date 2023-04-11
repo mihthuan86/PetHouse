@@ -1,8 +1,12 @@
 ﻿using AspNetCoreHero.ToastNotification;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using PetHouse.Data;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
+using PetHouse.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +21,15 @@ builder.Services.AddNotyf(configure =>
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 builder.Services.AddDbContext<PetHouseDbContext>(option => option.UseSqlServer(
-    builder.Configuration.GetConnectionString("PetHouseDb")
+builder.Configuration.GetConnectionString("PetHouseDb")
     ));
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PetHouseDbContext>();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddAuthentication(options =>
+{
+	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +44,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -44,4 +57,5 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "/{controller=Home}/{action=Index}/{id?}");
+//AppDbInitializer.SeedUsersAndRoleAsync(app).Wait();
 app.Run();

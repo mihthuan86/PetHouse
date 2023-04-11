@@ -7,22 +7,25 @@ namespace PetHouse.Models
 	{
 		[Key]
 		public int Id { get; set; }
-        public string UserId { get; set; }		
+        public string CustomerId { get; set; }		
 		[MaxLength(100)]
-		public string FullName { get; set; }
+		public string Receiver_FullName { get; set; }
 		[MaxLength(200)]
-		public string Address { get; set; }
+		public string Receiver_Address { get; set; }
 		[MaxLength(10)]
-		public string PhoneNumber { get; set; }
+		public string Receiver_PhoneNumber { get; set; }
 		[MaxLength(50)]
-		public string Email { get; set; }
+		public string Receiver_Email { get; set; }
 		public DateTime OrderDate { get; set;}
         public int OrderStatus { get; set; }
-		public int PaymentMethod { get; set; }
-
-		//relationship
-		[ForeignKey("UserId")]
-		public User User { get; set; }		
+		public int PaymentId { get; set; }
+        public DateTime ShipDate { get; set; }
+        public double TotalPrice { get; set; }
+        //relationship
+        [ForeignKey("CustomerId")]
+		public User User { get; set; }
+		[ForeignKey("PaymentId")]
+		public Payment Payment { get; set; }
 		public virtual IEnumerable<OrderDetail> OrderDetails { get; set; }
 	}
 }

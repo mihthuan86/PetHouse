@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Data;
+using PetHouse.Data.Setting;
+using PetHouse.Data.ViewModel;
 using PetHouse.Models;
 
 namespace PetHouse.Areas.Admin.Controllers
@@ -14,17 +16,21 @@ namespace PetHouse.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly PetHouseDbContext _context;
+		private readonly IWebHostEnvironment _webHostEnvironment;
+		public ProductsController(PetHouseDbContext context, IWebHostEnvironment webHostEnvironment)
+		{
+			_context = context;
+			_webHostEnvironment = webHostEnvironment;
+		}
 
-        public ProductsController(PetHouseDbContext context)
+		// GET: Admin/Products
+		public IActionResult Index(int? pageNumber)
         {
-            _context = context;
-        }
-
-        // GET: Admin/Products
-        public async Task<IActionResult> Index()
-        {
-            var petHouseDbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-            return View(await petHouseDbContext.ToListAsync());
+			ViewBag.CategoryParent = _context.Categories.Where(x=>x.isParent).ToList();
+			int pageSize = 5;
+			var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).OrderByDescending(x => x.CreateDate).AsQueryable();
+			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);           
+            return View(paginatedProducts);
         }
 
         // GET: Admin/Products/Details/5
@@ -64,17 +70,30 @@ namespace PetHouse.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CategoryId,BrandId,OrderPrice,ImnportPrice,Quantity,Status,CreateDate,UpdateDate")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,ImgFile,Description,CategoryId,BrandId,OrderPrice,Quantity")] Product product)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", product.CategoryId);
-            return View(product);
+			if (!ModelState.IsValid)
+			{
+				string wwwRootPath = _webHostEnvironment.WebRootPath;
+				string fileName = Path.GetFileNameWithoutExtension(product.ImgFile.FileName);
+				string extension = Path.GetExtension(product.ImgFile.FileName);
+				fileName += DateTime.Now.ToString("ddMMyyyy") + extension;
+				product.ProductImgAvt = fileName;
+				string path = Path.Combine(wwwRootPath + "/Admin/Img/ProductAvt", fileName);
+				using (var fileStream = new FileStream(path, FileMode.Create))
+				{
+					await product.ImgFile.CopyToAsync(fileStream);
+				}
+                product.ImgDetails = "12345";
+                product.CreateDate = DateTime.Now;
+                product.Status = 1;
+				_context.Add(product);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
+			ViewData["CategoryId"] = new SelectList(_context.Categories.Where(c => c.isParent == true), "Id", "Name");
+			return View(product);
         }
 
         // GET: Admin/Products/Edit/5
@@ -152,26 +171,41 @@ namespace PetHouse.Areas.Admin.Controllers
             return View(product);
         }
 
-        // POST: Admin/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Products == null)
-            {
-                return Problem("Entity set 'PetHouseDbContext.Products'  is null.");
-            }
-            var product = await _context.Products.FindAsync(id);
-            if (product != null)
-            {
-                _context.Products.Remove(product);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+		// POST: Admin/Products/Delete/5
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			if (_context.Products == null)
+			{
+				return Problem("Entity set 'PetHouseDbContext.Brands'  is null.");
+			}
+			var product = await _context.Products.FindAsync(id);
+			if (product != null)
+			{
+				product.Status = -1;
+				_context.Products.Update(product);
+			}
 
-        private bool ProductExists(int id)
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+		public async Task<IActionResult> ActiveConfirmed(int id)
+		{
+			if (_context.Products == null)
+			{
+				return Problem("Entity set 'PetHouseDbContext.Brands'  is null.");
+			}
+			var product = await _context.Products.FindAsync(id);
+			if (product != null)
+			{
+				product.Status = 1;
+				_context.Products.Update(product);
+			}
+
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool ProductExists(int id)
         {
           return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }

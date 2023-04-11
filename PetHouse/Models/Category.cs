@@ -16,7 +16,7 @@ namespace PetHouse.Models
 		public int? ParentId { get; set; }		
         public DateTime CreateDate { get; set; }
 		public DateTime? UpdateDate { get; set; }
-		public bool isDelete { get; set; }
+		public int Status { get; set; }
 		public bool isParent { get; set; }
 		public virtual IEnumerable<Product> Products { get; set; }
 
