@@ -4,7 +4,7 @@ using PetHouse.Models;
 using System.Diagnostics;
 
 namespace PetHouse.Controllers
-{
+{	
 	public class HomeController : Controller
 	{
 		private readonly PetHouseDbContext _context;
@@ -16,8 +16,11 @@ namespace PetHouse.Controllers
 
 		public IActionResult Index()
 		{
+			var cho = _context.Products.Where(x => x.Category.ParentId == 16).Take(6).ToList();
+			var meo = _context.Products.Where(x => x.Category.ParentId == 17).Take(6).ToList();
+			var model = new Tuple<List<Product>, List<Product>>(cho, meo);
 			ViewBag.Categories = _context.Categories.ToList();
-			return View();
+			return View(model);
 		}
 
 		public IActionResult Privacy()
