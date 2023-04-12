@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddNotyf(configure =>
 {
     configure.DurationInSeconds = 5;
@@ -23,6 +24,12 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 builder.Services.AddDbContext<PetHouseDbContext>(option => option.UseSqlServer(
 builder.Configuration.GetConnectionString("PetHouseDb")
     ));
+builder.Services.AddNotyf(config =>
+{
+	config.DurationInSeconds = 3;
+	config.IsDismissable = true;
+	config.Position = NotyfPosition.TopRight;
+});
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PetHouseDbContext>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();

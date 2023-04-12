@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PetHouse.Data;
-using PetHouse.Data.ViewModel;
 using PetHouse.Models;
+using PetHouse.ViewModel;
 using System.Data;
 
 namespace PetHouse.Controllers
-{    
+{
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -38,7 +38,7 @@ namespace PetHouse.Controllers
                         var role = await _userManager.GetRolesAsync(user);
                         if (role.Contains("customer"))
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home",new { area = ""});
                         }
                         else
                         {
@@ -53,6 +53,11 @@ namespace PetHouse.Controllers
             TempData["Error"] = "Không có email hoặc username này trong hệ thống!!!";
             return View(loginVM);
         }
-        
-    }
+		[HttpGet]
+		public async Task<IActionResult> Logout()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home", new { area = "" });
+		}
+	}
 }

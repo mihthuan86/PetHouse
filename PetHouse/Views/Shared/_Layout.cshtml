@@ -25,20 +25,9 @@
 						   style="color: gray; padding-left: 20px"></i>mail@gmail.com
 					</div>
 				</div>
-				<div class="right">
-					@*<div class="dn m-md-2">
-					<a href="" >ĐĂNG NHẬP</a>
-					<a href="">ĐĂNG KÝ</a>
-					</div>*@
-					<div class="dropdown">
-						<i class="bi bi-person-circle"
-						   style="color: #f9a392; font-size: 25px"></i><button class="nut_dropdown">Tên Tài Khoản</button>
-						<div class="noidung_dropdown">
-							<a href="#">Tài khoản của tôi</a>
-							<a href="#">Đơn đặt hàng</a>
-							<a href="#">Đăng xuất</a>
-						</div>
-					</div>
+				<div class="right">					
+					<partial name="_Identity" />
+
 				</div>
 			</div>
 			<div class="middle d-flex">
@@ -67,14 +56,7 @@
 						   style="color: #f9a392; font-size: 20px"></i>
 					</button>
 				</div>
-				<div class="giohang m-md-3 d-flex">
-					<i class="bi bi-cart" style="color: #f9a392; font-size: 35px"> </i>
-					<!-- Số lượng sau khi thêm sp vào giỏ hàng -->
-					<span class="Badge">
-						4
-						<span class="u-hiddenVisually"></span>
-					</span>
-				</div>
+				@await Component.InvokeAsync("NumberCart")
 
 			</div>
 			<div class="menu d-flex">
@@ -185,6 +167,7 @@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="~/js/chat.js"></script>
 	<script src="~/js/reponses.js"></script>
+	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

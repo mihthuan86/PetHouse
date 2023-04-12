@@ -109,14 +109,15 @@
 								<div class="cart-product-quantity">
 									<div class="quantity">
 										<input type="button" value="-" class="minus">
-										<input type="text" name="quantity" value="1" title="Qty" class="qty" size="4">
+										<input type="text" id="txtsoLuong" name="txtsoLuong" value="1" title="Qty" class="qty" size="4">
 										<input type="button" value="+" class="plus">
 									</div>
 								</div>
-								<div class="cart_btn">
+								<div class="add-to-cart">
 									<button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
-									<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
-									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>
+									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
+									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
+									<input hidden class="Id" asp-for="Id" />
 								</div>
 							</div>
 							<hr />
@@ -307,4 +308,5 @@
 	<script src="~/js/jquery.elevatezoom.js"></script>
 	<!-- scripts js -->
 	<script src="~/js/scripts.js"></script>
+	<script src="~/js/ShoppingCart.js"></script>
 		}

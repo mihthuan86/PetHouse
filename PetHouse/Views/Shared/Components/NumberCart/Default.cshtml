@@ -1,0 +1,34 @@
+﻿@model List<PetHouse.ViewModel.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+	<div class="giohang m-md-3 d-flex cursor-pointer" onclick="toCart()">
+		<i class="bi bi-cart" style="color: #f9a392; font-size: 35px"> </i>
+		<!-- Số lượng sau khi thêm sp vào giỏ hàng -->
+		<span class="Badge">
+			@Model.Count()
+			<span class="u-hiddenVisually"></span>
+		</span>
+
+	</div>
+}
+else
+{
+	<div class="giohang m-md-3 d-flex " onclick="toCart()">
+
+		<i class="bi bi-cart cursor-pointer" style="color: #f9a392; font-size: 35px"> </i>
+		<!-- Số lượng sau khi thêm sp vào giỏ hàng -->
+		<span class="Badge">
+			(0)
+			<span class="u-hiddenVisually"></span>
+		</span>
+
+	</div>
+}
+<script>
+	function toCart() {
+		
+			var url = '@Url.Action("Index", "ShoppingCart",new{area = ""})';
+			window.location.href = url;
+		
+	}
+</script>

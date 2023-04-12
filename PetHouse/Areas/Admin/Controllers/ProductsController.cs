@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Data;
 using PetHouse.Data.Setting;
-using PetHouse.Data.ViewModel;
+using PetHouse.ViewModel;
 using PetHouse.Models;
 
 namespace PetHouse.Areas.Admin.Controllers
