@@ -20,7 +20,7 @@ namespace PetHouse.Data.Repository
                 .Include(i => i.User)
                 .Include(i => i.ImportDetails)
                     .ThenInclude(id => id.Product)
-                .Select(i => i.ToViewModel())
+                .Select(i => i.ToViewModel()) // cái này t cho go throw rồi ở bên import.cs á 
                 .ToListAsync();
 
             return (IEnumerable<Import>)imports;
