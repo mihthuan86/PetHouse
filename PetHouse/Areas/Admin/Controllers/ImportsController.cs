@@ -162,7 +162,7 @@ namespace PetHouse.Areas.Admin.Controllers
             {
                 _context.Imports.Remove(import);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
