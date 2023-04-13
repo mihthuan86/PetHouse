@@ -14,8 +14,10 @@ namespace PetHouse.Models
 		public string Receiver_Address { get; set; }
 		[MaxLength(10)]
 		public string Receiver_PhoneNumber { get; set; }
-		[MaxLength(50)]
-		public string Receiver_Email { get; set; }
+		[MaxLength(70)]
+		public string? Receiver_Email { get; set; }
+		[MaxLength(100)]
+		public string? Note { get; set; }
 		public DateTime OrderDate { get; set;}
         public int OrderStatus { get; set; }
 		public int PaymentId { get; set; }
