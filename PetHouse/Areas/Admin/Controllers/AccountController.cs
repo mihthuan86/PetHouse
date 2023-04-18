@@ -20,19 +20,18 @@ namespace PetHouse.Areas.Admin.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        public async Task<IActionResult> AccountNV()
-        {
-            var usersInRole = await _userManager.GetUsersInRoleAsync("staff");
-            return View(usersInRole); 
-        }
+       
         public IActionResult CreateNV()
         {
             return View();
         }
-        public async Task<IActionResult> AccountKH()
+        [Route("taikhoan.cshtml",Name ="QLTK")]
+        public async Task<IActionResult> Index()
         {
-            var usersInRole = await _userManager.GetUsersInRoleAsync("customer");
-            return View(usersInRole);
+            var staff = await _userManager.GetUsersInRoleAsync("staff");
+            var customer = await _userManager.GetUsersInRoleAsync("staff");
+            var model = new Tuple<IList<User>, IList<User>>(staff, customer);
+            return View(model);
         }
 
         [HttpGet]

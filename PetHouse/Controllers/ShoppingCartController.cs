@@ -71,8 +71,7 @@ namespace PetHouse.Controllers
 				}
 
 				//Luu lai Session
-				HttpContext.Session.Set<List<CartItem>>("GioHang", cart);
-				_notyfService.Success("Thêm sản phẩm thành công");
+				HttpContext.Session.Set<List<CartItem>>("GioHang", cart);				
 				return Json(new { success = true });
 			}
 			catch
@@ -186,5 +185,6 @@ namespace PetHouse.Controllers
 			ViewBag.Categories = _context.Categories.ToList();
 			return View(GioHang);
 		}
+		
 	}
 }

@@ -1,0 +1,160 @@
+﻿@model List<PetHouse.Models.Order>
+@{
+	ViewData["Tittle"] = ViewBag.Stt;
+}
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+	<!-- START SECTION SHOP -->
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-9">
+					@if (Model != null && Model.Count() > 0)
+					{
+						<h4>@ViewBag.Stt</h4>
+						<div class="table-responsive wishlist_table">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Ngày mua hàng</th>
+										<th>Ngày ship hàng</th>
+										<th>Trạng thái</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td><a class="account-order-id" href="javascript:void(0)">#@item.Id</a></td>
+											<td>@item.OrderDate</td>
+											<td>@item.ShipDate</td>
+											@switch (item.OrderStatus)
+											{
+												case 1:
+													{
+														<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-secondary">Đang giao</span></td>
+														break;
+													}
+												case 2:
+													{
+														<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-primary">Hoàn thành</span></td>
+														break;
+													}
+												case 0:
+													{
+														<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-success">Đã đặt</span></td>
+														break;
+													}
+												case -1:
+													{
+														<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-danger">Đã hủy</span></td>
+														break;
+													}
+												default: break;
+											}
+											<td>
+												<a href="javascript:void(0)" class="xemdonhang" data-madonhang="@item.Id">Xem đơn hàng</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+							<div id="records_table">
+							</div>
+						</div>
+					}
+					else
+					{
+						<h4>@ViewBag.Stt</h4>
+						<p>Chưa có đơn hàng!</p>
+					}
+				</div>
+				<div class="col-xl-3 order-xl-first mt-4 pt-2 mt-xl-0 pt-xl-0">
+					<div class="sidebar">
+						<div class="widget">
+							<h5 class="widget_title">Trạng thái</h5>
+							<ul class="widget_archive">
+								<li><a href="javascript:void(0)" class="order-stt" stt="10"><span class="archive_year">Tất cả</span><span class="archive_num">(12)</span></a></li>
+								<li><a href="javascript:void(0)" class="order-stt" stt="0"><span class="archive_year">Đã đặt</span><span class="archive_num">(3)</span></a></li>
+								<li><a href="javascript:void(0)" class="order-stt" stt="1"><span class="archive_year">Đã giao</span><span class="archive_num">(3)</span></a></li>
+								<li><a href="javascript:void(0)" class="order-stt" stt="2"><span class="archive_year">Hoàn thành</span><span class="archive_num">(3)</span></a></li>
+								<li><a href="javascript:void(0)" class="order-stt" stt="-1"><span class="archive_year">Đã hủy</span><span class="archive_num">(3)</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- END SECTION SHOP -->
+
+</div>
+<!-- END MAIN CONTENT -->
+<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+@section Scripts{
+
+
+	<!-- Latest jQuery -->
+	<script src="~/js/jquery-3.6.0.min.js"></script>
+	<!-- jquery-ui -->
+	<script src="~/js/jquery-ui.js"></script>
+	<!-- popper min js -->
+	<script src="~/js/popper.min.js"></script>
+	<!-- Latest compiled and minified Bootstrap -->
+	<script src="~/bootstrap/js/bootstrap.min.js"></script>
+	<!-- owl-carousel min js  -->
+	<script src="~/owlcarousel/js/owl.carousel.min.js"></script>
+	<!-- magnific-popup min js  -->
+	<script src="~/js/magnific-popup.min.js"></script>
+	<!-- waypoints min js  -->
+	<script src="~/js/waypoints.min.js"></script>
+	<!-- parallax js  -->
+	<script src="~/js/parallax.js"></script>
+	<!-- countdown js  -->
+	<script src="~/js/jquery.countdown.min.js"></script>
+	<!-- imagesloaded js -->
+	<script src="~/js/imagesloaded.pkgd.min.js"></script>
+	<!-- isotope min js -->
+	<script src="~/js/isotope.min.js"></script>
+	<!-- jquery.dd.min js -->
+	<script src="~/js/jquery.dd.min.js"></script>
+	<!-- slick js -->
+	<script src="~/js/slick.min.js"></script>
+	<!-- elevatezoom js -->
+	<script src="~/js/jquery.elevatezoom.js"></script>
+	<!-- scripts js -->
+	<script src="~/js/scripts.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(".xemdonhang").click(function () {
+				var madonhang = $(this).attr("data-madonhang")
+				$.ajax({
+					url: '/Order/Details',
+					datatype: "json",
+					type: "POST",
+					data: { id: madonhang },
+					async: true,
+					success: function (results) {
+						$("#records_table").html("");
+						$("#records_table").html(results);
+					},
+					error: function (xhr) {
+						alert('error');
+					}
+				});
+			});
+			$(".order-stt").click(function () {
+				var stt = $(this).attr("stt")
+
+				
+				var	url = '/Order/Index/?stt='+stt
+				window.location.href = url
+				//console.log(stt);
+
+			});
+		});
+	</script>
+}

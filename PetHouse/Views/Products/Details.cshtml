@@ -45,6 +45,8 @@
 	<!-- Style CSS -->
 	<link rel="stylesheet" href="~/css/style.css">
 	<link rel="stylesheet" href="~/css/responsive.css">
+	<link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 }
 
@@ -66,24 +68,24 @@
 						</div>
 						<div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1" data-infinite="false">
 							@*<div class="item">
-								<a href="#" class="product_gallery_item active" data-image="~/images/product_img1.jpg" data-zoom-image="~/images/product_zoom_img1.jpg">
-									<img src="~/images/product_small_img1.jpg" alt="product_small_img1" />
-								</a>
+							<a href="#" class="product_gallery_item active" data-image="~/images/product_img1.jpg" data-zoom-image="~/images/product_zoom_img1.jpg">
+							<img src="~/images/product_small_img1.jpg" alt="product_small_img1" />
+							</a>
 							</div>
 							<div class="item">
-								<a href="#" class="product_gallery_item" data-image="~/images/product_img1-2.jpg" data-zoom-image="~/images/product_zoom_img2.jpg">
-									<img src="~/images/product_small_img2.jpg" alt="product_small_img2" />
-								</a>
+							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-2.jpg" data-zoom-image="~/images/product_zoom_img2.jpg">
+							<img src="~/images/product_small_img2.jpg" alt="product_small_img2" />
+							</a>
 							</div>
 							<div class="item">
-								<a href="#" class="product_gallery_item" data-image="~/images/product_img1-3.jpg" data-zoom-image="~/images/product_zoom_img3.jpg">
-									<img src="~/images/product_small_img3.jpg" alt="product_small_img3" />
-								</a>
+							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-3.jpg" data-zoom-image="~/images/product_zoom_img3.jpg">
+							<img src="~/images/product_small_img3.jpg" alt="product_small_img3" />
+							</a>
 							</div>
 							<div class="item">
-								<a href="#" class="product_gallery_item" data-image="~/images/product_img1-4.jpg" data-zoom-image="~/images/product_zoom_img4.jpg">
-									<img src="~/images/product_small_img4.jpg" alt="product_small_img4" />
-								</a>
+							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-4.jpg" data-zoom-image="~/images/product_zoom_img4.jpg">
+							<img src="~/images/product_small_img4.jpg" alt="product_small_img4" />
+							</a>
 							</div>*@
 						</div>
 					</div>
@@ -143,7 +145,7 @@
 							<div class="tab-content shop_info_tab">
 								<div class="tab-pane fade show active" id="Description" role="tabpanel" aria-labelledby="Description-tab">
 									<p>@Model.Description</p>
-									
+
 								</div>
 								<div class="tab-pane fade" id="Reviews" role="tabpanel" aria-labelledby="Reviews-tab">
 									<div class="comments">
@@ -237,35 +239,35 @@
 							<div class="item">
 								@foreach (var item in ViewBag.SameProduct)
 								{
-									
-								<div class="product">
-									<div class="product_img">
-										<a href="shop-product-detail.html">
+
+									<div class="product">
+										<div class="product_img">
+											<a href="shop-product-detail.html">
 												<img src="@("/Admin/Img/ProductAvt/"+item.ProductImgAvt)" alt="@item.Name">
-										</a>
-										<div class="product_action_box">
-											<ul class="list_none pr_action_btn">
-												<li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+											</a>
+											<div class="product_action_box">
+												<ul class="list_none pr_action_btn">
+													<li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
 													<li><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id"><i class="icon-magnifier-add"></i></a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="product_info">
-											<h6 class="product_title"><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id">@item.Name</a></h6>
-										<div class="product_price">
-												<span class="price">@item.OrderPrice.ToString("#.###")</span>
-										</div>
-										<div class="rating_wrap">
-											<div class="rating">
-												<div class="product_rate" style="width:80%"></div>
+												</ul>
 											</div>
-											<span class="rating_num">(21)</span>
+										</div>
+										<div class="product_info">
+											<h6 class="product_title"><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id">@item.Name</a></h6>
+											<div class="product_price">
+												<span class="price">@item.OrderPrice.ToString("#.###")</span>
+											</div>
+											<div class="rating_wrap">
+												<div class="rating">
+													<div class="product_rate" style="width:80%"></div>
+												</div>
+												<span class="rating_num">(21)</span>
+											</div>
 										</div>
 									</div>
-								</div>
 								}
 
-							</div>							
+							</div>
 						</div>
 					</div>
 				</div>
@@ -275,7 +277,7 @@
 	</div>
 	<!-- END MAIN CONTENT -->
 </div>
-	<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
 @section Scripts{
 
 	<!-- Latest jQuery -->
@@ -308,5 +310,43 @@
 	<script src="~/js/jquery.elevatezoom.js"></script>
 	<!-- scripts js -->
 	<script src="~/js/scripts.js"></script>
-	<script src="~/js/ShoppingCart.js"></script>
+	@*<script src="~/js/ShoppingCart1.js"></script>*@
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$(".add-to-cart").click(function () {
+					var productid = $(this).find('.Id').val();
+					var soLuong = $(document).find('#txtsoLuong').val();
+					$.ajax({
+						url: '/api/cart/add',
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							productID: productid,
+							amount: soLuong
+						},
+						success: function (response) {
+							if (response.result == 'Redirect') {
+								window.location = response.url;
+							}
+							else {
+								loadHeaderCart(); //Add Product success
+								location.reload();
+							}
+							console.log(response); // log to the console to see whether it worked
+						},
+						error: function (error) {
+							alert("There was an error posting the data to the server: " + error.responseText);
+						}
+					});
+					console.log(productid, soLuong)
+				});
+			});
+			function loadHeaderCart() {
+				$('#miniCart').load("/AjaxContent/HeaderCart");
+				$('#numberCart').load("/AjaxContent/NumberCart");
+			}
+		});
+	</script>
+
 		}

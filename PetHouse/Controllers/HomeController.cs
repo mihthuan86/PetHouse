@@ -16,6 +16,7 @@ namespace PetHouse.Controllers
 
 		public IActionResult Index()
 		{
+
 			var cho = _context.Products.Where(x => x.Category.ParentId == 16).Take(6).ToList();
 			var meo = _context.Products.Where(x => x.Category.ParentId == 17).Take(6).ToList();
 			var model = new Tuple<List<Product>, List<Product>>(cho, meo);

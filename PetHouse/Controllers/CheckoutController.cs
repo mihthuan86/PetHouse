@@ -56,7 +56,7 @@ namespace PetHouse.Controllers
 			{
 				model.FullName = user.FullName;
 				model.Email = user.Email;
-				model.Phone = user.PhoneNumber;
+				model.Phone = user.PhoneNumber;				
 				model.Address = user.Address;
 			}
 			ViewBag.GioHang = cart;
@@ -64,12 +64,22 @@ namespace PetHouse.Controllers
 		}
 		[HttpPost]
 		[Route("checkout.html", Name = "Checkout")]
-		public IActionResult Index(MuaHangVM model)
+		public async Task<IActionResult> Index(MuaHangVM model)
 		{
 			ViewBag.Categories = _context.Categories.ToList();
 			//Lay ra gio hang de xu ly
 			var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
-			ViewBag.GioHang = cart;			
+            var customer = await _userManager.FindByIdAsync(model.CustomerId);
+			if(customer != null && customer.UserName!="customer")
+			{
+				if(customer.Address == "")
+				{
+					customer.Address = model.Address;
+					_context.Update(customer);
+					_context.SaveChanges();
+				}
+			}
+            ViewBag.GioHang = cart;			
 			try
 			{
 				if (ModelState.IsValid)

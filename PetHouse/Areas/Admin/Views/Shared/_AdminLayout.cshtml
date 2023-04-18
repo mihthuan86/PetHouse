@@ -23,22 +23,23 @@
 		  href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
 	<link rel="stylesheet"
 		  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" />
+	@await RenderSectionAsync("Style", required: false)
 </head>
 
-<body onload="time()" class="app sidebar-mini rtl">
+<body class="app sidebar-mini rtl">
+
 	<!-- Navbar-->
 	<header class="app-header">
-		<!-- Sidebar toggle button--><a class="app-sidebar__toggle"
-								  href="#"
-								  data-toggle="sidebar"
+		<!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
 								  aria-label="Hide Sidebar"></a>
 		<!-- Navbar Right Menu-->
 		<ul class="app-nav">
+
+
 			<!-- User Menu-->
 			<li>
-				<a class="app-nav__item" asp-controller="Account" asp-action="Logout">
-					<i class="bx bx-log-out bx-rotate-180"></i>
-				</a>
+				<a class="app-nav__item" href="/index.html"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+
 			</li>
 		</ul>
 	</header>
@@ -46,93 +47,64 @@
 	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 	<aside class="app-sidebar">
 		<div class="app-sidebar__user">
-			<i class='bx bx-user'></i>
-			<div>
-				<p class="app-sidebar__user-name"><b>@_usermanager.GetUserName(User)</b></p>
-				<!-- Điền UserName -->
-				<p class="app-sidebar__user-designation">Chào mừng đến với trang Admin</p>
-			</div>
-		</div>
-		<hr />
+			<h3 style="color: rgb(221, 221, 24);">PET'S HOUSE</h3>
+			<p class="app-sidebar__user-designation">Chào mừng đến với trang Admin</p>
+		</div> -->
+		<hr>
+
 		<ul class="app-menu">
-			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Home" asp-action="Index">
-					<i class="app-menu__icon bx bx-tachometer"></i><span class="app-menu__label">Trang chủ</span>
-				</a>
-			</li>
 
 			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Account" asp-action="AccountNV">
-					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản Nhân viên</span>
+				<a class="app-menu__item" asp-controller="Home" asp-action="Index">
+					<i class="app-menu__icon bx bx-bar-chart-alt-2"></i><span class="app-menu__label">Thống kê</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Account" asp-action="AccountKH">
-					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản Khách hàng</span>
+				<a class="app-menu__item" asp-controller="Account" asp-action="Index">
+					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Categories" asp-action="Index">
-					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý Danh Mục</span>
+				<a class="app-menu__item" href="table-data-product.html">
+					<i class="app-menu__icon bx bx-data"></i><span class="app-menu__label">Quản lý sản phẩm</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Brands" asp-action="Index">
-					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý thương hiệu</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Products" asp-action="Index">
-					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý sản phẩm</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Imports" asp-action="Index">
-					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý nhập hàng</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-area="Admin" asp-controller="Suppliers" asp-action="Index">
-					<i class="app-menu__icon bx bx-purchase-tag-alt"></i><span class="app-menu__label">Quản lý nhà cung cấp</span>
-				</a>
-			</li>
-			@*<li>
 				<a class="app-menu__item" href="table-data-oder.html">
 					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="table-data-oder.html">
-					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đánh giá</span>
+				<a class="app-menu__item" href="form-danhgia.html">
+					<i class="app-menu__icon bx bx-star"></i><span class="app-menu__label">Quản lý đánh giá</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="table-data-oder.html">
-					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý bài đăng</span>
+				<a class="app-menu__item" href="form-tintuc.html">
+					<i class="app-menu__icon bx bx-bookmark"></i><span class="app-menu__label">Quản lý bài đăng</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="quan-ly-bao-cao.html">
-					<i class="app-menu__icon bx bx-pie-chart-alt-2"></i><span class="app-menu__label">Báo cáo doanh thu</span>
+				<a class="app-menu__item" href="">
+					<i class="app-menu__icon bx bx-chat"></i><span class="app-menu__label">Tư vấn khách hàng</span>
 				</a>
 			</li>
 
 			<li>
-				<a class="app-menu__item" href="#">
-					<i class="app-menu__icon bx bx-cog"></i><span class="app-menu__label">Quản lí nhập hàng</span>
+				<a class="app-menu__item" href="form-nhaphang.html">
+					<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
 				</a>
-			</li>*@
+			</li>
+			<li>
+				<a class="app-menu__item" href="form-nhacungcap.html">
+					<i class="app-menu__icon bx bx-group"></i><span class="app-menu__label">Quản lí nhà cung cấp</span>
+				</a>
+			</li>
+			
 		</ul>
 	</aside>
 	<main class="app-content">
-		<div class="app-title">
-			<ul class="app-breadcrumb breadcrumb">
-				<li class="breadcrumb-item">
-					<a href="#"><b>@ViewData["Title"]</b></a>
-				</li>
-			</ul>
-			<div id="clock"></div>
-		</div>
+		
 		@RenderBody()
 		
 	</main>
@@ -145,8 +117,8 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
-	<script src="js/jquery-3.2.1.min.js"></script>
+	
+	<script src="~/Admin/js/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="~/Admin/js/popper.min.js"></script>
 	<script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
@@ -159,86 +131,7 @@
 	<!--===============================================================================================-->
 	@*<script type="text/javascript" src="js/plugins/chart.js"></script>*@
 	<!--===============================================================================================-->
-	<script type="text/javascript">
-		var data = {
-			labels: [
-				"Tháng 1",
-				"Tháng 2",
-				"Tháng 3",
-				"Tháng 4",
-				"Tháng 5",
-				"Tháng 6",
-			],
-			datasets: [
-				{
-					label: "Dữ liệu đầu tiên",
-					fillColor: "rgba(255, 213, 59, 0.767), 212, 59)",
-					strokeColor: "rgb(255, 212, 59)",
-					pointColor: "rgb(255, 212, 59)",
-					pointStrokeColor: "rgb(255, 212, 59)",
-					pointHighlightFill: "rgb(255, 212, 59)",
-					pointHighlightStroke: "rgb(255, 212, 59)",
-					data: [20, 59, 90, 51, 56, 100],
-				},
-				{
-					label: "Dữ liệu kế tiếp",
-					fillColor: "rgba(9, 109, 239, 0.651)  ",
-					pointColor: "rgb(9, 109, 239)",
-					strokeColor: "rgb(9, 109, 239)",
-					pointStrokeColor: "rgb(9, 109, 239)",
-					pointHighlightFill: "rgb(9, 109, 239)",
-					pointHighlightStroke: "rgb(9, 109, 239)",
-					data: [48, 48, 49, 39, 86, 10],
-				},
-			],
-		};
-		var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-		var lineChart = new Chart(ctxl).Line(data);
-
-		var ctxb = $("#barChartDemo").get(0).getContext("2d");
-		var barChart = new Chart(ctxb).Bar(data);
-	</script>
-	<script type="text/javascript">
-		//Thời Gian
-		function time() {
-			var today = new Date();
-			var weekday = new Array(7);
-			weekday[0] = "Chủ Nhật";
-			weekday[1] = "Thứ Hai";
-			weekday[2] = "Thứ Ba";
-			weekday[3] = "Thứ Tư";
-			weekday[4] = "Thứ Năm";
-			weekday[5] = "Thứ Sáu";
-			weekday[6] = "Thứ Bảy";
-			var day = weekday[today.getDay()];
-			var dd = today.getDate();
-			var mm = today.getMonth() + 1;
-			var yyyy = today.getFullYear();
-			var h = today.getHours();
-			var m = today.getMinutes();
-			var s = today.getSeconds();
-			m = checkTime(m);
-			s = checkTime(s);
-			nowTime = h + " giờ " + m + " phút " + s + " giây";
-			if (dd < 10) {
-				dd = "0" + dd;
-			}
-			if (mm < 10) {
-				mm = "0" + mm;
-			}
-			today = day + ", " + dd + "/" + mm + "/" + yyyy;
-			tmp = '<span class="date"> ' + today + " - " + nowTime + "</span>";
-			document.getElementById("clock").innerHTML = tmp;
-			clocktime = setTimeout("time()", "1000", "Javascript");
-
-			function checkTime(i) {
-				if (i < 10) {
-					i = "0" + i;
-				}
-				return i;
-			}
-		}
-	</script>
+	@await RenderSectionAsync("Scripts", required: false)
 	@await Component.InvokeAsync("Notyf")
 </body>
 </html>

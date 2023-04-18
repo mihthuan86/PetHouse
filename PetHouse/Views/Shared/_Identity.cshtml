@@ -12,8 +12,8 @@ else{
 		<i class="bi bi-person-circle"
 		   style="color: #f9a392; font-size: 25px"></i><button class="nut_dropdown">@UserManager.GetUserName(User)</button>
 		<div class="noidung_dropdown">
-			<a href="#">Tài khoản của tôi</a>
-			<a href="#">Đơn đặt hàng</a>
+			<a>Tài khoản của tôi</a>
+			<a asp-area="" asp-controller="Order" asp-action="Index" asp-route-stt ="10">Đơn đặt hàng</a>
 			<a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
 		</div> 
 	</div>

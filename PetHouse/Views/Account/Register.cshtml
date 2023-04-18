@@ -1,4 +1,4 @@
-﻿
+﻿@model PetHouse.ViewModel.RegisterVM
 @{
     Layout = null;
     ViewData["Title"] = "Register";
@@ -64,33 +64,51 @@
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                 <h2 class="card-title font-weight-bold mb-1">Chào mừng đến với Pet's House'</h2>
                                 <p class="card-text mb-2">Hoàn thành form đăng ký ở đưới đây</p>
-                                <form class="auth-register-form mt-2" action="index.html" method="POST">
+                                <form class="auth-register-form mt-2" method="POST">
                                     <div class="form-group">
-                                        <label class="form-label" for="register-username">Tên Đăng Nhập</label>
-                                        <input class="form-control" id="register-username" type="text" name="register-username" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
+                                        <label class="form-label" asp-for="UserName">Tên Đăng Nhập</label>
+                                        <input asp-for="UserName" required class="form-control" id="register-username" type="text" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="register-username">Họ Và Tên</label>
-                                        <input class="form-control" id="register-username" type="text" name="register-username" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
+                                        <label class="form-label">Họ Và Tên</label>
+                                        <input class="form-control" asp-for="FullName" id="register-name" type="text" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
+                                        <span asp-validation-for="FullName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="register-email">Email</label>
-                                        <input class="form-control" id="register-email" type="text" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                                        <input class="form-control" required id="register-email" type="email" asp-for="Email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-email">Số điện thoại</label>
+                                        <input class="form-control" required id="register-phone" type="text" asp-for="Phone" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="form-label" for="register-password">Mật Khẩu</label>
                                         <div class="input-group input-group-merge form-password-toggle">
-                                            <input class="form-control form-control-merge" id="register-password" type="password" name="register-password" placeholder="············" aria-describedby="register-password" tabindex="3" />
+                                            <input class="form-control form-control-merge" required id="register-password" type="password" asp-for="Password" placeholder="············" aria-describedby="register-password" tabindex="3" />
                                             <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
                                         </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
+                                        <label class="form-label" for="register-password">Nhập lại mật khẩu</label>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input class="form-control form-control-merge" required id="register-password" type="password" asp-for="ConfirmPassword" placeholder="············" aria-describedby="register-password" tabindex="3" />
+                                            <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
+                                        </div>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                    @*<div class="form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input class="custom-control-input" id="register-privacy-policy" type="checkbox" tabindex="4" />
                                             <label class="custom-control-label" for="register-privacy-policy">Tôi đồng ý với điều khoản sau đây<a href="javascript:void(0);">&nbsp;privacy policy & terms</a></label>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary btn-block" tabindex="5">Đăng ký</button>
+                                        </div>                                                               
+                                    </div>*@
+                                    <button type="submit" class="btn btn-primary btn-block" tabindex="5">Đăng ký</button>
                                 </form>
                                 <p class="text-center mt-2"><span>Bạn đã có tài khoản?</span><a href="page-auth-login-v2.html"><span>&nbsp;Đăng nhập tại đây</span></a></p>
                                 <div class="divider my-2">

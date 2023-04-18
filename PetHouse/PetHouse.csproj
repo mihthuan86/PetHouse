@@ -27,4 +27,25 @@
     <Folder Include="wwwroot\Admin\Img\ProductAvt\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Admin\js\bootstrap.min.js" />
+    <None Include="wwwroot\Admin\js\jquery-3.2.1.min.js" />
+    <None Include="wwwroot\Admin\js\main.js" />
+    <None Include="wwwroot\Admin\js\plugins\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\bootstrap-notify.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\chart.js" />
+    <None Include="wwwroot\Admin\js\plugins\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\fullcalendar.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\jquery-ui.custom.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\jquery.dataTables.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\jquery.vmap.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\jquery.vmap.sampledata.js" />
+    <None Include="wwwroot\Admin\js\plugins\jquery.vmap.world.js" />
+    <None Include="wwwroot\Admin\js\plugins\moment.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\pace.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\select2.min.js" />
+    <None Include="wwwroot\Admin\js\plugins\sweetalert.min.js" />
+    <None Include="wwwroot\Admin\js\popper.min.js" />
+  </ItemGroup>
+
 </Project>
