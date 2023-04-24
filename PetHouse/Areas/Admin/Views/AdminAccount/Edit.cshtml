@@ -1,0 +1,43 @@
+﻿@model PetHouse.Areas.Admin.ViewModel.UpdateUserVM
+
+@{
+	ViewData["Title"] = "Tạo tài khoản nhân viên";
+}
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="tile">
+
+			<h3 class="tile-title">Tạo mới tài khoản</h3>
+			<div class="tile-body">
+				<div class="row element-button">
+				</div>
+				<form asp-controller="AdminAccount" asp-action="Edit" class="row">
+					<input hidden asp-for="Id" />
+					<div class="form-group col-md-4">
+						<label class="control-label">Tên đăng nhập</label>
+						<input asp-for="UserName" class="form-control" type="text">
+					</div>
+					<div class="form-group col-md-4">
+						<label class="control-label">Họ và tên</label>
+						<input asp-for="FullName" class="form-control" type="text" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label class="control-label">Email</label>
+						<input asp-for="Email" class="form-control" type="text" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label class="control-label">Địa chỉ thường trú</label>
+						<input asp-for="Address" class="form-control" type="text" required>
+					</div>
+					<div class="form-group  col-md-4">
+						<label class="control-label">Số điện thoại</label>
+						<input asp-for="Phone" class="form-control" type="number" required>
+					</div>
+					<button class="btn btn-save" type="submit">Lưu lại</button>
+					<a class="btn btn-cancel" href="/taikhoanNV.cshtml">Hủy bỏ</a>
+				</form>
+			</div>			
+		</div>
+	</div>
+</div>

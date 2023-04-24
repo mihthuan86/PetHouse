@@ -1,0 +1,221 @@
+﻿@using PetHouse.Data.Setting
+@model PaginatedList<PetHouse.Models.User>
+@section Style{
+	<style type="text/css">
+		div.container {
+			width: 105%;
+			margin: auto;
+			margin-left: -25px;
+		}
+		/* định dạng thẻ div chưa các button tab */
+		div.tab {
+			overflow: hidden;
+			border: 1px solid #ccc;
+			background-color: #f1f1f1;
+			height: 50px;
+		}
+
+			/* định dạng các button tab */
+			div.tab button {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				padding: 14px 16px;
+				transition: 0.3s;
+				font-size: 17px;
+				font-weight: 700;
+			}
+
+				/* đổi màu khi một button tab được hover */
+				div.tab button:hover {
+					background-color: #ddd;
+				}
+
+				/* đổi màu nền cho tab đang được hiển thị nội dung */
+				div.tab button.active {
+					background-color: #ccc;
+				}
+
+		/* định dạng nội dung hiển thị */
+		.tabcontent {
+			display: block;
+			padding: 6px 12px;
+			border: 1px solid #ccc;
+			border-top: none;
+		}
+	</style>
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+
+				<div class="row element-button">
+					<div class="col-sm-2">
+
+						<a asp-action="CreateNV" class="btn btn-add btn-sm" title="Thêm">
+							<i class="fas fa-plus"></i>
+							Tạo mới tài khoản nhân viên
+						</a>
+					</div>
+
+
+				</div>
+				<div class="container">
+
+					<div class="tab">
+						<button class="tablinks">
+							<a asp-action="IndexKH">
+								Khách hàng
+							</a>
+						</button>
+						
+						<button class="tablinks active">
+							<a asp-action="IndexNV">
+								Nhân viên
+							</a>
+						</button>
+					</div>
+
+					
+
+					<div class="tabcontent">
+						<table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+							   id="sampleTable">
+							<thead>
+								<tr>
+
+									
+									<th width="120">Tên đăng nhập</th>
+									<th width="">Họ và Tên</th>
+
+									<th width="100">SĐT</th>
+									<th width="">Email</th>
+									<th width="">Địa chỉ</th>
+									<th width="">Trạng thái</th>
+									<th width="100">Tính năng</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var staff in Model)
+								{
+									<tr>
+										<td>@staff.UserName</td>
+										<td>@staff.FullName</td>
+										<td>@staff.PhoneNumber</td>
+										<td>@staff.Email</td>
+										<td>@staff.Address</td>
+										@if (staff.Status == 0)
+										{
+											<td><span class="badge bg-danger">Block</span></td>
+											<td class="table-td-center">
+												<button id="@staff.Id" class="btn btn-success" type="button" title="Active"
+														onclick="toActive(this)">
+
+													<i class="fas fa-solid fa-check"></i>
+												</button>
+												<button id="@staff.Id" class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+														onclick="toEdit(this)">
+													<i class="fas fa-edit"></i>
+												</button>
+											</td>
+										}
+										else
+										{
+											<td><span class="badge bg-success">Active</span></td>
+											<td class="table-td-center">
+												<button id="@staff.Id" class="btn btn-primary btn-sm trash" type="button" title="Block"
+														onclick="toBlock(this)">
+													<i class="fas fa-trash-alt"></i>
+												</button>
+												<button id="@staff.Id" class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+														onclick="toEdit(this)">
+													<i class="fas fa-edit"></i>
+												</button>
+											</td>
+											
+										}
+									</tr>
+								}
+
+							</tbody>
+						</table>
+						<nav>
+							<ul class="pagination">
+								<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+									<a class="page-link" href="@Url.Action("IndexKH", new { page = Model.PageIndex - 1 }))">Previous</a>
+								</li>
+								@for (int i = 1; i <= Model.TotalPages; i++)
+								{
+									<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+										<a class="page-link" href="@Url.Action("IndexKH", new { page = i }))">@i</a>
+									</li>
+								}
+								<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+									<a class="page-link" href="@Url.Action("IndexKH", new { page = Model.PageIndex + 1 }))">Next</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		function toBlock(element) {
+			let choice = confirm("Bạn có muốn khoá?")
+			if (choice == true) {
+				var id= element.id;
+				$.ajax({
+					url: "/api/user/block",
+					type: "POST",
+					dataType: "JSON",
+					data: { id: id },
+					success: function (result) {
+						if (result.success) {
+							alert("Đã khóa tài khoản!")
+							location.reload();
+						}
+					},
+					error: function (rs) {
+						alert("Error !")
+					}
+				});
+			}
+		}
+		function toActive(element) {
+			let choice = confirm("Bạn có muốn kích hoạt?")
+			if (choice == true) {
+				var id = element.id;
+				$.ajax({
+					url: "/api/user/active",
+					type: "POST",
+					dataType: "JSON",
+					data: { id: id },
+					success: function (result) {
+						if (result.success) {
+							alert("Đã kích hoạt tài khoản!")
+							location.reload();
+						}
+					},
+					error: function (rs) {
+						alert("Error !")
+					}
+				});
+			}
+		}
+		function toEdit(element) {
+			var id = element.id
+			var url = 'Admin/AdminAccount/Edit/?id=' + id
+			window.location.href = url				
+			}
+		
+	</script>
+}

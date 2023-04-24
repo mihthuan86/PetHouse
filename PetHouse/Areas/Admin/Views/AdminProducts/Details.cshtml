@@ -1,0 +1,72 @@
+﻿@model PetHouse.Models.Product
+
+@{
+	ViewData["Title"] = "Thông tin sản phẩm";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Thông tin sản phẩm</h3>
+			<div class="tile-body">
+				<form asp-action="Edit" class="row" enctype="multipart/form-data">
+
+					<div class="form-group col-md-3">
+						<label class="control-label">Mã sản phẩm: @Model.Id </label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Tên sản phẩm: @Model.Name </label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Giá bán: @Model.OrderPrice</label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Danh mục: @ViewData["danhmuc"]</label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Loại: @Model.Category.Name</label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Thương hiệu :@Model.Brand.Name</label>
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Ngày tạo: @Model.CreateDate.ToString("dd/MM/yyyy")</label>
+					</div>
+					<div class="form-group col-md-3">
+						@if (Model.UpdateDate != null)
+						{
+							<label class="control-label">Ngày sửa: @Model.UpdateDate </label>
+						}
+						else
+						{
+							<label class="control-label">Ngày sửa: </label>
+						}
+					</div>
+					<div class="form-group col-md-3">
+						@if (Model.Status==-1)
+						{
+						<label class="control-label">
+							Trạng thái:<span class="badge bg-danger">Block</span>
+						</label>
+						}
+						else
+						{
+						<label class="control-label">
+								Trạng thái:<span class="badge bg-success">Active</span>
+						</label>
+						}
+					</div>
+					<div class="form-group col-md-3">
+						<label class="control-label">Số lần đặt mua: @ViewData["order"]</label>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Mô tả sản phẩm</label>
+						<textarea disabled asp-for="Description" class="form-control"></textarea>
+					</div>
+					<a class="btn btn-save ml-3 mr-3" asp-action="Edit" asp-route-id="@Model.Id">Chỉnh sửa</a>
+					<a class="btn btn-cancel" asp-action="Index">Trở về</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

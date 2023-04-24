@@ -1,0 +1,118 @@
+﻿@using PetHouse.Data.Setting
+@model PaginatedList<PetHouse.Models.Order>
+@{
+	ViewData["Title"] = "Quản lý đơn hàng/Trang " + Model.PageIndex;
+}
+<div class="app-title">
+	<select class="" id="OrderStatus">
+		<option value="10">Tất cả</option>
+		<option value="0">Đã đặt</option>
+		<option value="1">Đang giao</option>
+		<option value="2">Hoàn thành</option>
+		<option value="-1">Đã hủy</option>
+	</select>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+				<div class="row element-button">
+				</div>
+				<table class="table table-hover table-bordered text-center" id="sampleTable">
+					<thead>
+						<tr>
+							<th>ID đơn hàng</th>
+							<th>Khách hàng</th>
+							<th>Ngày đặt hàng</th>
+							<th>Ngày giao hàng dự kiến</th>
+							<th>Tổng tiền</th>
+							<th>Hình thức thanh toán</th>
+							<th>Tình trạng</th>
+							<th>Tính năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td><a asp-action="Details" asp-route-id="@item.Id">@item.Id</a></td>
+								<td>@item.User.FullName</td>
+								<td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+								<td>@item.ShipDate.ToString("dd/MM/yyyy")</td>
+								<td>@item.TotalPrice.ToString("#,###") VNĐ</td>
+								@if (item.PaymentId == 1)
+								{
+									<td>Thanh Toán khi nhận hàng</td>
+
+								}
+								else
+								{
+
+									<td>Thanh toán Paypal</td>
+								}
+								@switch (item.OrderStatus)
+								{
+									case 1:
+										{
+											<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-secondary">Đang giao</span></td>
+											break;
+										}
+									case 2:
+										{
+											<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-primary">Hoàn thành</span></td>
+											break;
+										}
+									case 0:
+										{
+											<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-success">Đã đặt</span></td>
+											break;
+										}
+									case -1:
+										{
+											<td class="product-stock-status" data-title="Trạng thái"><span class="badge badge-pill badge-danger">Đã hủy</span></td>
+											break;
+										}
+									default: break;
+								}
+								<td>
+									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
+										<i class="fas fa-eye"></i>
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1,stt = ViewData["stt"] })">Previous</a>
+						</li>
+						@for (int i = 1; i <= Model.TotalPages; i++)
+						{
+							<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+								<a class="page-link" href="@Url.Action("Index", new { pageNumber = i,stt = ViewData["stt"] })">@i</a>
+							</li>
+						}
+						<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1,stt = ViewData["stt"] })">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		var activities = document.getElementById("OrderStatus");
+		activities.addEventListener("change", function () {
+			var url = '@Url.Action("Index")?pageNumber=1&stt=' + activities.value;
+			window.location.href = url;
+		});
+	</script>
+	<script>
+		var element = document.getElementById("OrderStatus");
+		element.value = @ViewData["stt"]
+	</script>
+}

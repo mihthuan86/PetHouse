@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetHouse.Data;
 
@@ -11,9 +12,11 @@ using PetHouse.Data;
 namespace PetHouse.Migrations
 {
     [DbContext(typeof(PetHouseDbContext))]
-    partial class PetHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230420081802_updateImportOk")]
+    partial class updateImportOk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,8 +234,11 @@ namespace PetHouse.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ImportDate")
+                    b.Property<DateTime>("ImportDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -254,35 +260,6 @@ namespace PetHouse.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Imports");
-                });
-
-            modelBuilder.Entity("PetHouse.Models.ImportDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ImportId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImportId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ImportDetails");
                 });
 
             modelBuilder.Entity("PetHouse.Models.Menu", b =>
@@ -752,25 +729,6 @@ namespace PetHouse.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PetHouse.Models.ImportDetail", b =>
-                {
-                    b.HasOne("PetHouse.Models.Import", "Import")
-                        .WithMany("ImportDetails")
-                        .HasForeignKey("ImportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetHouse.Models.Product", "Product")
-                        .WithMany("ImportDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Import");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("PetHouse.Models.Order", b =>
                 {
                     b.HasOne("PetHouse.Models.User", "User")
@@ -869,11 +827,6 @@ namespace PetHouse.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("PetHouse.Models.Import", b =>
-                {
-                    b.Navigation("ImportDetails");
-                });
-
             modelBuilder.Entity("PetHouse.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -881,8 +834,6 @@ namespace PetHouse.Migrations
 
             modelBuilder.Entity("PetHouse.Models.Product", b =>
                 {
-                    b.Navigation("ImportDetails");
-
                     b.Navigation("OrderDetails");
                 });
 

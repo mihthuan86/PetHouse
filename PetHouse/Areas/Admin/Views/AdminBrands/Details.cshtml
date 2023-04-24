@@ -1,0 +1,116 @@
+﻿@model PetHouse.Models.Brand
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Chi Tiết Thương Hiệu</h3>
+			<div class="tile-body">
+				<form asp-action="Create" class="row" enctype="multipart/form-data">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input asp-for="Id" hidden />
+					<div class="form-group col-md-5">
+						<label asp-for="Name" class="control-label">Tên thương hiệu</label>
+						<input asp-for="Name" class="form-control" type="text">
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Tổng sản phẩm: @ViewBag.Count</label>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Ngày tạo: @Model.CreateDate</label>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">
+							Ngày sửa @{
+								if (Model.UpdateDate != null)
+								{
+									@Model.UpdateDate
+									;
+								}
+							}
+						</label>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">
+							Trạng thái: @{
+								if (Model.Status == -1)
+								{
+									<span class="badge bg-danger">Block</span>
+								}
+								else
+								{
+									<span class="badge bg-success">Active</span>
+								}
+							}
+						</label>
+					</div>
+					
+				</form><table class="table table-hover table-bordered" id="sampleTable">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Tên sản phẩm</th>
+							<th>Số lượng</th>
+							<th>Tình trạng</th>
+							<th>Giá bán</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in ViewBag.Product)
+						{
+							<tr>
+								<td>
+									<a asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.Id">
+										@item.Id
+									</a>
+								</td>
+								<td>
+									<a asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.Id">
+										@item.Name
+									</a>
+								</td>
+								<td>@item.Quantity</td>
+								@{
+									if (item.Status == -1)
+									{
+										<td><span class="badge bg-danger">Block</span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-success">Active</span></td>
+									}
+								}
+
+								<td>@item.OrderPrice.ToString("#,###") VNĐ</td>
+
+							</tr>
+						}
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item @(ViewBag.Product.HasPreviousPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Details", new {id = Model.Id, pageNumber = ViewBag.Product.PageIndex - 1 })">Previous</a>
+						</li>
+						@for (int i = 1; i <= ViewBag.Product.TotalPages; i++)
+						{
+							<li class="page-item @(ViewBag.Product.PageIndex == i ? "active" : "")">
+								<a class="page-link" href="@Url.Action("Details", new {id = Model.Id, pageNumber = i })">@i</a>
+							</li>
+						}
+						<li class="page-item @(ViewBag.Product.HasNextPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Details", new {id = Model.Id, pageNumber = ViewBag.Product.PageIndex + 1 })">Next</a>
+						</li>
+					</ul>
+				</nav>
+				<a class="btn btn-cancel" asp-action="Index">Trở về</a>
+			</div>
+		</div>
+	</div>
+</div>

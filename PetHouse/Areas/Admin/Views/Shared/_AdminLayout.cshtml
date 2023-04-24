@@ -56,21 +56,21 @@
 
 			<li>
 				<a class="app-menu__item" asp-controller="Home" asp-action="Index">
-					<i class="app-menu__icon bx bx-bar-chart-alt-2"></i><span class="app-menu__label">Thống kê</span>
+					<i class="app-menu__icon bx bx-bar-chart-alt-2"></i><span class="app-menu__label">Trang chủ</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" asp-controller="Account" asp-action="Index">
+				<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
 					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="table-data-product.html">
+				<a class="app-menu__item" asp-controller="AdminProducts" asp-action="Index">
 					<i class="app-menu__icon bx bx-data"></i><span class="app-menu__label">Quản lý sản phẩm</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="table-data-oder.html">
+				<a class="app-menu__item" asp-controller="AdminOrder" asp-action="Index">
 					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
 				</a>
 			</li>
@@ -91,12 +91,12 @@
 			</li>
 
 			<li>
-				<a class="app-menu__item" href="form-nhaphang.html">
+				<a class="app-menu__item" asp-controller="AdminImports" asp-action="Index">
 					<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
 				</a>
 			</li>
 			<li>
-				<a class="app-menu__item" href="form-nhacungcap.html">
+				<a class="app-menu__item" asp-controller="AdminSuppliers" asp-action="Index">
 					<i class="app-menu__icon bx bx-group"></i><span class="app-menu__label">Quản lí nhà cung cấp</span>
 				</a>
 			</li>
@@ -104,7 +104,13 @@
 		</ul>
 	</aside>
 	<main class="app-content">
-		
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active">
+					<a href="#"><b>@ViewData["Title"]</b></a>
+				</li>
+			</ul>			
+		</div>
 		@RenderBody()
 		
 	</main>

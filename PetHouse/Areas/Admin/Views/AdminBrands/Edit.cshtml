@@ -1,0 +1,28 @@
+﻿@model PetHouse.Models.Brand
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Tạo mới sản phẩm</h3>
+			<div class="tile-body">
+				<form asp-action="Edit" class="row" enctype="multipart/form-data">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input asp-for="Id" hidden />
+					<div class="form-group col-md-5">
+						<label asp-for="Name" class="control-label">Tên thương hiệu</label>
+						<input asp-for="Name" class="form-control" type="text">
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<button class="btn btn-save ml-3 mr-3" type="submit">Lưu lại</button>
+					<a class="btn btn-cancel" asp-action="Index">Hủy bỏ</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+

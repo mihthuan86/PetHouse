@@ -1,0 +1,96 @@
+﻿@using PetHouse.Data.Setting
+@model PaginatedList<PetHouse.Models.Import>
+
+@{
+	ViewData["Title"] = "Quản lý nhập hàng/Trang ";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+				<div class="row element-button">
+					<div class="col-sm-2">
+
+						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
+							<i class="fas fa-plus"></i>
+							Tạo phiếu nhập hàng mới
+						</a>
+					</div>
+				</div>
+				<table class="table table-hover table-bordered" id="sampleTable">
+					<thead>
+						<tr>
+							<th>Mã phiếu</th>
+							<th>Người tạo phiếu</th>
+							<th>Nhà cung cấp</th>
+							<th>Ngày tạo</th>
+							<th>Tổng tiền</th>
+							<th>Trạng thái</th>
+							<th>Chức năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td>@item.User.UserName</td>
+								<td>@item.Supplier.Name</td>
+								<td>@item.CreateDate</td>
+								<td>@item.TotalMoney.ToString("#,###") VNĐ</td>								
+								@{
+									if (item.Status == 0)
+									{
+										<td><span class="badge bg-secondary">Chờ xác nhận</span></td>
+									}
+									else if (item.Status == 2)
+									{
+										<td><span class="badge bg-success">Hoàn thành</span></td>
+									}
+
+									else if(item.Status == 1)
+									{
+										<td><span class="badge bg-primary">Đã xác nhận</span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-danger">Đã hủy</span></td>
+
+									}
+								}
+								<td class="table-td-center">
+									@if (item.Status != 2)
+									{
+										<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary btn-sm edit" title="Sửa">
+											<i class="fas fa-edit"></i>
+										</a>
+									} 
+									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
+										<i class="fas fa-eye"></i>
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1 })">Previous</a>
+						</li>
+						@for (int i = 1; i <= Model.TotalPages; i++)
+						{
+							<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+								<a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+							</li>
+						}
+						<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1 })">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>

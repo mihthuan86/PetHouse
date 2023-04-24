@@ -21,14 +21,14 @@ namespace PetHouse.Data
 			modelBuilder.Entity<OrderDetail>().HasOne(m => m.Product).WithMany(am => am.OrderDetails).HasForeignKey(m => m.ProductId);
 
 
-			modelBuilder.Entity<ImportDetail>().HasKey(am => new
-			{
-				am.ImportId,
-				am.ProductId
-			});
+			//modelBuilder.Entity<ImportDetail>().HasKey(am => new
+			//{
+			//	am.ImportId,
+			//	am.ProductId
+			//});
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Import).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ImportId);
 			modelBuilder.Entity<ImportDetail>().HasOne(m => m.Product).WithMany(am => am.ImportDetails).HasForeignKey(m => m.ProductId);
-			
+
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Brand> Brands { get; set; }

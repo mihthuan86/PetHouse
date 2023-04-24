@@ -1,0 +1,137 @@
+﻿@model Order
+@{
+	ViewData["Tittle"] = "Chi tiết đơn hàng";
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Chi tiết đơn hàng</h3>
+			<div class="tile-body">
+				<div class="row">
+					<div class="col-md-7">
+						<p><b>Mã đơn hàng</b>: @Model.Id</p>
+						<p><b>Tài khoản đặt hàng</b>: @Model.User.UserName</p>
+						<p><b>Ngày đặt</b>: @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+						<p><b>Ngày giao</b>: @Model.ShipDate.ToString("dd/MM/yyyy")</p>
+						<p>
+							<b>Trạng thái đơn</b>:@switch (Model.OrderStatus)
+							{
+								case 1:
+									{
+										<span class="badge badge-pill badge-secondary">Đang giao</span>
+										break;
+									}
+								case 2:
+									{
+										<span class="badge badge-pill badge-primary">Hoàn thành</span>
+										break;
+									}
+								case 0:
+									{
+										<span class="badge badge-pill badge-success">Đã đặt</span>
+										break;
+									}
+								case -1:
+									{
+										<span class="badge badge-pill badge-danger">Đã hủy</span>
+										break;
+									}
+								default: break;
+							}
+						</p>
+						@if (Model.PaymentId == 1)
+						{
+
+							<p><b>Hình thức thanh toán</b>: Thanh Toán khi nhận hàng</p>
+
+						}
+						else
+						{
+							<p>
+								<b>Hình thức thanh toán</b>: Thanh toán Paypal
+							</p>
+
+						}
+
+					</div>
+					<div class="col-md-5">
+						<h5>Thông tin nhận hàng</h5>
+						<p><b>Họ và tên:</b>  @Model.Receiver_FullName</p>
+						<p>
+							<b>Số điện thoại:</b>
+							@Model.Receiver_PhoneNumber
+						</p>
+						<p><b>Email:</b> @Model.Receiver_Email</p>
+						<p><b>Địa chỉ giao hàng:</b> @Model.Receiver_Address</p>
+					</div>
+
+
+
+				</div>
+				<div>
+					<table class="table table-hover table-bordered" id="sampleTable">
+						<thead>
+							<tr>
+								<th>Mã sản phẩm</th>
+								<th>Ảnh</th>
+								<th>Tên sản phẩm</th>
+								<th>Số lượng</th>
+								<th>Số lượng tồn kho</th>
+								<th>Đơn giá</th>
+								<th>Thành tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in ViewBag.ChiTiet)
+							{
+								<tr>
+
+									<td>@item.ProductId</td>
+									<td><img src="~/Admin/Img/ProductAvt/@item.Product.ProductImgAvt" alt="" width="100px;"></td>
+									<td>@item.Product.Name</td>
+									<td>@item.Quantity</td>
+									<td>@item.Product.Quantity</td>
+									<td>@item.Price.ToString("#,###") VNĐ</td>
+									<td>@((item.Quantity * item.Price).ToString("#,###")) VNĐ</td>
+								</tr>
+							}
+
+						</tbody>
+					</table>
+				</div>
+				<div style="margin-left: 72%;">
+					<p style="font-size: 22px"><b style="color: red">Tổng tiền: </b>@Model.TotalPrice.ToString("#,###") VNĐ</p>
+				</div>
+				@if (Model.OrderStatus == 0)
+				{
+					<a asp-action="ChangeStt" asp-route-OrderId="@Model.Id" asp-route-stt="1" class="btn btn-outline-success">
+						<i class="bi bi-pencil-square"></i> &nbsp;Xác Nhận
+					</a>
+					<a asp-action="ChangeStt" asp-route-OrderId="@Model.Id" asp-route-stt="-1" class="btn btn-outline-danger">
+						<i class="bi bi-pencil-square"></i> &nbsp;Huỷ
+					</a>
+				}
+				@if (Model.OrderStatus == 1)
+				{
+					<a asp-action="ChangeStt" asp-route-OrderId="@Model.Id" asp-route-stt="2" class="btn btn-outline-primary">
+						<i class="bi bi-pencil-square"></i> &nbsp;Hoàn Thành
+					</a>
+					<a asp-action="ChangeStt" asp-route-OrderId="@Model.Id" asp-route-stt="-1" class="btn btn-outline-danger">
+						<i class="bi bi-pencil-square"></i> &nbsp;Huỷ
+					</a>
+				}
+				@if (Model.OrderStatus == -1)
+				{
+					<a asp-action="ChangeStt" asp-route-OrderId="@Model.Id" asp-route-stt="0" class="btn btn-outline-primary">
+						<i class="bi bi-pencil-square"></i> &nbsp;Hoàn Tác
+					</a>
+				}
+				<div style="float:right">
+					<a asp-action="Index" class="btn btn-outline-secondary">
+						<i class="bi bi-arrow-return-left"></i> &nbsp;Trở về
+					</a>
+				</div>
+			</div>		
+		</div>
+	</div>
+</div>

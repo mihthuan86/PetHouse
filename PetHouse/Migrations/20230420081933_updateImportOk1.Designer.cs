@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetHouse.Data;
 
@@ -11,9 +12,11 @@ using PetHouse.Data;
 namespace PetHouse.Migrations
 {
     [DbContext(typeof(PetHouseDbContext))]
-    partial class PetHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230420081933_updateImportOk1")]
+    partial class updateImportOk1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,8 +234,11 @@ namespace PetHouse.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ImportDate")
+                    b.Property<DateTime>("ImportDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
