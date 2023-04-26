@@ -18,8 +18,9 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-8">
-					<div class="heading_s1">
+				<div class="col-md-4">
+					<div class="order_review">
+						<div class="heading_s1">
 						<h4>Thông tin người nhận</h4>
 					</div>
 					<div>
@@ -39,10 +40,9 @@
 							<p>Phương thức thanh toán: Thanh toán qua Paypal</p>
 						}
 					</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="order_review">
 						<div class="heading_s1">
 							<h4>Thông tin sản phẩm</h4>
@@ -78,8 +78,8 @@
 									<tr>
 										<th></th>
 										<th>Phụ Thu</th>
-										
-									<td class="product-subtotal">@((donhang.TotalPrice-Carts.Sum(x => x.TotalMonay)).ToString("#,##0")) VNĐ</td>
+
+										<td class="product-subtotal">@((donhang.TotalPrice - Carts.Sum(x => x.TotalMonay)).ToString("#,##0")) VNĐ</td>
 									</tr>
 									<tr>
 										<th>Thành tiền</th>
@@ -88,9 +88,12 @@
 								</tfoot>
 							</table>
 						</div>
-						<div class="col-md-3" style="float:right"><a id="submitBtn" class="btn btn-fill-out btn-block">Đặt hàng</a></div>
+						<div style="float:right"><a id="submitBtn" class="btn btn-fill-out btn-block">Đặt hàng</a></div>
 					</div>
 				</div>
+			</div>
+			<div class="row">
+
 			</div>
 		</div>
 	</div>
