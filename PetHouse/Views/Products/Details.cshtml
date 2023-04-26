@@ -103,8 +103,15 @@
 								</div>
 								<span class="rating_num">(21)</span>
 							</div>
-							<div class="pr_desc">
-								@*<p>@Model.Description</p>*@
+							@*<div class="pr_desc">
+								<p>@Model.Description</p>
+							</div>*@
+							<div class="product_sort_info">
+								<ul>
+									<li><i class="linearicons-shield-check"></i> Thương hiệu</li> <!-- thêm dữ liệu vào nhá -->
+									<li><i class="linearicons-sync"></i> Hoàn trả trong 7 ngày</li> <!-- thêm dữ liệu vào nhá -->
+									<li><i class="linearicons-bag-dollar"></i> Có thể thanh toán bằng paypal</li> <!-- thêm dữ liệu vào nhá -->
+								</ul>
 							</div>
 							<hr />
 							<div class="cart_extra">
@@ -113,8 +120,14 @@
 										<input type="button" value="-" class="minus">
 										<input type="text" id="txtsoLuong" name="txtsoLuong" value="1" title="Qty" class="qty" size="4">
 										<input type="button" value="+" class="plus">
+										<ul>
+											<li><i> số lượng trong kho</i></li> <!-- thêm dữ liệu vào nhá -->
+										</ul>
 									</div>
-								</div>
+								</div>								
+							</div>							
+							<hr />
+							<div class="cart_extra">
 								<div class="add-to-cart">
 									<button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
 									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
@@ -122,7 +135,6 @@
 									<input hidden class="Id" asp-for="Id" />
 								</div>
 							</div>
-							<hr />
 						</div>
 					</div>
 				</div>

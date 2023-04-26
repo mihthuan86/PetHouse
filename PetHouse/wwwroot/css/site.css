@@ -1,7 +1,7 @@
 
 .header {
     width: 100%;
-    z-index: 1 !important;
+    z-index: 99999 !important;
     position: fixed;
     align-items: center;
     height: 20%;
