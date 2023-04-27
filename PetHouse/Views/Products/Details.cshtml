@@ -67,26 +67,7 @@
 							</a>
 						</div>
 						<div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1" data-infinite="false">
-							@*<div class="item">
-							<a href="#" class="product_gallery_item active" data-image="~/images/product_img1.jpg" data-zoom-image="~/images/product_zoom_img1.jpg">
-							<img src="~/images/product_small_img1.jpg" alt="product_small_img1" />
-							</a>
-							</div>
-							<div class="item">
-							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-2.jpg" data-zoom-image="~/images/product_zoom_img2.jpg">
-							<img src="~/images/product_small_img2.jpg" alt="product_small_img2" />
-							</a>
-							</div>
-							<div class="item">
-							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-3.jpg" data-zoom-image="~/images/product_zoom_img3.jpg">
-							<img src="~/images/product_small_img3.jpg" alt="product_small_img3" />
-							</a>
-							</div>
-							<div class="item">
-							<a href="#" class="product_gallery_item" data-image="~/images/product_img1-4.jpg" data-zoom-image="~/images/product_zoom_img4.jpg">
-							<img src="~/images/product_small_img4.jpg" alt="product_small_img4" />
-							</a>
-							</div>*@
+							
 						</div>
 					</div>
 				</div>
@@ -120,10 +101,11 @@
 										<input type="button" value="-" class="minus">
 										<input type="text" id="txtsoLuong" name="txtsoLuong" value="1" title="Qty" class="qty" size="4">
 										<input type="button" value="+" class="plus">
-										<ul>
-											<li><i> số lượng trong kho</i></li> <!-- thêm dữ liệu vào nhá -->
-										</ul>
+										
 									</div>
+									<ul>
+										<li><i> số lượng trong kho: @Model.Quantity</i></li>
+									</ul>
 								</div>								
 							</div>							
 							<hr />
@@ -322,7 +304,7 @@
 	<script src="~/js/jquery.elevatezoom.js"></script>
 	<!-- scripts js -->
 	<script src="~/js/scripts.js"></script>
-	@*<script src="~/js/ShoppingCart1.js"></script>*@
+	<script src="~/js/ShoppingCart1.js"></script>
 	<script>
 		$(document).ready(function () {
 			$(function () {
