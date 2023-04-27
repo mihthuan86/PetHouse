@@ -12,6 +12,6 @@ namespace PetHouse.Models
         public int Status { get; set; }
 		public DateTime CreateDate { get; set; }
 		public DateTime? UpdateDate { get; set; }
-		public virtual IEnumerable<Order> Orders { get; set; }
-    }
+		public virtual IEnumerable<Order> Orders { get; set; }	
+	}
 }
