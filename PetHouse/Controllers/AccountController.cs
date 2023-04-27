@@ -53,6 +53,8 @@ namespace PetHouse.Controllers
 						var role = await _userManager.GetRolesAsync(user);
 						if (role.Contains("customer"))
 						{
+							HttpContext.Session.Remove("GioHang");
+							HttpContext.Session.Remove("DonHang");
 							var cartStore = _context.Carts.Where(x => x.UserId == user.Id).Include(x => x.Product).ToList();
 							if (cartStore.Any())
 							{
@@ -87,24 +89,28 @@ namespace PetHouse.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
-			User user;
-			if (HttpContext.User.Identity.IsAuthenticated)
+			if (cart != null)
 			{
-				string username = HttpContext.User.Identity.Name;
-				user = await _userManager.FindByNameAsync(username);
-
-				foreach (var item in cart)
+				User user;
+				if (HttpContext.User.Identity.IsAuthenticated)
 				{
-					Cart cartItem = new Cart();
-					cartItem.ProductId = item.Product.Id;
-					cartItem.UserId = user.Id;
-					cartItem.Quatity = item.amount;
-					_context.Carts.Add(cartItem);
+					string username = HttpContext.User.Identity.Name;
+					user = await _userManager.FindByNameAsync(username);
+
+					foreach (var item in cart)
+					{
+						Cart cartItem = new Cart();
+						cartItem.ProductId = item.Product.Id;
+						cartItem.UserId = user.Id;
+						cartItem.Quatity = item.amount;
+						_context.Carts.Add(cartItem);
+					}
+					_context.SaveChanges();
+					HttpContext.Session.Remove("GioHang");
+					HttpContext.Session.Remove("DonHang");
 				}
-				_context.SaveChanges();
-				HttpContext.Session.Remove("GioHang");
-				HttpContext.Session.Remove("DonHang");				
 			}
+			
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home", new { area = "" });
 		}
