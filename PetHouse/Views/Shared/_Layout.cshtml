@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/petshop.styles.css" asp-append-version="true" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Meta -->
 	<meta charset="utf-8">
@@ -65,7 +65,7 @@
 						   style="color: gray; padding-left: 20px"></i>mail@gmail.com
 					</div>
 				</div>
-				<div class="right">					
+				<div class="right">
 					<partial name="_Identity" />
 
 				</div>
@@ -87,14 +87,16 @@
 				</div>
 				<div class="input-group mb-3 m-md-4"
 					 style="width: 500px; height: 10px">
-					<input type="text"
+					<input id="keyword" name="keyword" type="text"
 						   class="form-control"
 						   placeholder="Tìm kiếm..."
 						   aria-label="Recipient's username" />
-					<button class="btn btn-outline-secondary" type="button">
+					<button id="btn-search"  class="btn btn-outline-secondary" type="button">
 						<i class="bi bi-search"
 						   style="color: #f9a392; font-size: 20px"></i>
 					</button>
+					<div id="records_table" class="results-box">
+					</div>
 				</div>
 				@await Component.InvokeAsync("NumberCart")
 
@@ -106,7 +108,7 @@
 						<li><a asp-area="" asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
 						<li><a asp-area="" asp-controller="Products" asp-action="Index">SẢN PHẨM</a></li>
 						<li><a asp-area="" asp-controller="Home" asp-action="Service">DỊCH VỤ CHĂM SÓC</a></li>
-						<li><a href="">TIN TỨC</a></li>	
+						<li><a href="">TIN TỨC</a></li>
 						<li><a href="">LIÊN HỆ</a></li>
 					</ul>
 				</div>
@@ -119,7 +121,7 @@
 	<div class="container">
 		<main role="main" class="pb-3">
 			<div style="margin-top: 200px">
-			<partial name="_Breadcrumb" />
+				<partial name="_Breadcrumb" />
 				@RenderBody()
 			</div>
 		</main>
@@ -207,7 +209,34 @@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="~/js/chat.js"></script>
 	<script src="~/js/reponses.js"></script>
-	
+	<script>
+		
+		$(document).ready(function () {
+			$("#keyword").keyup(function () {
+				var strkeyword = $('#keyword').val();
+				$.ajax({
+					url: '/Search/FindProduct/',
+					datatype: "json",
+					type: "POST",
+					data: { keyword: strkeyword },
+					async: true,
+					success: function (results) {
+						$("#records_table").html("");
+						$("#records_table").html(results);
+					},
+					error: function (xhr) {
+						alert('error');
+					}
+				});
+			});
+			$("#btn-search").click(function(){
+				var strkeyword = $('#keyword').val();
+				var url = "/Products/Find/?keyword=" + strkeyword
+				window.location.href = url;
+			});
+		});
+
+	</script>
 	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

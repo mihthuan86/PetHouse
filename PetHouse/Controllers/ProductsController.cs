@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Query;
 using PetHouse.Data;
 using PetHouse.Data.Setting;
 using PetHouse.Models;
+using PetHouse.ViewModel;
+using System.Drawing.Printing;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PetHouse.Controllers
@@ -66,9 +68,36 @@ namespace PetHouse.Controllers
 					AsQueryable();
 			}
 			products = products.OrderByDescending(x => x.CreateDate);
-			int pageSize = 9;
+			int pageSize = 12;
 			var paginatedProducts = PaginatedList<Product>.Create(products,1, pageSize);
 			return View("Index",paginatedProducts);
 		}
+		public IActionResult Find(string keyword)
+		{
+            ViewBag.PCategory = _context.Categories.Where(x => x.isParent).ToList();
+            ViewBag.Brand = _context.Brands.ToList();
+            ViewBag.Categories = _context.Categories.ToList();
+			IQueryable<Product> ls;
+            if (string.IsNullOrEmpty(keyword) || keyword.Length < 1)
+            {
+                return RedirectToAction("Index");
+            }
+			ls = _context.Products.AsNoTracking()
+								  .Include(a => a.Category)
+								  .Where(x => x.Name.Contains(keyword))
+								  .OrderByDescending(x => x.Name)
+								  .AsQueryable();
+            ViewBag.CateName = "Tìm kiếm cho ' " + keyword + " '";
+            if (ls.Count()>0)
+            {
+                
+                var paginatedProducts = PaginatedList<Product>.Create(ls, 1, 12);
+                return View("Index", paginatedProducts);
+            }
+            else
+            {
+                return View("NotFind");
+            }
+        }
 	}
 }
