@@ -182,10 +182,10 @@
 							<h5 class="widget_title">Lọc giá</h5>
 							<ul class="widget_categories">
 								<li>
-                                <div class="custome-checkbox">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="Arrivals" value="">
-                                    <label class="form-check-label" for="Arrivals"><span>Từ thấp đến cao</span></label>
-                                </div>
+									<div class="custome-checkbox">
+										<input class="form-check-input" type="checkbox" name="checkbox" id="Arrivals" value="">
+										<label class="form-check-label" for="Arrivals"><span>Từ thấp đến cao</span></label>
+									</div>
 								</li>
 								<li>
 									<div class="custome-checkbox">
@@ -236,5 +236,42 @@
 	<script src="~/js/jquery.elevatezoom.js"></script>
 	<!-- scripts js -->
 	<script src="~/js/scripts.js"></script>
-	<script src="~/js/ShoppingCart.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$(".add-to-cart").click(function () {
+					var productid = $(this).find('.Id').val();
+					$.ajax({
+						url: '/api/cart/add',
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							productID: productid,
+						},
+						success: function (response) {
+							if (response.result == 'Redirect') {
+								window.location = response.url;
+							}
+							else {
+								loadHeaderCart();
+								alert('Thêm vào giỏ hàng thành công');
+								location.reload();
+
+							}
+
+							console.log(response);
+						},
+						error: function (error) {
+							alert("There was an error posting the data to the server: " + error.responseText);
+						}
+					});
+					console.log(productid, soLuong)
+				});
+			});
+			function loadHeaderCart() {
+				$('#miniCart').load("/AjaxContent/HeaderCart");
+				$('#numberCart').load("/AjaxContent/NumberCart");
+			}
+		});
+	</script>
 }

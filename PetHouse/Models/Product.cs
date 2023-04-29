@@ -32,7 +32,8 @@ namespace PetHouse.Models
 		[ForeignKey("BrandId")]
 		public Brand Brand { get; set; }			
 		public virtual IEnumerable<OrderDetail> OrderDetails { get; set; }
-		public virtual IEnumerable<ImportDetail> ImportDetails { get; set; }
+		public virtual IEnumerable<ImportDetail> ImportDetails { get; set; }		
+
 
 
 

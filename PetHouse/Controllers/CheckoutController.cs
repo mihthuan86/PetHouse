@@ -137,7 +137,16 @@ namespace PetHouse.Controllers
 				_context.SaveChanges();
 				//clear gio hang
 				HttpContext.Session.Remove("GioHang");
-				HttpContext.Session.Remove("DonHang");
+				HttpContext.Session.Remove("DonHang");				
+				var cartStore = _context.Carts.Where(x => x.UserId == donhang.CustomerId).ToList();
+				if(cartStore != null) {
+					foreach (var item in cartStore)
+					{
+						_context.Carts.Remove(item);
+					}
+					_context.SaveChanges();
+				}
+				
 				//Xuat thong bao
 				_notyfService.Success("Đơn hàng đặt thành công");
 				//cap nhat thong tin khach hang
