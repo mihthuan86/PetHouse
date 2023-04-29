@@ -57,12 +57,12 @@
 		<div class="header fixed-top justify-content-between">
 
 			<div class="top">
-				<div class="left">
+				<div class="left" style="color: white">
 					<div class="phone m-md-2">
-						<i class="bi bi-telephone-fill" style="color: gray"></i>+012 345
+						<i class="bi bi-telephone-fill" style="color: white"></i>+012 345
 						6789
 						<i class="bi bi-envelope-fill m-1"
-						   style="color: gray; padding-left: 20px"></i>mail@gmail.com
+						   style="color: white; padding-left: 20px"></i>mail@gmail.com
 					</div>
 				</div>
 				<div class="right">					
@@ -74,26 +74,35 @@
 
 
 				<div class="d-flex">
-					<img src="~/images/logo.png"
+					<img src="~/images/logomoi1-removebg-preview.png"
 	   class="logo"
 	   style="
                     width: 130px;
                     height: 130px;
-                    margin-top: -20px;
+                    margin-top: -9px;
                     margin-left: 90px;
                   "
 	   alt="" />
-					<p style="margin-top: 30px; font-size: 25px">PET'S HOUSE</p>
+					<img src="~/images/chu.png"
+						 class="logo"
+						 style="
+                    width:300px;
+                    height: 55px;
+                    margin-top: 17px;
+margin-left:-30px
+                    
+                  "
+						 alt="" />
+					@*<p style="margin-top: 30px; font-size: 30px; color:red">PET'S HOUSE</p>*@
 				</div>
-				<div class="input-group mb-3 m-md-4"
-					 style="width: 500px; height: 10px">
+				<div class="input-group search0 mb-3 m-md-4"
+					 style="width: 400px; height:5px;">
 					<input type="text"
 						   class="form-control"
 						   placeholder="Tìm kiếm..."
 						   aria-label="Recipient's username" />
-					<button class="btn btn-outline-secondary" type="button">
-						<i class="bi bi-search"
-						   style="color: #f9a392; font-size: 20px"></i>
+					<button class="btn btn-outline-secondary" type="button" style="width:50px; background-color:#6e7374">
+						<i class="bi bi-search" style="font-size:20px;"></i>
 					</button>
 				</div>
 				@await Component.InvokeAsync("NumberCart")
@@ -202,12 +211,53 @@
 			</div>
 		</div>
 	</footer>
+	@*<footer>
+		<div class="footer d-flex" style="background-color: #f4f4f4">
+			<div class="container">
+				<div class="row">
+					<div class="col-4">
+						<h3>Liên hệ</h3>
+						<p><i class="bi bi-geo-alt"></i> 45 Nguyễn Hữu Thọ -TP Đà Nẵng</p>
+						<p><i class="bi bi-envelope-open"></i> petshop@gmail.com</p>
+						<p><i class="bi bi-telephone"></i> +012 345 6789</p>
+					</div>
+					<div class="col-4" style="margin-left: -20px">
+						<h3>Về Pet's House</h3>
+						Hệ thống cửa hàng chuyên cung cấp các mặt hàng và dịch vụ chăm sóc
+						thú cưng. Với tiêu chí uy tín và chất lượng tốt nhất cho các bạn
+						thú cưng, ở Pet's House khách hàng sẽ hài lòng về hàng hóa đa dạng
+						và phong phú, giá cả cực kỳ phải chăng và nhân viên chăm sóc nhiệt
+						tình, chu đáo.
+					</div>
+
+					<div class="col-4" style="margin-left: 20px">
+						<h3>Chính sách</h3>
+						<p>Chính sách đổi/trả hàng và hoàn tiền</p>
+						<p>Chính sách vận chuyển, giao nhận</p>
+						<p>Bảo mật thông tin khách hàng Hình thức thanh toán</p>
+						<h3>Follow us</h3>
+						<i class="bi bi-facebook"></i>
+						<i class="bi bi-twitter"></i>
+						<i class="bi bi-instagram"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>*@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="~/js/chat.js"></script>
 	<script src="~/js/reponses.js"></script>
-	
+	<style>
+		.bi-search{
+			color:white;
+			margin-left:-10px;
+			
+		}
+
+		
+	</style>
 	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

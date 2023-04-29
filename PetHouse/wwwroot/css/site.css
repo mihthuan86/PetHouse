@@ -9,11 +9,11 @@
 }
 
 .top {
-    background-color: #fdf1f0;
-    justify-content: space-between;
+    background-color: #f1b815;
+    justify-content:space-between;
     display: flex;
-    padding: 0 100px 0 100px;
-    border-bottom: rgb(216, 213, 213) solid 1px;
+    padding: 0 50px 0 100px;
+    border-bottom: white solid 1px;
 }
 
 .dn a {
@@ -25,53 +25,58 @@
     font-family: "Roboto", sans-serif;
 }
 
-    .dn a:hover {
-        color: #f9a392;
-    }
+
 
 .nut_dropdown {
-    background-color: #fdf1f0;
+    background-color: #f1b815;
     color: black;
     padding: 7px;
-    font-size: 15px;
+    font-size: 18px;
     border: none;
     /* font-family: "Poppins", sans-serif; */
     font-weight: 500;
 }
 
     .nut_dropdown:hover {
-        color: #f9a392;
+        color: white;
     }
 
 .dropdown {
     position: relative;
     display: inline-block;
-}
+   margin-left:-260px;
+    
 
+}
+    
 /* Nội dung Dropdown */
 .noidung_dropdown {
     /*Ẩn nội dụng các đường dẫn*/
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
+    background-color: white;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    border-radius:5px;
+    
+    
 }
 
     /* Thiết kế style cho các đường dẫn tronng Dropdown */
     .noidung_dropdown a {
-        color: black;
+      
         padding: 12px 16px;
         text-decoration: none;
         display: block;
-        font-size: 15px;
+        font-size: 16px;
+       
     }
 
         /* thay đổi màu background khi hover vào đường dẫn */
         .noidung_dropdown a:hover {
-            background-color: #ddd;
-            color: #f9a392;
+            color: #f1b815;
+            font-weight: 500;
         }
 
 .dropdown:hover .noidung_dropdown {
@@ -89,15 +94,15 @@
 }
 
 .middle {
-    background-color: #fdf1f0;
+    background-color: #f1b815;
     height: 90px;
     justify-content: space-between;
-    padding-right: 200px;
+    padding-right: 250px;
 }
 
 .Badge {
     align-items: center;
-    background: #ce2c6c;
+    background: red;
     border: 2px solid #fff;
     border-radius: 200em;
     color: #fff;
@@ -110,6 +115,9 @@
     min-width: 1.44em;
     position: absolute;
     margin-left: 25px;
+}
+.Badge:hover {
+    cursor:pointer;
 }
 
 .u-hiddenVisually {
@@ -134,7 +142,7 @@
     padding-right: 200px;
     /* height: 20px; */
     background-color: white;
-    padding-left: 50px;
+    padding-left: 100px;
     /* margin-top: 10px; */
     padding-top: 5px;
 }
@@ -151,7 +159,7 @@ ul {
     .danhmuc > li a {
         display: block;
         font-size: 16px;
-        padding: 10px 15px;
+        padding: 10px 30px;
         color: black;
         text-decoration: none;
     }
@@ -164,6 +172,9 @@ ul {
     background-color: white;
     border: 1px solid gainsboro;
     display: none;
+    border-radius: 10px;
+    -webkit-box-shadow: 7px 7px 15px 4px #000000;
+    box-shadow: 7px 7px 15px 4px #000000;
 }
 
     .danhmuc ul ul {
@@ -172,12 +183,18 @@ ul {
     }
 
 .danhmuc li li:hover {
-    background-color: #fdb3a5;
+    background-color: #ffd100;
+   
+}
+.danhmuc li li a:hover{
+    transform:scale(1.06)
 }
 
 .danhmuc ul li {
     text-align: left;
+    border-radius: 10px;
 }
+
 
 .danhmuc li:hover > ul {
     display: block;
@@ -186,11 +203,13 @@ ul {
 .tt {
     font-size: 18px;
     font-weight: 500;
+    color: black
 }
 
     .tt:hover {
         cursor: pointer;
-        color: #dc8371;
+        color: #f1b815;
+        display: block;
     }
 
 .danhmuc2 {
@@ -214,7 +233,7 @@ ul {
         }
 
     .danhmuc2 li a:hover {
-        color: #f16c51;
+        color: #f4b915;
         font-weight: 500;
         transform: scale(1.1);
         transition: 300ms;

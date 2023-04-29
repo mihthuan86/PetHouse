@@ -3,18 +3,31 @@
 @if (!User.Identity.IsAuthenticated)
 {
 	<div class="dn m-md-2">
-		<a asp-area="" asp-controller="Account" asp-action="Login">ĐĂNG NHẬP</a>
-		<a asp-area="" asp-controller="Account" asp-action="Register">ĐĂNG KÝ</a>
+		<a asp-area="" asp-controller="Account" asp-action="Login" style="color:black">ĐĂNG NHẬP</a>
+		<a asp-area="" asp-controller="Account" asp-action="Register" style="color:black; border:none">ĐĂNG KÝ</a>
 	</div>
 }
 else{
-	<div class="dropdown">
+	<div class="d-flex">
+			<div class="dropdown">
 		<i class="bi bi-person-circle"
-		   style="color: #f9a392; font-size: 25px"></i><button class="nut_dropdown">@UserManager.GetUserName(User)</button>
+		   style="color: white; font-size: 25px"></i><button class="nut_dropdown">@UserManager.GetUserName(User)</button>
 		<div class="noidung_dropdown">
-			<a>Tài khoản của tôi</a>
+			<a asp-area="" asp-controller="" asp-action="" asp-route-stt="">Tài khoản của tôi</a>
 			<a asp-area="" asp-controller="Order" asp-action="Index" asp-route-stt ="10">Đơn đặt hàng</a>
-			<a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
-		</div> 
+		<a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+		</div>
+		
+	
+		
+
+	</div>
+
 	</div>
 }
+<style>
+	
+	.noidung_dropdown a{
+		color:black;
+	}
+</style>
