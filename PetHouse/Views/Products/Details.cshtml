@@ -55,7 +55,7 @@
 <div class="main_content">
 
 	<!-- START SECTION SHOP -->
-	<div class="section">
+	<div class="section" style="margin-top:20px">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-6 mb-4 mb-md-0">
@@ -87,35 +87,53 @@
 							@*<div class="pr_desc">
 								<p>@Model.Description</p>
 							</div>*@
-							<div class="product_sort_info">
+							<br />
+							<div class="product_sort_info" style="margin-top:20px">
 								<ul>
-									<li><i class="linearicons-shield-check"></i> Thương hiệu</li> <!-- thêm dữ liệu vào nhá -->
-									<li><i class="linearicons-sync"></i> Hoàn trả trong 7 ngày</li> <!-- thêm dữ liệu vào nhá -->
+									<li><i class="linearicons-shield-check"></i><b>Thương hiệu:</b> @Model.Brand.Name  </li> <!-- thêm dữ liệu vào nhá -->
+									<li><i class="linearicons-check"></i><b>Loại:</b> @Model.Category.Name </li> <!-- thêm dữ liệu vào nhá -->
+									<li><i class="linearicons-sync"></i> Hoàn trả trong 7 ngày</li>
 									<li><i class="linearicons-bag-dollar"></i> Có thể thanh toán bằng paypal</li> <!-- thêm dữ liệu vào nhá -->
 								</ul>
 							</div>
 							<hr />
 							<div class="cart_extra">
-								<div class="cart-product-quantity">
+								<h6>Số lượng</h6>
+								
+								<div class="cart-product-quantity d-flex m-lg-2 ">
 									<div class="quantity">
 										<input type="button" value="-" class="minus">
 										<input type="text" id="txtsoLuong" name="txtsoLuong" value="1" title="Qty" class="qty" size="4">
 										<input type="button" value="+" class="plus">
 										
 									</div>
+									<div style="margin-left:15px;margin-top:10px">
 									<ul>
 										<li><i> số lượng trong kho: @Model.Quantity</i></li>
 									</ul>
+
+									</div>
 								</div>								
 							</div>							
 							<hr />
+							<div class="d-flex">
 							<div class="cart_extra">
 								<div class="add-to-cart">
-									<button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
+									<button class="btn btn-fill-out btn-addtocart" type="button"><i class=""></i>Thêm vào giỏ hàng</button>
 									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
 									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
 									<input hidden class="Id" asp-for="Id" />
 								</div>
+							</div>
+							<div class="cart_extra m-3">
+								<div class="add-to-cart">
+										<button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i>Mua ngay</button>
+									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
+									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
+									<input hidden class="Id" asp-for="Id" />
+								</div>
+							</div>
+
 							</div>
 						</div>
 					</div>
@@ -271,6 +289,43 @@
 	</div>
 	<!-- END MAIN CONTENT -->
 </div>
+<style>
+	.btn-fill-out {
+		background-color: transparent;
+		border: 1px solid #f9a529;
+		color: #fff;
+		position: relative;
+		overflow: hidden;
+		z-index: 0;
+
+	}
+
+
+		.btn-fill-out::before,
+		.btn-fill-out::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			background-color: #f9a529;
+			z-index: -1;
+			transition: all 0.3s ease-in-out;
+			width: 51%;
+			
+		}
+
+		.btn-fill-out::after {
+			right: 0;
+			left: auto;
+		}
+
+		.btn-fill-out:hover:before,
+		.btn-fill-out:hover:after {
+			width: 0;
+
+		}
+</style>
 <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
 @section Scripts{
 
