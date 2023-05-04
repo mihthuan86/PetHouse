@@ -29,9 +29,10 @@ namespace PetHouse.Areas.Admin.Controllers
 			ViewBag.CategoryParent = _context.Categories.Where(x=>x.isParent).ToList();
 			int pageSize = 5;
 			var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).OrderByDescending(x => x.CreateDate).AsQueryable();
-			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);           
-            return View(paginatedProducts);
-        }
+			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);
+			ViewBag.CurrentPage = pageNumber;
+			return View(paginatedProducts);
+		}
 
         // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)

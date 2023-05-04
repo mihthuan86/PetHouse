@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Admin\Img\CateIcon\" />
+    <Folder Include="wwwroot\Admin\Img\Post\" />
     <Folder Include="wwwroot\Admin\Img\ProductAvt\" />
   </ItemGroup>
 

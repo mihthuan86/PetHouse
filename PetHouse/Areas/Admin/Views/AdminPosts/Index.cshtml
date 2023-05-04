@@ -1,0 +1,187 @@
+﻿@using PetHouse.Data.Setting;
+@model PaginatedList<PetHouse.Models.Post>
+@{
+	ViewData["Title"] = "Quản lí bài đăng";
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+				<div class="row element-button">
+					<div class="col-sm-2">
+
+						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
+							<i class="fas fa-plus"></i>
+							Tạo bài đăng mới
+						</a>
+					</div>
+
+				</div>
+				<table class="table table-hover table-bordered" id="sampleTable">
+					<thead>
+						<tr>
+
+							<th>Mã bài viết</th>
+							<th>Tiêu đề</th>
+							<th>Mô tả</th>
+							<th>Tác giả</th>
+							<th>Trạng thái</th>
+							<th>Chức năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+
+							<tr>
+
+								<td>@item.Id</td>
+								<td>@item.Name</td>
+								<td>
+									<p>
+										@item.Description
+									</p>
+								</td>
+								<td>@item.User.FullName</td>
+								<td>
+									@if (item.Status == 1)
+									{
+										<span class="badge bg-success">Đã đăng</span>
+									}
+									else
+									{
+										<span class="badge bg-danger">Đã ẩn</span>
+									}
+								</td>
+								<td>
+									<button id="@item.Id" class="btn btn-primary btn-sm trash delete" type="button" title="Xóa" onclick="toDelete(this)">
+										<i class="fas fa-trash-alt"></i>
+									</button>
+									@if (item.Status == 1)
+									{
+										<button id="@item.Id" class="btn btn-primary btn-sm trash" type="button" title="Ẩn"
+												onclick="toHidden(this)">
+											<i class="fas fa-eye"></i>
+										</button>
+									}
+									else
+									{
+										<button id="@item.Id" class="btn btn-secondary btn-sm active" type="button" title="Kích hoạt"
+												onclick="toActive(this)">
+											<i class="fas fa-eye"></i>
+										</button>
+									}
+									<button asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary btn-sm edit" type="button" title="Sửa">
+										<i class="fas fa-edit"></i>
+									</button>
+
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1 })">Previous</a>
+						</li>
+						@for (int i = 1; i <= Model.TotalPages; i++)
+						{
+							<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+								<a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+							</li>
+						}
+						<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1 })">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		function toDelete(element) {
+			let choice = confirm("Bạn có muốn xóa?")
+			if (choice == true) {
+				$.ajax({
+					url: 'AdminPosts/Delete',
+					type: "POST",
+					dataType: "JSON",
+					data: {
+						Id: element.id
+					},
+					success: function (response) {
+						if (response.result == 'Redirect') {
+							window.location = response.url;
+						}
+						else {							
+							alert('Đã xóa');
+							location.reload();
+						}
+
+						console.log(response);
+					},
+					error: function (error) {
+						alert("There was an error posting the data to the server: " + error.responseText);
+					}
+				});
+			}
+		}
+		function toActive(element) {
+			let choice = confirm("Bạn có muốn kích hoạt?")
+			if (choice == true) {
+				$.ajax({
+					url: 'AdminPosts/ChangeStt',
+					type: "POST",
+					dataType: "JSON",
+					data: {
+						Id: element.id,
+						stt: 1
+					},
+					success: function (response) {
+						if (response.result == 'Redirect') {
+							window.location = response.url;
+						}
+						else {
+							alert('Đã kich hoạt');
+							location.reload();
+						}
+						console.log(response);
+					},
+					error: function (error) {
+						alert("There was an error posting the data to the server: " + error.responseText);
+					}
+				});
+			}
+		}
+		function toHidden(element) {
+			let choice = confirm("Bạn có muốn ẩn?")
+			if (choice == true) {
+				$.ajax({
+					url: 'AdminPosts/ChangeStt',
+					type: "POST",
+					dataType: "JSON",
+					data: {
+						Id: element.id,
+						stt: 0
+					},
+					success: function (response) {
+						if (response.result == 'Redirect') {
+							window.location = response.url;
+						}
+						else {
+							alert('Đã ẩn');
+							location.reload();
+						}
+						console.log(response);
+					},
+					error: function (error) {
+						alert("There was an error posting the data to the server: " + error.responseText);
+					}
+				});
+			}
+		}
+	</script>
+}

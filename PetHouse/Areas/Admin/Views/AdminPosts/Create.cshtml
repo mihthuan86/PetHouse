@@ -1,0 +1,39 @@
+﻿@model PetHouse.Models.Post
+@{
+	ViewData["Title"] = "Tạo bài đăng mới";
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<h3 class="tile-title">Tạo bài đăng mới</h3>
+			<div class="tile-body">
+				<form asp-action="Create" class="row" enctype="multipart/form-data">
+					<div class="form-group col-md-8">
+						<label class="control-label">Tiêu đề bài đăng</label>
+						<input asp-for="Name" class="form-control" type="text">
+					</div>
+
+					
+					<div class="form-group col-md-8">
+						<label class="control-label">Mô tả</label>
+						<input asp-for="Description" class="form-control" type="text">
+					</div>
+					
+					<div class="form-group col-md-12">
+						<label class="control-label">Hình ảnh sản phẩm</label>
+						<input asp-for="ImgFile" accept="image/*" />
+						<span asp-validation-for="ImgFile" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="control-label">Nội dung</label>
+						<textarea asp-for="Content" class="form-control"></textarea>						
+					</div>
+					<button class="btn btn-save" type="submit">Đăng bài</button>
+					<a class="btn btn-cancel" asp-action="Index" asp-route-pageNumber="@ViewBag.CurrentPage">Hủy bỏ</a>
+				</form>
+
+			</div>
+			
+		</div>
+	</div>
+</div>

@@ -9,19 +9,20 @@ namespace PetHouse.Models
 		public int Id { get; set; }
 		[MaxLength(100)]
 		public string Name { get; set; }
-		public int MenuId { get; set; }
+		
 		[MaxLength(200)]
 		public string Description { get; set; }		
 		public string AuthorId { get; set; }
 		[MaxLength(200)]
 		public string ImgUrl { get; set;}
+		[NotMapped]
+		public IFormFile ImgFile { get; set; }
 		public string Content { get; set; }
+		public int Status { get; set; }
 		public DateTime CreateDate { get; set; }
 		public DateTime? UpdateDate { get; set; }
 
-		//relationship
-		[ForeignKey(nameof(MenuId))]
-		public Menu Menu { get; set; }
+		//relationship		
 		[ForeignKey(nameof(AuthorId))]
 		public User User { get; set; }
 
