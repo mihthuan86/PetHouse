@@ -7,7 +7,17 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="tile">
-			<h3 class="tile-title">Chi tiết danh mục</h3>
+			<div class="row">
+				<div class="col-md-11">
+					<h3 class="tile-title">Chi tiết danh mục</h3>
+				</div>
+				<div class="col-md-1">
+					<a asp-action="Index" class="">
+						<i class="bx bx-undo" style="font-size:35px; margin-left:20px"></i> &nbsp;
+					</a>
+				</div>
+			</div>
+			
 			<div class="tile-body">
 				<form asp-action="Create" class="row" enctype="multipart/form-data">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -123,7 +133,7 @@
 						</li>
 					</ul>
 				</nav>
-				<a class="btn btn-cancel" asp-action="Index">Trở về</a>
+				@*<a class="btn btn-cancel" asp-action="Index">Trở về</a>*@
 			</div>
 		</div>
 	</div>

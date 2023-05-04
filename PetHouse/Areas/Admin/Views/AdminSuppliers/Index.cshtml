@@ -30,9 +30,8 @@
 							<th>Email</th>
 							<th>Ngày tạo</th>
 							<th>Ngày sửa</th>
-							<th width="100px">Trạng thái</th>
-							<th>Tính năng</th>
-						</tr>
+							<th width="100px">Tính năng</th>
+													</tr>
 					</thead>
 					<tbody>
 						@foreach (var item in Model)
@@ -46,12 +45,12 @@
 								<td>@item.CreateDate</td>
 								<td>@item.UpdateDate</td>
 								
-								<td class="table-td-center">									
-									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary btn-sm edit" title="Sửa">
+								<td class="table-td-center">
+									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-add btn-sm badge" title="Sửa">
 										<i class="fas fa-edit"></i>
 									</a>
 									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
-										<i class="fas fa-edit"></i>
+										<i class="fas fa-eye"></i>
 									</a>
 								</td>
 							</tr>

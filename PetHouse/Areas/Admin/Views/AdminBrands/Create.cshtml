@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="tile">
-			<h3 class="tile-title">Tạo mới sản phẩm</h3>
+			<h3 class="tile-title">Tạo thương hiệu mới</h3>
 			<div class="tile-body">
 				<form asp-action="Create" class="row" enctype="multipart/form-data">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -14,9 +14,12 @@
 						<label asp-for="Name" class="control-label">Tên thương hiệu</label>
 						<input asp-for="Name" class="form-control" type="text">
 						<span asp-validation-for="Name" class="text-danger"></span>
-					</div>					
-					<button class="btn btn-save ml-3 mr-3" type="submit">Lưu lại</button>
+					</div>	
+					<div style="height:70px; margin-top:30px">
+
+					<button class="btn btn-save mr-1" type="submit" >Lưu lại</button>
 					<a class="btn btn-cancel" asp-action="Index">Hủy bỏ</a>
+					</div>
 				</form>
 			</div>
 		</div>

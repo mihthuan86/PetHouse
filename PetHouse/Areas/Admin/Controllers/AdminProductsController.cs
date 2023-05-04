@@ -75,7 +75,7 @@ namespace PetHouse.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,ImgFile,Description,CategoryId,BrandId,OrderPrice")] Product product)
         {
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
 				string wwwRootPath = _webHostEnvironment.WebRootPath;
 				string fileName = Path.GetFileNameWithoutExtension(product.ImgFile.FileName);

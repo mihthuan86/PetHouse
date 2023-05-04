@@ -1,14 +1,14 @@
 ﻿@model PetHouse.Areas.Admin.ViewModel.UpdateUserVM
 
 @{
-	ViewData["Title"] = "Tạo tài khoản nhân viên";
+	ViewData["Title"] = "Chỉnh sửa tài khoản nhân viên";
 }
 <div class="row">
 	<div class="col-md-12">
 
 		<div class="tile">
 
-			<h3 class="tile-title">Tạo mới tài khoản</h3>
+			<h3 class="tile-title">Chỉnh sửa</h3>
 			<div class="tile-body">
 				<div class="row element-button">
 				</div>
@@ -34,8 +34,10 @@
 						<label class="control-label">Số điện thoại</label>
 						<input asp-for="Phone" class="form-control" type="number" required>
 					</div>
+					<div style="height:70px; margin-top:30px">
 					<button class="btn btn-save" type="submit">Lưu lại</button>
 					<a class="btn btn-cancel" href="/taikhoanNV.cshtml">Hủy bỏ</a>
+					</div>
 				</form>
 			</div>			
 		</div>

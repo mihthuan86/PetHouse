@@ -10,7 +10,7 @@
 		<div class="tile">
 			<div class="tile-body">
 				<div class="row element-button">
-					<div class="col-sm-2">
+					<div class="col-md-8">
 
 						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
 							<i class="fas fa-plus"></i>
@@ -25,12 +25,23 @@
 							Xem thương hiệu
 						</a>
 					</div>
+					<div class="col-md-4 d-flex" style="">
+						<input name="keyword" type="text"
+							   class="form-control"
+							   placeholder="Tìm kiếm..."
+							   aria-label="">
+						<button id="btn-search" class="btn btn-outline-secondary" type="submit" style="width:50px; height:45px;">
+						
+							<i class="fas fa-search" style="font-size:20px;"></i>
+						</button>
+					</div>
+				
 				</div>
 				<table class="table table-hover table-bordered" id="sampleTable">
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th>Tên sản phẩm</th>
+							<th width="260">Tên sản phẩm</th>
 							<th>Hình ảnh</th>
 							<th>Số lượng</th>
 							<th>Tình trạng</th>
@@ -91,11 +102,11 @@
 										}
 									}
 
-									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary btn-sm edit" title="Sửa">
+									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-add btn-sm badge" title="Sửa">
 										<i class="fas fa-edit"></i>
 									</a>
 									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
-										<i class="fas fa-edit"></i>
+										<i class="fas fa-eye"></i>
 									</a>
 								</td>
 							</tr>
@@ -140,3 +151,32 @@
 		}
 	</script>
 }
+<script>
+	const searchFocus = document.getElementById('search-focus');
+	const keys = [
+		{ keyCode: 'AltLeft', isTriggered: false },
+		{ keyCode: 'ControlLeft', isTriggered: false },
+	];
+
+	window.addEventListener('keydown', (e) => {
+		keys.forEach((obj) => {
+			if (obj.keyCode === e.code) {
+				obj.isTriggered = true;
+			}
+		});
+
+		const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+		if (shortcutTriggered) {
+			searchFocus.focus();
+		}
+	});
+
+	window.addEventListener('keyup', (e) => {
+		keys.forEach((obj) => {
+			if (obj.keyCode === e.code) {
+				obj.isTriggered = false;
+			}
+		});
+	});
+</script>

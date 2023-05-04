@@ -24,11 +24,11 @@
 
 							<th>ID</th>
 							<th width="">Tên danh mục</th>
-							<th width="130px">Danh mục cha</th>
-							<th width="">Ngày tạo</th>
-							<th width="">Ngày sửa</th>
+							<th width="170px">Danh mục cha</th>
+							<th width="200">Ngày tạo</th>
+							<th width="200">Ngày sửa</th>
 							<th width="100px">Trạng thái</th>
-							<th width="">Tính năng</th>
+							<th width="135">Tính năng</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -75,7 +75,7 @@
 										}
 									}
 
-									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary btn-sm edit" title="Sửa">
+									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-add btn-sm badge" title="Sửa">
 										<i class="fas fa-edit"></i>
 									</a>
 									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
