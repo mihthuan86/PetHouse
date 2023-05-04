@@ -12,7 +12,7 @@ using PetHouse.Data;
 namespace PetHouse.Migrations
 {
     [DbContext(typeof(PetHouseDbContext))]
-    [Migration("20230427074545_add-cart")]
+    [Migration("20230504041057_add-cart")]
     partial class addcart
     {
         /// <inheritdoc />
@@ -475,13 +475,13 @@ namespace PetHouse.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("MenuId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -489,8 +489,6 @@ namespace PetHouse.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("MenuId");
 
                     b.ToTable("Posts");
                 });
@@ -865,14 +863,6 @@ namespace PetHouse.Migrations
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PetHouse.Models.Menu", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Menu");
 
                     b.Navigation("User");
                 });
