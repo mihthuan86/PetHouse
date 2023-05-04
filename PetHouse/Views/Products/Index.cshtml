@@ -77,14 +77,6 @@
 										<a href="javascript:Void(0);" class="shorting_icon grid"><i class="ti-view-grid"></i></a>
 										<a href="javascript:Void(0);" class="shorting_icon list active"><i class="ti-layout-list-thumb"></i></a>
 									</div>
-									<div class="custom_select">
-										<select class="form-control form-control-sm">
-											<option value="">Showing</option>
-											<option value="9">9</option>
-											<option value="12">12</option>
-											<option value="18">18</option>
-										</select>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -134,17 +126,22 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<ul class="pagination mt-3 justify-content-center pagination_style1">
-								@if (Model.HasPreviousPage)
-								{
-									<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)">Trang trước</a>
-								}
-
-								@if (Model.HasNextPage)
-								{
-									<a style="float:right" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)">Trang kế tiếp</a>
-								}
-							</ul>
+							<nav>
+								<ul class="pagination">
+									<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+										<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1 })">Previous</a>
+									</li>
+									@for (int i = 1; i <= Model.TotalPages; i++)
+									{
+										<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+											<a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+										</li>
+									}
+									<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+										<a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1 })">Next</a>
+									</li>
+								</ul>
+							</nav>
 						</div>
 					</div>
 				</div>

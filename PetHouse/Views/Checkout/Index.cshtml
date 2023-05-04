@@ -26,87 +26,87 @@
 						<form class="row" asp-controller="Checkout" asp-action="Index" method="post">
 							<input hidden asp-for="CustomerId" value="@Model.CustomerId" />
 							<div class="col-md-7">
-							<div class="form-group">
-								<input asp-for="FullName" required class="form-control" type="text" placeholder="Họ và tên *">
-							</div>
-							<div class="form-group">
-								<input asp-for="Address" class="form-control" required type="text" placeholder="Địa chỉ *">
-							</div>
-							<div class="form-group">
-								<input asp-for="Phone" class="form-control" required type="text" placeholder="Số điện thoại *">
-							</div>
-							<div class="form-group">
-								<input asp-for="Email" class="form-control" required type="email" placeholder="Địa chỉ Email *">
-							</div>
-							<div class="form-group">
-								<input asp-for="Note" class="form-control" placeholder="Ghi chú *">
-							</div>
+								<div class="form-group">
+									<input asp-for="FullName" required class="form-control" type="text" placeholder="Họ và tên *">
+								</div>
+								<div class="form-group">
+									<input asp-for="Address" class="form-control" required type="text" placeholder="Địa chỉ *">
+								</div>
+								<div class="form-group">
+									<input asp-for="Phone" class="form-control" required type="text" placeholder="Số điện thoại *">
+								</div>
+								<div class="form-group">
+									<input asp-for="Email" class="form-control" required type="email" placeholder="Địa chỉ Email *">
+								</div>
+								<div class="form-group">
+									<input asp-for="Note" class="form-control" placeholder="Ghi chú *">
+								</div>
 
 							</div>
 							<div class="col-md-5">
 								<div class="payment_method" style="margin-left:50px">
-								<div class="heading_s1" style="margin-top:-50px">
-									<h4>Phương thức thanh toán</h4>
-								</div>
-								<div class="payment_option">
-									<div class="custome-radio">
-										<input asp-for="PaymentID" type="radio" value="1" id="paymentOption1" />
-										<label asp-for="PaymentID" for="paymentOption1">Thanh toán khi nhận hàng</label>
-										<p data-method="option1" class="payment-text">(Thanh toán khi bạn nhận được hàng)</p>
+									<div class="heading_s1" style="margin-top:-50px">
+										<h4>Phương thức thanh toán</h4>
 									</div>
-									<div class="custome-radio">
-										<input asp-for="PaymentID" type="radio" value="2" id="paymentOption2" />
-										<label asp-for="PaymentID" for="paymentOption2">Paypal</label>
-										<p data-method="option2" class="payment-text">Thanh toán qua ví Paypal</p>
+									<div class="payment_option">
+										<div class="custome-radio">
+											<input asp-for="PaymentID" type="radio" value="1" id="paymentOption1" checked />
+											<label asp-for="PaymentID" for="paymentOption1">Thanh toán khi nhận hàng</label>
+											<p data-method="option1" class="payment-text">(Thanh toán khi bạn nhận được hàng)</p>
+										</div>
+										<div class="custome-radio">
+											<input asp-for="PaymentID" type="radio" value="2" id="paymentOption2" />
+											<label asp-for="PaymentID" for="paymentOption2">Paypal</label>
+											<p data-method="option2" class="payment-text">Thanh toán qua ví Paypal</p>
+										</div>
 									</div>
 								</div>
-							</div>
 								<div id="submitBtn" style="margin-left:50px">
 									<button class="btn btn-fill-out btn-addtocart" type="submit">XÁC NHẬN ĐẶT HÀNG</button>
-							</div>
+								</div>
 							</div>
 						</form>
 					</div>
 				</div>
 				@*<div class="row">
-					<div class="col-md-6">
-						<div class="order_review">
-							<div class="heading_s1">
-								<h4>Thông tin sản phẩm</h4>
-							</div>
-							<div class="table-responsive order_table">
-								<table class="table">
-									<thead>
-										<tr>
-											<th></th>
-											<th>Tên sản phẩm</th>
-											<th>Số lượng</th>
-											<th>Đơn giá</th>
-										</tr>
-									</thead>
-									<tbody>
-									@foreach(var item in Carts){
-										<tr>
-												<td><img src="~/Admin/Img/ProductAvt/@item.Product.ProductImgAvt" /></td>
-											<td>@item.Product.Name</td>
-												<td class="product-qty">x @item.amount</td>
-												<td>@item.TotalMonay.ToString("#,##0") VNĐ</td>
-										</tr>
-									}
-									</tbody>
-									<tfoot>
-										<tr>
-											<th></th>
-											<th>Tổng</th>
-											<td class="product-qty">x @Carts.Count()</td>
-											<td class="product-subtotal">@Carts.Sum(x => x.TotalMonay).ToString("#,##0") VNĐ</td>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
+				<div class="col-md-6">
+				<div class="order_review">
+				<div class="heading_s1">
+				<h4>Thông tin sản phẩm</h4>
+				</div>
+				<div class="table-responsive order_table">
+				<table class="table">
+				<thead>
+				<tr>
+				<th></th>
+				<th>Tên sản phẩm</th>
+				<th>Số lượng</th>
+				<th>Đơn giá</th>
+				</tr>
+				</thead>
+				<tbody>
+				@foreach(var item in Carts){
+				<tr>
+				<td><img src="~/Admin/Img/ProductAvt/@item.Product.ProductImgAvt" /></td>
+				<td>@item.Product.Name</td>
+				<td class="product-qty">x @item.amount</td>
+				<td>@item.TotalMonay.ToString("#,##0") VNĐ</td>
+				</tr>
+				}
+				</tbody>
+				<tfoot>
+				<tr>
+				<th></th>
+				<th>Tổng</th>
+				<td class="product-qty">x @Carts.Count()</td>
+				<td class="product-subtotal">@Carts.Sum(x => x.TotalMonay).ToString("#,##0") VNĐ</td>
+				</tr>
+				</tfoot>
+				</table>
+				</div>
 
-						</div>
-					</div>
+				</div>
+				</div>
 				</div>*@
 			</div>
 		</div>
@@ -123,7 +123,7 @@
 		position: relative;
 		overflow: hidden;
 		z-index: 0;
-		width:100%;
+		width: 100%;
 	}
 
 
@@ -183,5 +183,5 @@
 	<script src="~/js/jquery.elevatezoom.js"></script>
 	<!-- scripts js -->
 	<script src="~/js/scripts.js"></script>
-	
+
 }

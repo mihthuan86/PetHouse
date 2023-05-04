@@ -80,7 +80,7 @@ namespace PetHouse.Controllers
 			IQueryable<Product> ls;
             if (string.IsNullOrEmpty(keyword) || keyword.Length < 1)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new {area = ""});
             }
 			ls = _context.Products.AsNoTracking()
 								  .Include(a => a.Category)

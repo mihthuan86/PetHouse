@@ -84,28 +84,28 @@
                   "
 	   alt="" />
 					<img src="~/images/chu.png"
-						 class="logo"
-						 style="
+	   class="logo"
+	   style="
                     width:300px;
                     height: 55px;
                     margin-top: 17px;
 margin-left:-30px
-                    
+
                   "
-						 alt="" />
+	   alt="" />
 					@*<p style="margin-top: 30px; font-size: 30px; color:red">PET'S HOUSE</p>*@
 				</div>
-				<div class="input-group search0 mb-3 m-md-4"
+				<form asp-area="" asp-controller="Products" asp-action="Find" class="input-group search0 mb-3 m-md-4"
 					 style="width: 400px; height:5px;">
-					<input type="text"
+					<input name="keyword" type="text"
 						   class="form-control"
 						   placeholder="Tìm kiếm..."
 						   aria-label="Recipient's username" />
-					<button class="btn btn-outline-secondary" type="button" style="width:50px; background-color:#6e7374">
+					<button id="btn-search" class="btn btn-outline-secondary" type="submit" style="width:50px; background-color:#6e7374">
 						<i class="bi bi-search" style="font-size:20px;"></i>
 					</button>
-					
-				</div>
+
+				</form>
 				@await Component.InvokeAsync("NumberCart")
 
 			</div>
@@ -213,51 +213,49 @@ margin-left:-30px
 		</div>
 	</footer>
 	@*<footer>
-		<div class="footer d-flex" style="background-color: #f4f4f4">
-			<div class="container">
-				<div class="row">
-					<div class="col-4">
-						<h3>Liên hệ</h3>
-						<p><i class="bi bi-geo-alt"></i> 45 Nguyễn Hữu Thọ -TP Đà Nẵng</p>
-						<p><i class="bi bi-envelope-open"></i> petshop@gmail.com</p>
-						<p><i class="bi bi-telephone"></i> +012 345 6789</p>
-					</div>
-					<div class="col-4" style="margin-left: -20px">
-						<h3>Về Pet's House</h3>
-						Hệ thống cửa hàng chuyên cung cấp các mặt hàng và dịch vụ chăm sóc
-						thú cưng. Với tiêu chí uy tín và chất lượng tốt nhất cho các bạn
-						thú cưng, ở Pet's House khách hàng sẽ hài lòng về hàng hóa đa dạng
-						và phong phú, giá cả cực kỳ phải chăng và nhân viên chăm sóc nhiệt
-						tình, chu đáo.
-					</div>
+	<div class="footer d-flex" style="background-color: #f4f4f4">
+	<div class="container">
+	<div class="row">
+	<div class="col-4">
+	<h3>Liên hệ</h3>
+	<p><i class="bi bi-geo-alt"></i> 45 Nguyễn Hữu Thọ -TP Đà Nẵng</p>
+	<p><i class="bi bi-envelope-open"></i> petshop@gmail.com</p>
+	<p><i class="bi bi-telephone"></i> +012 345 6789</p>
+	</div>
+	<div class="col-4" style="margin-left: -20px">
+	<h3>Về Pet's House</h3>
+	Hệ thống cửa hàng chuyên cung cấp các mặt hàng và dịch vụ chăm sóc
+	thú cưng. Với tiêu chí uy tín và chất lượng tốt nhất cho các bạn
+	thú cưng, ở Pet's House khách hàng sẽ hài lòng về hàng hóa đa dạng
+	và phong phú, giá cả cực kỳ phải chăng và nhân viên chăm sóc nhiệt
+	tình, chu đáo.
+	</div>
 
-					<div class="col-4" style="margin-left: 20px">
-						<h3>Chính sách</h3>
-						<p>Chính sách đổi/trả hàng và hoàn tiền</p>
-						<p>Chính sách vận chuyển, giao nhận</p>
-						<p>Bảo mật thông tin khách hàng Hình thức thanh toán</p>
-						<h3>Follow us</h3>
-						<i class="bi bi-facebook"></i>
-						<i class="bi bi-twitter"></i>
-						<i class="bi bi-instagram"></i>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="col-4" style="margin-left: 20px">
+	<h3>Chính sách</h3>
+	<p>Chính sách đổi/trả hàng và hoàn tiền</p>
+	<p>Chính sách vận chuyển, giao nhận</p>
+	<p>Bảo mật thông tin khách hàng Hình thức thanh toán</p>
+	<h3>Follow us</h3>
+	<i class="bi bi-facebook"></i>
+	<i class="bi bi-twitter"></i>
+	<i class="bi bi-instagram"></i>
+	</div>
+	</div>
+	</div>
+	</div>
 	</footer>*@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="~/js/chat.js"></script>
-	<script src="~/js/reponses.js"></script>
+	<script src="~/js/reponses.js"></script>	
 	<style>
-		.bi-search{
-			color:white;
-			margin-left:-10px;
-			
+		.bi-search {
+			color: white;
+			margin-left: -10px;
 		}
 
-		
 	</style>
 	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)

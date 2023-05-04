@@ -5,6 +5,7 @@ using PetHouse.Models;
 using PetHouse.ViewModel;
 using PetHouse.Extention;
 using System;
+using Microsoft.CodeAnalysis;
 
 namespace PetHouse.Controllers
 {
@@ -54,7 +55,7 @@ namespace PetHouse.Controllers
 					}
 					else
 					{
-					item.amount = item.amount + amount.Value;
+						item.amount = item.amount + amount.Value;
 					}
 					//luu lai session
 					//HttpContext.Session.Set<List<CartItem>>("GioHang", cart);
@@ -71,7 +72,7 @@ namespace PetHouse.Controllers
 				}
 
 				//Luu lai Session
-				HttpContext.Session.Set<List<CartItem>>("GioHang", cart);				
+				HttpContext.Session.Set<List<CartItem>>("GioHang", cart);
 				return Json(new { success = true });
 			}
 			catch
@@ -185,6 +186,40 @@ namespace PetHouse.Controllers
 			ViewBag.Categories = _context.Categories.ToList();
 			return View(GioHang);
 		}
-		
+
+		public IActionResult OrderNow(int productID)
+		{
+			List<CartItem> cart = GioHang;
+
+			try
+			{
+				//Them san pham vao gio hang
+				CartItem item = cart.SingleOrDefault(p => p.Product.Id == productID);
+				if (item != null) // da co => cap nhat so luong
+				{
+
+					item.amount++;
+
+				}
+				else
+				{
+					Product hh = _context.Products.SingleOrDefault(p => p.Id == productID);
+					item = new CartItem
+					{
+						amount = 1,
+						Product = hh
+					};
+					cart.Add(item);//Them vao gio
+				}
+
+				//Luu lai Session
+				HttpContext.Session.Set<List<CartItem>>("GioHang", cart);
+				return RedirectToAction("Index", "Checkout");
+			}
+			catch
+			{
+				return Json(new { success = false });
+			}
+		}
 	}
 }
