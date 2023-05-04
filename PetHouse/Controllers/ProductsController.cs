@@ -32,7 +32,7 @@ namespace PetHouse.Controllers
 		public async Task<IActionResult> Details(int Id)
 		{
 			ViewBag.Categories = _context.Categories.ToList();
-			var model = await _context.Products.FirstOrDefaultAsync(x => x.Id == Id);
+			var model = await _context.Products.Include(x=>x.Brand).Include(x=>x.Category).FirstOrDefaultAsync(x => x.Id == Id);
 			if (model == null)
 			{
 				return RedirectToAction("Index");

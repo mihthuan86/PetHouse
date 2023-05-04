@@ -9,7 +9,7 @@
 	<div class="main_content">
 
 		<!-- START SECTION SHOP -->
-		<div class="section">
+		<div class="section" style="margin-top:-50px">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
@@ -18,13 +18,14 @@
 						<div class="medium_divider"></div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-8">
+				<div class="row" style="margin-top:-50px">
+					<div class="col-md-12">
 						<div class="heading_s1">
 							<h4>Thông tin người nhận</h4>
 						</div>
-						<form asp-controller="Checkout" asp-action="Index" method="post">
+						<form class="row" asp-controller="Checkout" asp-action="Index" method="post">
 							<input hidden asp-for="CustomerId" value="@Model.CustomerId" />
+							<div class="col-md-7">
 							<div class="form-group">
 								<input asp-for="FullName" required class="form-control" type="text" placeholder="Họ và tên *">
 							</div>
@@ -40,15 +41,18 @@
 							<div class="form-group">
 								<input asp-for="Note" class="form-control" placeholder="Ghi chú *">
 							</div>
-							<div class="payment_method">
-								<div class="heading_s1">
+
+							</div>
+							<div class="col-md-5">
+								<div class="payment_method" style="margin-left:50px">
+								<div class="heading_s1" style="margin-top:-50px">
 									<h4>Phương thức thanh toán</h4>
 								</div>
 								<div class="payment_option">
 									<div class="custome-radio">
 										<input asp-for="PaymentID" type="radio" value="1" id="paymentOption1" />
 										<label asp-for="PaymentID" for="paymentOption1">Thanh toán khi nhận hàng</label>
-										<p data-method="option1" class="payment-text">Thanh toán khi bạn nhận được hàng.</p>
+										<p data-method="option1" class="payment-text">(Thanh toán khi bạn nhận được hàng)</p>
 									</div>
 									<div class="custome-radio">
 										<input asp-for="PaymentID" type="radio" value="2" id="paymentOption2" />
@@ -57,8 +61,9 @@
 									</div>
 								</div>
 							</div>
-							<div class="btn btn-fill-out btn-block" id="submitBtn">
-								<button type="submit">XÁC NHẬN ĐẶT HÀNG</button>
+								<div id="submitBtn" style="margin-left:50px">
+									<button class="btn btn-fill-out btn-addtocart" type="submit">XÁC NHẬN ĐẶT HÀNG</button>
+							</div>
 							</div>
 						</form>
 					</div>
@@ -110,6 +115,41 @@
 	</div>
 	<!-- END MAIN CONTENT -->
 </div>
+<style>
+	.btn-fill-out {
+		background-color: transparent;
+		border: 1px solid #f9a529;
+		color: #fff;
+		position: relative;
+		overflow: hidden;
+		z-index: 0;
+		width:100%;
+	}
+
+
+		.btn-fill-out::before,
+		.btn-fill-out::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			background-color: #f9a529;
+			z-index: -1;
+			transition: all 0.3s ease-in-out;
+			width: 51%;
+		}
+
+		.btn-fill-out::after {
+			right: 0;
+			left: auto;
+		}
+
+		.btn-fill-out:hover:before,
+		.btn-fill-out:hover:after {
+			width: 0;
+		}
+</style>
 <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
 @section Scripts{
 
