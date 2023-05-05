@@ -91,7 +91,7 @@ namespace PetHouse.Controllers
 					donhang.Receiver_PhoneNumber = model.Phone;
 					donhang.Receiver_FullName = model.FullName;					
 					donhang.Receiver_Email = model.Email;					
-					donhang.Note = "Hello";
+					donhang.Note = model.Note;
 					donhang.OrderDate = DateTime.Now;
 					donhang.OrderStatus = 0;//đơn hàng mới
 					donhang.ShipDate = DateTime.Now.AddDays(7);

@@ -1,174 +1,214 @@
 ﻿@using Newtonsoft.Json;
 @{
-    ViewData["Title"] = "ThanhToan";
-    List<PetHouse.ViewModel.CartItem> Carts = ViewBag.GioHang;
-    Order donhang = ViewBag.DonHang;
+	ViewData["Title"] = "ThanhToan";
+	List<PetHouse.ViewModel.CartItem> Carts = ViewBag.GioHang;
+	Order donhang = ViewBag.DonHang;
 }
 <!-- START MAIN CONTENT -->
 <div class="main_content">
 
-    <!-- START SECTION SHOP -->
-    <div class="section" style="margin-top:-50px">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="medium_divider"></div>
-                    <div class="divider center_icon"><i class="linearicons-credit-card"></i></div>
-                    <div class="medium_divider"></div>
-                </div>
-            </div>
-            <div class="row" style="margin-top:-50px">
-                <div class="col-md-5">
-                    <div class="order_review">
-                        <div class="heading_s1">
-                            <h4>Thông tin người nhận</h4>
-                        </div>
-                        <div>
-                            <b>Người nhận hàng:</b> @donhang.Receiver_FullName
-                            <br />
-                            <br />
+	<!-- START SECTION SHOP -->
+	<div class="section" style="margin-top:-50px">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="medium_divider"></div>
+					<div class="divider center_icon"><i class="linearicons-credit-card"></i></div>
+					<div class="medium_divider"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:-50px">
+				<div class="col-md-5">
+					<div class="order_review">
+						<div class="heading_s1">
+							<h4>Thông tin người nhận</h4>
+						</div>
+						<div>
+							<b>Người nhận hàng:</b> @donhang.Receiver_FullName
+							<br />
+							<br />
 
-                            <b>Số điện thoại: </b>@donhang.Receiver_PhoneNumber
-                            <br />
-                            <br />
+							<b>Số điện thoại: </b>@donhang.Receiver_PhoneNumber
+							<br />
+							<br />
 
-                            <b>Địa chỉ: </b> @donhang.Receiver_Address
-                            <br />
-                            <br />
+							<b>Địa chỉ: </b> @donhang.Receiver_Address
+							<br />
+							<br />
 
-                            @if (@donhang.Receiver_Email != null)
-                            {
-                                <b>Email: </b>
+							@if (@donhang.Receiver_Email != null)
+							{
+								<b>Email: </b>
 
-                                @donhang.Receiver_Email
-                            }
-                            <br />
-                            <br />
-                            @if (donhang.PaymentId == 1)
-                            {
-                                <b>Phương thức thanh toán:</b>
-                                <span> Thanh toán khi nhận hàng</span>
-                            }
-                            else
-                            {
-                                <b>Phương thức thanh toán:</b>
-                                <span> Thanh toán qua Paypal</span>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="order_review" style="height:auto">
-                        <div class="heading_s1">
-                            <h4>Thông tin sản phẩm</h4>
-                        </div>
-                        <div class="table-responsive order_table">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Số lượng</th>
-                                        <th>Đơn giá</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Carts)
-                                    {
-                                        <tr>
-                                            <td class="product-thumbnail"><img src="~/Admin/Img/ProductAvt/@item.Product.ProductImgAvt" /></td>
-                                            <td>@item.Product.Name</td>
-                                            <td class="product-qty">x @item.amount</td>
-                                            <td>@item.Product.OrderPrice.ToString("#,##0") VNĐ</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>Thành tiền</th>
-                                        <td class="product-qty">x @Carts.Count()</td>
-                                        <td class="product-subtotal">@Carts.Sum(x => x.TotalMonay).ToString("#,##0") VNĐ</td>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
+								@donhang.Receiver_Email
+							}
+							<br />
+							<br />
+							@if (donhang.PaymentId == 1)
+							{
+								<b>Phương thức thanh toán:</b>
+								<span> Thanh toán khi nhận hàng</span>
+							}
+							else
+							{
+								<b>Phương thức thanh toán:</b>
+								<span> Thanh toán qua Paypal</span>
+							}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="order_review" style="height:auto">
+						<div class="heading_s1">
+							<h4>Thông tin sản phẩm</h4>
+						</div>
+						<div class="table-responsive order_table">
+							<table class="table">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Tên sản phẩm</th>
+										<th>Số lượng</th>
+										<th>Đơn giá</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Carts)
+									{
+										<tr>
+											<td class="product-thumbnail"><img src="~/Admin/Img/ProductAvt/@item.Product.ProductImgAvt" /></td>
+											<td>@item.Product.Name</td>
+											<td class="product-qty">x @item.amount</td>
+											<td>@item.Product.OrderPrice.ToString("#,##0") VNĐ</td>
+										</tr>
+									}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th></th>
+										<th>Thành tiền</th>
+										<td class="product-qty">x @Carts.Count()</td>
+										<td class="product-subtotal">@Carts.Sum(x => x.TotalMonay).ToString("#,##0") VNĐ</td>
+									</tr>
+									<tr>
+										<th></th>
+										<th></th>
 
-                                        <th>Phụ thu</th>
+										<th>Phụ thu</th>
 
-                                        <td class="product-subtotal">@((donhang.TotalPrice - Carts.Sum(x => x.TotalMonay)).ToString("#,##0")) VNĐ</td>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th><h5 style="color:red">Tổng tiền</h5></th>
-                                        <td class="product-total">@donhang.TotalPrice.ToString("#,###") VNĐ</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div><a id="submitBtn" class="btn btn-fill-out btn-addtocart">Đặt hàng</a></div>
-                   
-                </div>
-            </div>
-            <div class="row">
-            </div>
-        </div>
-    </div>
-    <!-- END SECTION SHOP -->
+										<td class="product-subtotal">@((donhang.TotalPrice - Carts.Sum(x => x.TotalMonay)).ToString("#,##0")) VNĐ</td>
+									</tr>
+									<tr>
+										<th></th>
+										<th></th>
+										<th><h5 style="color:red">Tổng tiền</h5></th>
+										<td class="product-total">@donhang.TotalPrice.ToString("#,###") VNĐ</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						@if (donhang.PaymentId == 1)
+						{
+							<div><a id="submitBtn" class="btn btn-fill-out btn-addtocart">Đặt hàng</a></div>
+						}
+						else
+						{
+							<div id="paypal-btn"></div>
+						}
 
-</div>
-<!-- END MAIN CONTENT -->
-<style>
-	.btn-fill-out {
-		background-color: transparent;
-		border: 1px solid #f9a529;
-		color: #fff;
-		position: relative;
-		overflow: hidden;
-		z-index: 0;
-        width:100%;
+					</div>
+				</div>
+				<div class="row">
+				</div>
+			</div>
+		</div>
+		<!-- END SECTION SHOP -->
 
-	}
+	</div>
+	<!-- END MAIN CONTENT -->
+	<style>
+		.btn-fill-out {
+			background-color: transparent;
+			border: 1px solid #f9a529;
+			color: #fff;
+			position: relative;
+			overflow: hidden;
+			z-index: 0;
+			width: 100%;
+		}
 
 
-		.btn-fill-out::before,
-		.btn-fill-out::after {
-			content: "";
-			position: absolute;
-			left: 0;
-			top: 0;
-			bottom: 0;
-			background-color: #f9a529;
-			z-index: -1;
-			transition: all 0.3s ease-in-out;
-			width: 51%;
+			.btn-fill-out::before,
+			.btn-fill-out::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				background-color: #f9a529;
+				z-index: -1;
+				transition: all 0.3s ease-in-out;
+				width: 51%;
+			}
+
+			.btn-fill-out::after {
+				right: 0;
+				left: auto;
+			}
+
+			.btn-fill-out:hover:before,
+			.btn-fill-out:hover:after {
+				width: 0;
+			}
+	</style>
+	<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+	@section Scripts{
+		<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+		<script>
 			
-		}
+			$(document).ready(function () {
+				$('#submitBtn').click(function (event) {
+					var url = '/Checkout/Thanhtoan'
+					window.location.href = url;
 
-		.btn-fill-out::after {
-			right: 0;
-			left: auto;
-		}
+				});
+			});
+			let _total = @Html.Raw(Math.Round(donhang.TotalPrice/23250,2));
 
-		.btn-fill-out:hover:before,
-		.btn-fill-out:hover:after {
-			width: 0;
+			paypal.Button.render({
+				//Configure environment
+				env: 'sandbox',
+				client: {
+					sandbox: 'AXNEJ9JPsA_2nwLhHexwT2yY1U-ukQnN853x2QHirGfLlvR1KSe1ZfGsln3sFRvWv8sRMDNBKEg7ZA3j'
+				},
 
-		}
-</style>
-<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('#submitBtn').click(function (event) {
-                if (@donhang.PaymentId== 2) {
-                    console.log("Thanh toán paypal")
-                } else {
-                    var url = '/Checkout/Thanhtoan'
-                    window.location.href = url;
-                }
-            });
-        });
-    </script>
-}
+				//Customize button
+				locale: 'en_US',
+				style: {
+					size: 'small',
+					color: 'gold',
+					shape: 'pill'
+				},
+				commit: true,
+
+				//Set up a payment
+				payment: function (data, actions) {
+					return actions.payment.create({
+						transactions: [{
+							amount: {
+								total: _total,
+								currency: 'USD'
+							}
+						}]
+					});
+				},
+				//Execute the payment
+				onAuthorize: function (data, actions) {
+					return actions.payment.execute().then(function () {
+						var url = '/Checkout/Thanhtoan'
+						window.location.href = url;
+					});
+				}
+			}, '#paypal-btn')
+		</script>
+	}
