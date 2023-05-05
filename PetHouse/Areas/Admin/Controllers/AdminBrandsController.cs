@@ -14,8 +14,8 @@ using PetHouse.Models;
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
-    public class AdminBrandsController : Controller
+	[Authorize(Roles = "admin")]
+	public class AdminBrandsController : Controller
     {
         private readonly PetHouseDbContext _context;
         public INotyfService _notyfService { get; }

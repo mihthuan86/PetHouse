@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +13,8 @@ using PetHouse.Models;
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminSuppliersController : Controller
+	[Authorize(Roles = "admin")]
+	public class AdminSuppliersController : Controller
     {
         private readonly PetHouseDbContext _context;
 

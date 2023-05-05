@@ -1,5 +1,7 @@
 ﻿@using PetHouse.Data.Setting
+@using Microsoft.AspNetCore.Identity;
 @model PaginatedList<PetHouse.Models.User>
+@inject UserManager<PetHouse.Models.User> _usermanager
 @{
 	ViewData["Title"] = "Quản lý tài khoản khách hàng/Trang " + Model.PageIndex;
 }
@@ -54,18 +56,20 @@
 	<div class="col-md-12">
 		<div class="tile">
 			<div class="tile-body">
+				@if (User.IsInRole("admin"))
+				{
+					<div class="row element-button">
+						<div class="col-sm-2">
 
-				<div class="row element-button">
-					<div class="col-sm-2">
+							<a asp-action="CreateNV" class="btn btn-add btn-sm" title="Thêm">
+								<i class="fas fa-plus"></i>
+								Tạo mới tài khoản nhân viên
+							</a>
+						</div>
 
-						<a asp-action="CreateNV" class="btn btn-add btn-sm" title="Thêm">
-							<i class="fas fa-plus"></i>
-							Tạo mới tài khoản nhân viên
-						</a>
+
 					</div>
-
-
-				</div>
+				}
 				<div class="container">
 
 					<div class="tab">
@@ -74,12 +78,14 @@
 								Khách hàng
 							</a>
 						</button>
-
-						<button class="tablinks">
-							<a asp-action="IndexNV">
-								Nhân viên
-							</a>
-						</button>
+						@if (User.IsInRole("admin"))
+						{
+							<button class="tablinks">
+								<a asp-action="IndexNV">
+									Nhân viên
+								</a>
+							</button>
+						}
 					</div>
 
 					<div id="Khách hàng" class="tabcontent">

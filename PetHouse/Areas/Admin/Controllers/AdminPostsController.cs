@@ -14,7 +14,7 @@ using System.Security.Claims;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminPostsController : Controller
 	{
 		private readonly PetHouseDbContext _context;

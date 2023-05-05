@@ -13,7 +13,7 @@
 		  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 	<!-- or -->
 	<link rel="stylesheet"
-		  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"/>
+		  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 	<!-- Font-icon css-->
 	<link rel="stylesheet"
 		  type="text/css"
@@ -38,7 +38,7 @@
 
 			<!-- User Menu-->
 			<li>
-				<a class="app-nav__item" href="/index.html"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+				<a class="app-nav__item" asp-controller="AdminAccount" asp-action="Logout"><i class='bx bx-log-out bx-rotate-180'></i> </a>
 
 			</li>
 		</ul>
@@ -49,7 +49,8 @@
 		<div class="app-sidebar__user">
 			<h3 style="color: rgb(221, 221, 24);">PET'S HOUSE</h3>
 			<p class="app-sidebar__user-designation">Chào mừng đến với trang Admin</p>
-		</div> -->
+			<h4 style="color: rgb(221, 221, 24)"> @_usermanager.GetUserName(User) </h4>
+		</div> 
 		<hr>
 
 		<ul class="app-menu">
@@ -59,48 +60,86 @@
 					<i class="app-menu__icon bx bx-bar-chart-alt-2"></i><span class="app-menu__label">Trang chủ</span>
 				</a>
 			</li>
-			<li>
-				<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
-					<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-controller="AdminProducts" asp-action="Index">
-					<i class="app-menu__icon bx bx-data"></i><span class="app-menu__label">Quản lý sản phẩm</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-controller="AdminOrder" asp-action="Index">
-					<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" href="form-danhgia.html">
-					<i class="app-menu__icon bx bx-star"></i><span class="app-menu__label">Quản lý đánh giá</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-controller="AdminPosts" asp-action="Index">
-					<i class="app-menu__icon bx bx-bookmark"></i><span class="app-menu__label">Quản lý bài đăng</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" href="">
-					<i class="app-menu__icon bx bx-chat"></i><span class="app-menu__label">Tư vấn khách hàng</span>
-				</a>
-			</li>
+			@if (User.IsInRole("admin"))
+			{
+				<li>
+					<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
+						<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminProducts" asp-action="Index">
+						<i class="app-menu__icon bx bx-data"></i><span class="app-menu__label">Quản lý sản phẩm</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminOrder" asp-action="Index">
+						<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="form-danhgia.html">
+						<i class="app-menu__icon bx bx-star"></i><span class="app-menu__label">Quản lý đánh giá</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminPosts" asp-action="Index">
+						<i class="app-menu__icon bx bx-bookmark"></i><span class="app-menu__label">Quản lý bài đăng</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="">
+						<i class="app-menu__icon bx bx-chat"></i><span class="app-menu__label">Tư vấn khách hàng</span>
+					</a>
+				</li>
 
-			<li>
-				<a class="app-menu__item" asp-controller="AdminImports" asp-action="Index">
-					<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
-				</a>
-			</li>
-			<li>
-				<a class="app-menu__item" asp-controller="AdminSuppliers" asp-action="Index">
-					<i class="app-menu__icon bx bx-group"></i><span class="app-menu__label">Quản lí nhà cung cấp</span>
-				</a>
-			</li>
-			
+				<li>
+					<a class="app-menu__item" asp-controller="AdminImports" asp-action="Index">
+						<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminSuppliers" asp-action="Index">
+						<i class="app-menu__icon bx bx-group"></i><span class="app-menu__label">Quản lí nhà cung cấp</span>
+					</a>
+				</li>
+			}
+			else
+			{
+				<li>
+					<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
+						<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminOrder" asp-action="Index">
+						<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="form-danhgia.html">
+						<i class="app-menu__icon bx bx-star"></i><span class="app-menu__label">Quản lý đánh giá</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" asp-controller="AdminPosts" asp-action="Index">
+						<i class="app-menu__icon bx bx-bookmark"></i><span class="app-menu__label">Quản lý bài đăng</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="">
+						<i class="app-menu__icon bx bx-chat"></i><span class="app-menu__label">Tư vấn khách hàng</span>
+					</a>
+				</li>
+
+				<li>
+					<a class="app-menu__item" asp-controller="AdminImports" asp-action="Index">
+						<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
+					</a>
+				</li>
+			}
+
+
 		</ul>
 	</aside>
 	<main class="app-content">
@@ -109,10 +148,10 @@
 				<li class="breadcrumb-item active">
 					<a href="#"><b>@ViewData["Title"]</b></a>
 				</li>
-			</ul>			
+			</ul>
 		</div>
 		@RenderBody()
-		
+
 	</main>
 	@*
 	<footer class="border-top footer text-muted">
@@ -123,7 +162,7 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	
+
 	<script src="~/Admin/js/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="~/Admin/js/popper.min.js"></script>

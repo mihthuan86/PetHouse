@@ -1,14 +1,17 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Data;
 using PetHouse.Data.Setting;
 using PetHouse.Models;
+using System.Data;
 using System.Drawing.Printing;
 
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminOrderController : Controller
 	{
 
@@ -43,7 +46,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			return View(listOrder);
 		}
 		[Route("Admin/ChiTietDonHang.cshtml")]
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(int? id,string returnUrl)
 		{
 			if (id == null)
 			{
@@ -65,6 +68,7 @@ namespace PetHouse.Areas.Admin.Controllers
 				.OrderBy(x => x.ProductId)
 				.ToList();
 			ViewBag.ChiTiet = Chitietdonhang;
+			ViewBag.ReturnUrl = returnUrl;
 			return View(order);
 		}		
 		public async Task<IActionResult> ChangeStt(int OrderId,int stt)

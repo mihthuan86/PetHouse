@@ -9,11 +9,14 @@ using PetHouse.Data;
 using PetHouse.Data.Setting;
 using PetHouse.ViewModel;
 using PetHouse.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminProductsController : Controller
+	[Authorize(Roles = "admin")]
+	public class AdminProductsController : Controller
     {
         private readonly PetHouseDbContext _context;
 		private readonly IWebHostEnvironment _webHostEnvironment;

@@ -14,7 +14,7 @@ using PetHouse.Models;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminImportsController : Controller
 	{
 		private readonly PetHouseDbContext _context;

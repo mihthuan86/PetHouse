@@ -86,7 +86,7 @@
 													@item.TotalPrice.ToString("#,###") VNĐ
 												</td>
 												<td>
-													<a asp-controller="AdminOrder" asp-action="Details" class="xemdonhang" asp-route-id="@item.Id">Xem đơn hàng</a>
+													<a asp-controller="AdminOrder" asp-action="Details" class="xemdonhang" asp-route-returnUrl="KH" asp-route-id="@item.Id">Xem đơn hàng</a>
 												</td>
 											</tr>											
 										}

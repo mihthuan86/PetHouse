@@ -16,7 +16,7 @@ using System.Drawing.Printing;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize(Roles ="admin,staff")]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminAccountController : Controller
 	{
 		private readonly UserManager<User> _userManager;
@@ -32,6 +32,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			_notyfService = notyfService;
 
 		}
+		[Authorize(Roles = "admin")]
 		[Route("Admin/TaotaikhoanNV.cshtml", Name = "TaoTKNV")]
 		public IActionResult CreateNV()
 		{
@@ -98,6 +99,7 @@ namespace PetHouse.Areas.Admin.Controllers
 				return View(taikhoan);
 			}
 		}
+		[Authorize(Roles = "admin")]
 		[Route("taikhoanNV.cshtml", Name = "QLTKNV")]
 		public async Task<IActionResult> IndexNV(int? pageNumber)
 		{
@@ -117,6 +119,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			return View(paginatedCustomer);
 		}
 		[HttpGet]
+		[AllowAnonymous]
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
@@ -160,7 +163,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			_context.SaveChanges();
 			return Json(new { success = true });
 		}
-
+		[Authorize(Roles = "admin")]
 		public async Task<IActionResult> Edit(string id)
 		{
 			var user = _context.Users.FirstOrDefault(x => x.Id == id);

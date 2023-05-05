@@ -16,7 +16,7 @@
             <i class="icon bx bxs-user fa-3x"></i>
             <div class="info">
                 <h4>Tổng tài khoản</h4>
-                <p><b>26 tài khoản</b></p>
+                <p><b>@ViewBag.countAccount tài khoản</b></p>
             </div>
         </d>
     </div>
@@ -25,7 +25,7 @@
             <i class="icon bx bxs-data fa-3x"></i>
             <div class="info">
                 <h4>Tổng sản phẩm</h4>
-                <p><b>8580 sản phẩm</b></p>
+                <p><b>@ViewBag.countProduct sản phẩm</b></p>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
             <i class="icon fa-3x bx bxs-shopping-bags"></i>
             <div class="info">
                 <h4>Tổng đơn hàng</h4>
-                <p><b>457 đơn hàng</b></p>
+                <p><b>@ViewBag.countOrder đơn hàng</b></p>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
             <i class="icon fa-3x bx bxs-receipt"></i>
             <div class="info">
                 <h4>Đơn hàng hủy</h4>
-                <p><b>2 đơn hàng</b></p>
+                <p><b>@ViewBag.countOrderCancel đơn hàng</b></p>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
             <i class="icon fa-3x bx bxs-tag-x"></i>
             <div class="info">
                 <h4>Hết hàng</h4>
-                <p><b>1 sản phẩm</b></p>
+                <p><b>@ViewBag.ProductEmty.Count sản phẩm</b></p>
             </div>
         </div>
     </div>
@@ -64,12 +64,12 @@
             <i class="icon fa-3x bx bxs-chart"></i>
             <div class="info">
                 <h4>Tổng thu nhập</h4>
-                <p><b>104.890.000 đ</b></p>
+                <p><b>@ViewBag.TotalPrice.ToString("#,###") đ</b></p>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+@*<div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div>
@@ -99,44 +99,38 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div>
-                <h3 class="tile-title">TỔNG ĐƠN HÀNG ĐÃ HOÀN THÀNH</h3>
+                <h3 class="tile-title">ĐƠN HÀNG MỚI</h3>
             </div>
             <div class="tile-body">
                 <table class="table table-hover table-bordered" id="sampleTable">
+
                     <thead>
                         <tr>
                             <th>ID đơn hàng</th>
                             <th>Khách hàng</th>
-                            <th>Đơn hàng</th>
-                            <th>Số lượng</th>
+                            <th>Ngày đặt hàng</th>
                             <th>Tổng tiền</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>MD0837</td>
-                            <td>Triệu Thanh Phú</td>
-                            <td>Dầu thơm và khử mùi Forbis, Trụ cào móng</td>
-                            <td>2 sản phẩm</td>
-                            <td>9.400.000 đ</td>
-                        </tr>
-                        <tr>
-                            <td>MĐ8265</td>
-                            <td>Nguyễn Thị Ngọc Cẩm</td>
-                            <td>Ghế ăn gỗ Lucy màu trắng</td>
-                            <td>1 sản phẩm</td>
-                            <td>3.800.000 đ</td>
-                        </tr>
 
-                        <tr>
-                            <th colspan="4">Tổng cộng:</th>
-                            <td>104.890.000 đ</td>
-                        </tr>
+                        @foreach (var item in ViewBag.newOrder)
+                        {                            
+                            <tr>
+                                
+                                <td>@item.Id</td>
+                                <td>@item.User.UserName</td>
+                                <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.TotalPrice.ToString("#,###") đ</td>
+                                <td><a asp-controller="AdminOrder" asp-action="Details" asp-route-id="@item.Id" asp-route-returnUrl = "Order">Xem đơn hàng</a></td>
+                            </tr>
+                        }                                           
                     </tbody>
                 </table>
             </div>
@@ -159,23 +153,23 @@
                             <th>Số lượng</th>
                             <th>Tình trạng</th>
                             <th>Giá tiền</th>
-                            <th>Danh mục</th>
-                            <th>Loại</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach(Product product in ViewBag.ProductEmty){
+
+                        
                         <tr>
-                            <td>83826226</td>
-                            <td>Set 4 bóng cho mèo Cattyman</td>
-                            <td>
-                                <img src="/img-sanpham/tu.jpg" alt="" width="100px;" />
-                            </td>
-                            <td>0</td>
+                            <td>@product.Id</td>
+                            <td>@product.Name</td>
+                                <td>
+                                    <img src="@("/Admin/Img/ProductAvt/"+product.ProductImgAvt)" alt="@product.Name" width="100px">
+                                </td>
+                            <td>@product.Quantity</td>
                             <td><span class="badge bg-danger">Hết hàng</span></td>
-                            <td>2.450.000 đ</td>
-                            <td>Mèo cưng</td>
-                            <td>Đồ chơi</td>
+                            <td>@product.OrderPrice.ToString("#,###") đ</td>                            
                         </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -183,7 +177,7 @@
     </div>
 </div>
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-6">
         <div class="tile">
             <h3 class="tile-title">DỮ LIỆU HÀNG THÁNG</h3>
@@ -200,11 +194,11 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
-<div class="text-right" style="font-size: 12px">
+@*<div class="text-right" style="font-size: 12px">
     <p><b>Hệ thống quản lý V2.0 | Code by Trường</b></p>
-</div>
+</div>*@
 @section Scripts{
     <script type="text/javascript" src="~/Admin/js/plugins/chart.js"></script>
     <script type="text/javascript">
