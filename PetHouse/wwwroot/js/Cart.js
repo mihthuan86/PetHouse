@@ -50,9 +50,13 @@
         });
     });
 });
-    function updateCart(element) {
-        var productId = element.getAttribute("data-mahh");
-        var soluong = element.value;
+function updateCart(element) {
+    var productId = element.getAttribute("data-mahh");
+    var soluong = element.value;
+    if (soluong < 1) {
+        alert('Vui lòng chọn lại số lượng');
+    }
+    else {
         $.ajax({
             url: "api/cart/update",
             type: "POST",
@@ -72,8 +76,9 @@
             }
         });
     }
+}
 //$(function () {
-//    function loadHeaderCart() {      
+//    function loadHeaderCart() {
 //        $('#numberCart').load("/AjaxContent/NumberCart");
 //    }
 //    // function to update cart with given product id and quantity
@@ -127,7 +132,7 @@
 //    $(".plus").click(function () {
 //        var input = $(this).siblings(".qty");
 //        var quantity = parseInt(input.val()) + 1;
-//        input.val(quantity);       
+//        input.val(quantity);
 //        updateCartOnButtonClick(this, quantity);
 //    });
 

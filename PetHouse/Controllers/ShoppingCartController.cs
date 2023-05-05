@@ -165,10 +165,10 @@ namespace PetHouse.Controllers
 					if (item != null && amount.HasValue) // da co -> cap nhat so luong
 					{
 						item.amount = amount.Value;
-						if (item.amount < 1)
-						{
-							cart.Remove(item);
-						}
+						//if (item.amount < 1)
+						//{
+						//	cart.Remove(item);
+						//}
 					}
 					//Luu lai session
 					HttpContext.Session.Set<List<CartItem>>("GioHang", cart);

@@ -8,7 +8,15 @@
 <p>Trạng thái đơn hàng: @Model.Status</p>
 <p>Tổng giá trị đơn hàng: <strong> @total VNĐ</strong></p>
 <p>Ngày ship hàng: @Model.DonHang.ShipDate</p>
-
+<p>Ghi Chú: @Model.DonHang.Note</p>
+@if (Model.DonHang.PaymentId == 1)
+{
+	<p>Phương thức thanh toán: Thanh toán khi nhận hàng</p>
+}
+else
+{
+	<p>Phương thức thanh toán: Thanh toán qua Paypal</p>
+}
 <div class="table-responsive">
 	<table class="table table-bordered table-hover">
 		<tbody>
@@ -36,7 +44,7 @@
 @if (Model.DonHang.OrderStatus == 0)
 {
 	<div class="col-md-3" style="float:right">
-		<a asp-action="Cancel" class="btn btn-fill-out btn-block">Hủy đơn hàng</a>
+		<a asp-area="" asp-action="Cancel" asp-route-id="@Model.DonHang.Id" class="btn btn-fill-out btn-block">Hủy đơn hàng</a>
 	</div>
 }
 

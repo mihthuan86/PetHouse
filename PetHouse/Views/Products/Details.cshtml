@@ -67,7 +67,6 @@
 							</a>
 						</div>
 						<div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1" data-infinite="false">
-							
 						</div>
 					</div>
 				</div>
@@ -85,7 +84,7 @@
 								<span class="rating_num">(21)</span>
 							</div>
 							@*<div class="pr_desc">
-								<p>@Model.Description</p>
+							<p>@Model.Description</p>
 							</div>*@
 							<br />
 							<div class="product_sort_info" style="margin-top:20px">
@@ -99,39 +98,38 @@
 							<hr />
 							<div class="cart_extra">
 								<h6>Số lượng</h6>
-								
+
 								<div class="cart-product-quantity d-flex m-lg-2 ">
 									<div class="quantity">
 										<input type="button" value="-" class="minus">
 										<input type="text" id="txtsoLuong" name="txtsoLuong" value="1" title="Qty" class="qty" size="4">
 										<input type="button" value="+" class="plus">
-										
 									</div>
 									<div style="margin-left:15px;margin-top:10px">
-									<ul>
-										<li><i> số lượng trong kho: @Model.Quantity</i></li>
-									</ul>
+										<ul>
+											<li><i> số lượng trong kho: @Model.Quantity</i></li>
+										</ul>
 
 									</div>
-								</div>								
-							</div>							
+								</div>
+							</div>
 							<hr />
 							<div class="d-flex">
-							<div class="cart_extra">
-								<div class="add-to-cart">
-									<button class="btn btn-fill-out btn-addtocart" type="button"><i class=""></i>Thêm vào giỏ hàng</button>
-									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
-									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
-									<input hidden class="Id" asp-for="Id" />
+								<div class="cart_extra">
+									<div class="add-to-cart">
+										<button class="btn btn-fill-out btn-addtocart" type="button"><i class=""></i>Thêm vào giỏ hàng</button>
+										@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
+										<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
+										<input hidden class="Id" asp-for="Id" />
+									</div>
 								</div>
-							</div>
-							<div class="cart_extra m-3">
-								<div class="add-to-cart-now">
+								<div class="cart_extra m-3">
+									<div class="add-to-cart-now">
 										<a class="btn btn-fill-out btn-addtocart" asp-area="" asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-productID="@Model.Id"><i class="icon-basket-loaded"></i>Mua ngay</a>
-									@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
-									<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@									
+										@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
+										<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
+									</div>
 								</div>
-							</div>
 
 							</div>
 						</div>
@@ -296,7 +294,6 @@
 		position: relative;
 		overflow: hidden;
 		z-index: 0;
-
 	}
 
 
@@ -311,7 +308,6 @@
 			z-index: -1;
 			transition: all 0.3s ease-in-out;
 			width: 51%;
-			
 		}
 
 		.btn-fill-out::after {
@@ -322,7 +318,6 @@
 		.btn-fill-out:hover:before,
 		.btn-fill-out:hover:after {
 			width: 0;
-
 		}
 </style>
 <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
@@ -365,30 +360,36 @@
 				$(".add-to-cart").click(function () {
 					var productid = $(this).find('.Id').val();
 					var soLuong = $(document).find('#txtsoLuong').val();
-					$.ajax({
-						url: '/api/cart/add',
-						type: "POST",
-						dataType: "JSON",
-						data: {
-							productID: productid,
-							amount: soLuong
-						},
-						success: function (response) {
-							if (response.result == 'Redirect') {
-								window.location = response.url;
+					if (soLuong < 1) {
+						alert('Vui lòng chọn lại số lượng');
+						$(document).find('#txtsoLuong').val(1)
+					}
+					else {
+						$.ajax({
+							url: '/api/cart/add',
+							type: "POST",
+							dataType: "JSON",
+							data: {
+								productID: productid,
+								amount: soLuong
+							},
+							success: function (response) {
+								if (response.result == 'Redirect') {
+									window.location = response.url;
+								}
+								else {
+									loadHeaderCart(); //Add Product success
+									alert('Thêm vào giỏ hàng thành công');
+									location.reload();
+								}
+								console.log(response); // log to the console to see whether it worked
+							},
+							error: function (error) {
+								alert("There was an error posting the data to the server: " + error.responseText);
 							}
-							else {
-								loadHeaderCart(); //Add Product success
-								alert('Thêm vào giỏ hàng thành công');
-								location.reload();
-							}
-							console.log(response); // log to the console to see whether it worked
-						},
-						error: function (error) {
-							alert("There was an error posting the data to the server: " + error.responseText);
-						}
-					});
-					console.log(productid, soLuong)
+						});
+						console.log(productid, soLuong)
+					}
 				});
 			});
 			function loadHeaderCart() {
