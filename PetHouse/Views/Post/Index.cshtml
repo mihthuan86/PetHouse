@@ -1,0 +1,85 @@
+﻿@using PetHouse.Data.Setting;
+@model PaginatedList<PetHouse.Models.Post>
+@{
+	ViewData["Title"] = ViewBag.CateName;
+}
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9">
+				<div class="row blog_thumbs">
+					@foreach (var item in Model)
+					{
+						<div class="col-12">
+							<div class="blog_post blog_style2 box_shadow1">
+								<div class="blog_img">
+									<a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">
+										<img src="@("/Admin/Img/Post/"+item.ImgUrl)" alt="@item.Name">
+									</a>
+								</div>
+								<div class="blog_content bg-white">
+									<div class="blog_text">
+										<h5 class="blog_title"><a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">@item.Name</a></h5>
+										<ul class="list_none blog_meta">
+											<li><a href="#"><i class="ti-calendar"></i> ngày @item.CreateDate.ToString("dd/MM/yyyy")</a></li>
+										</ul>
+										<p>@item.Description</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+				<div class="row">
+					<div class="col-12 mt-2 mt-md-4">
+						<nav>
+							<ul class="pagination">
+								<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+									<a class="page-link" href="@Url.Action("Index", new {area = "", pageNumber = Model.PageIndex - 1 })">Previous</a>
+								</li>
+								@for (int i = 1; i <= Model.TotalPages; i++)
+								{
+									<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+										<a class="page-link" href="@Url.Action("Index", new {area = "", pageNumber = i })">@i</a>
+									</li>
+								}
+								<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+									<a class="page-link" href="@Url.Action("Index", new {area = "", pageNumber = Model.PageIndex + 1 })">Next</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+				<div class="sidebar">
+					<div class="widget">
+						<div class="search_form">
+							<form>
+								<input required="" class="form-control" placeholder="Search..." type="text">
+								<button type="submit" title="Subscribe" class="btn icon_search" name="submit" value="Submit">
+									<i class="ion-ios-search-strong"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+					<div class="widget">
+						<h5 class="widget_title">Danh mục </h5>
+						<ul class="widget_recent_post">
+							@foreach (var cate in ViewBag.Menu)
+							{
+								<li>
+									<div class="post_footer">
+										<div class="post_content">
+											<h6><a href="#">@cate.Name</a></h6>
+										</div>
+									</div>
+								</li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

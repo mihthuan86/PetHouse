@@ -9,7 +9,7 @@ namespace PetHouse.Models
 		public int Id { get; set; }
 		[MaxLength(100)]
 		public string Name { get; set; }
-		
+		public int MenuId { get; set; }
 		[MaxLength(200)]
 		public string Description { get; set; }		
 		public string AuthorId { get; set; }
@@ -25,6 +25,7 @@ namespace PetHouse.Models
 		//relationship		
 		[ForeignKey(nameof(AuthorId))]
 		public User User { get; set; }
-
+		[ForeignKey (nameof(MenuId))]
+		public Menu Menu { get; set; }
 	}
 }

@@ -51,7 +51,7 @@ namespace PetHouse.Areas.Admin.Controllers
 					if (usere != null)
 					{
 						_notyfService.Error("Email này đã được sử dụng");
-						return View(taikhoan);
+						return RedirectToAction("CreateNV");
 					}
 					var usern = await _userManager.FindByNameAsync(taikhoan.UserName);
 					if (usern != null)
@@ -81,22 +81,22 @@ namespace PetHouse.Areas.Admin.Controllers
 					{
 						await _userManager.AddToRoleAsync(newUser, UserRoles.Staff);
 						_notyfService.Success("Đăng ký thành công");
-						return RedirectToAction("Index", "Account");
+						return RedirectToAction("IndexNV", "AdminAccount");
 					}
 					else
 					{
 						_notyfService.Error(newUserResponse.Errors.ToString());
-						return View(taikhoan);
+						return View("CreateNV.cshtml",taikhoan);
 					}
 				}
 				else
 				{
-					return View(taikhoan);
+					return View("CreateNV.cshtml", taikhoan);
 				}
 			}
 			catch
 			{
-				return View(taikhoan);
+				return View("CreateNV.cshtml", taikhoan);
 			}
 		}
 		[Authorize(Roles = "admin")]

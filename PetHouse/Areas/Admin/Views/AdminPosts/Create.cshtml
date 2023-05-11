@@ -12,8 +12,11 @@
 						<label class="control-label">Tiêu đề bài đăng</label>
 						<input asp-for="Name" class="form-control" type="text">
 					</div>
-
-					
+					<div class="form-group col-md-4">
+						<label class="control-label">Danh mục bài đăng</label>
+						<select asp-for="MenuId" class="form-control" asp-items="ViewBag.MenuId"></select>
+						<span asp-validation-for="MenuId" class="text-danger"></span>
+					</div>				
 					<div class="form-group col-md-8">
 						<label class="control-label">Mô tả</label>
 						<input asp-for="Description" class="form-control" type="text">

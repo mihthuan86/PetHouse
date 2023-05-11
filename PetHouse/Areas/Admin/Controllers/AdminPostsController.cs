@@ -41,6 +41,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			var pageSize = 10;
 			var lsTinDangs = _context.Posts
 				.Include(x => x.User)
+				.Include(x=>x.Menu)
 				.OrderBy(x => x.Id)
 				.AsQueryable();
 			var paginatedPosts = PaginatedList<Post>.Create(lsTinDangs, pageNumber ?? 1, pageSize);
@@ -73,12 +74,13 @@ namespace PetHouse.Areas.Admin.Controllers
 			return Json(new { success = true });
 		}
 		public IActionResult Create()
-		{		
-			return View();
+		{
+            ViewData["MenuId"] = new SelectList(_context.Menus, "Id", "Name");
+            return View();
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("Id,Name,ImgFile,Description,Content")] Post post)
+		public async Task<IActionResult> Create([Bind("Id,Name,ImgFile,Description,Content,MenuId")] Post post)
 		{
 			if (!ModelState.IsValid)
 			{

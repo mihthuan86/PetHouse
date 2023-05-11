@@ -5,15 +5,15 @@
          <div class="row align-items-center">
              <div class="col-md-6">
                  <div class="page-title">
-                    <h1>@ViewData["Tittle"]</h1>
+                    <h1>@ViewData["Title"]</h1>
                  </div>
              </div>
              <div class="col-md-6">
                  <ol class="breadcrumb justify-content-md-end">
                      <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (ViewData["Tittle"] != "Home Page")
+                    @if (ViewData["Title"] != "Home Page")
                     {                      
-                    <li class="breadcrumb-item active">@ViewData["Tittle"]</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
                     }
                  </ol>
              </div>

@@ -1,0 +1,77 @@
+﻿@model Post
+@{
+	ViewData["Title"] = "Post Details";
+}
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9">
+				<div class="single_post">
+					<h2 class="blog_title">@Model.Name</h2>
+					<ul class="list_none blog_meta">
+						<li><a href="#"><i class="ti-calendar"></i> Ngày @Model.CreateDate.ToString("dd/MM/yyyy")</a></li>
+					</ul>
+					<div class="blog_img">
+						<img <img src="@("/Admin/Img/Post/"+Model.ImgUrl)" alt="@Model.Name">>
+					</div>
+					<div class="blog_content">
+						<div class="blog_text">
+							<blockquote class="blockquote_style3">
+								<p>@Model.Description</p>
+							</blockquote>
+							<p>@Model.Content</p>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="related_post">
+				<div class="content_title">
+					<h5>Bài viết liên quan</h5>
+				</div>
+				@*<div class="row">
+					<div class="col-md-6">
+						<div class="blog_post blog_style2 box_shadow1">
+							<div class="blog_img">
+								<a href="blog-single.html">
+									<img src="~/images/blog_small_img2.jpg" alt="blog_small_img2">
+								</a>
+							</div>
+							<div class="blog_content bg-white">
+								<div class="blog_text">
+									<h5 class="blog_title"><a href="blog-single.html">Sống trong đời sống cần có một đống tiền</a></h5>
+									<ul class="list_none blog_meta">
+										<li><a href="#"><i class="ti-calendar"></i> ngày 1/4/2023</a></li>
+										<li><a href="#"><i class="ti-comments"></i> 2 Bình luận</a></li>
+									</ul>
+									<p>để làm gì em biết không - để chó nó tha- mô tả ngắn </p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="blog_post blog_style2 box_shadow1">
+							<div class="blog_img">
+								<a href="blog-single.html">
+									<img src="~/images/blog_small_img2.jpg" alt="blog_small_img2">
+								</a>
+							</div>
+							<div class="blog_content bg-white">
+								<div class="blog_text">
+									<h5 class="blog_title"><a href="blog-single.html">Sống trong đời sống cần có một đống tiền</a></h5>
+									<ul class="list_none blog_meta">
+										<li><a href="#"><i class="ti-calendar"></i> ngày 1/4/2023</a></li>
+										<li><a href="#"><i class="ti-comments"></i> 2 Bình luận</a></li>
+									</ul>
+									<p>để làm gì em biết không - để chó nó tha- mô tả ngắn </p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>*@
+			</div>
+
+		</div>
+	</div>
+</div>

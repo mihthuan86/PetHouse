@@ -1,0 +1,107 @@
+﻿@model IEnumerable<PetHouse.Models.Menu>
+
+@{
+    ViewData["Title"] = "Quản lý danh mục bài viết";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+
+				<div class="row element-button">
+					<div class="col-sm-2">
+
+						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
+							<i class="fas fa-plus"></i>
+							Tạo danh mục bài viết mới
+						</a>
+					</div>
+					<div class="col-sm-2" style="float:left">
+						<a class="btn btn-add btn-sm" asp-controller="AdminPosts" asp-action="Index" title="Trỏ về">
+							<i class="fas fa-plus"></i>
+							Trở về
+						</a>
+					</div>
+				</div>
+				<table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+					   id="sampleTable">
+					<thead>
+						<tr>
+
+							<th>ID</th>
+							<th width ="300px">Tên danh mục</th>
+							<th>Ngày tạo</th>
+							<th>Ngày sửa</th>
+							<th width="100px">Trạng thái</th>
+							<th width="135px">Tính năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td>@item.Name</td>								
+								<td>@item.CreateDate</td>
+								<td>@item.UpdateDate</td>
+								@{
+									if (item.Status==-1)
+									{
+										<td><span class="badge bg-danger">Block</span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-success">Active</span></td>
+									}
+								}
+								<td class="table-td-center">
+									@{
+										if (item.Status==1)
+										{
+											<a id="@item.Id" onclick="toDelete(this)" class="btn btn-primary btn-sm trash" title="Xóa">
+												<i class="fas fa-trash-alt"></i>
+											</a>
+										}
+										else
+										{
+											<a id="@item.Id" onclick="toActive(this)" class="btn btn-success btn-sm" title="Xóa">
+												<i class="fas fa-undo"></i>
+											</a>
+										}
+									}
+
+									<a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-add btn-sm badge" title="Sửa">
+										<i class="fas fa-edit"></i>
+									</a>
+									<a asp-route-id="@item.Id" asp-action="Details" class="btn btn-primary btn-sm edit" title="Chi tiết">
+										<i class="fas fa-eye"></i>
+									</a>
+								</td>
+							</tr>
+						}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		function toDelete(element) {
+			let choice = confirm("Bạn có muốn khoá?")
+			if (choice == true) {
+				var url = '@Url.Action("DeleteConfirmed", "AdminMenus")?id=' + element.id;
+				window.location.href = url;
+			}
+		}
+		function toActive(element) {
+			let choice = confirm("Bạn có muốn kích hoạt?")
+			if (choice == true) {
+				var url = '@Url.Action("ActiveConfirmed", "AdminMenus")?id=' + element.id;
+				window.location.href = url;
+			}
+		}
+	</script>
+}
