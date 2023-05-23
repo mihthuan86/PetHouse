@@ -18,14 +18,28 @@ namespace PetHouse.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index(int? pageNumber)
+		public IActionResult Index(int? pageNumber,int? sort)
 		{
 			ViewBag.Brand = _context.Brands.ToList();
 			ViewBag.PCategory = _context.Categories.Where(x => x.isParent).ToList();
 			ViewBag.Categories = _context.Categories.ToList();
 			ViewBag.CateName = "Tất cả sản phẩm";
+			ViewData["stt"] = 0;
 			int pageSize = 9;
 			var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).OrderByDescending(x => x.CreateDate).AsQueryable();
+			if(sort != null)
+			{
+				if (sort == 1)
+				{
+					products = products.OrderBy(x => x.OrderPrice);
+					ViewData["stt"] = 1;
+				}
+				else
+				{
+					products = products.OrderByDescending(x => x.OrderPrice);
+					ViewData["stt"] = 2;
+				}
+			}
 			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);
 			return View(paginatedProducts);
 		}
