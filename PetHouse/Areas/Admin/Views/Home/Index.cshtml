@@ -1,15 +1,6 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <div class="app-title">
-            <ul class="app-breadcrumb breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#"><b>Thống kê </b></a>
-                </li>
-            </ul>
-            <div id="clock"></div>
-        </div>
-    </div>
-</div>
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+}
 <div class="row">
     <div class="col-md-6 col-lg-4">
         <d iv class="widget-small primary coloured-icon">
@@ -31,6 +22,18 @@
     </div>
     <div class="col-md-6 col-lg-4">
         <div class="widget-small warning coloured-icon">
+            <i class="icon fa-3x bx bxs-tag-x"></i>
+            <div class="info">
+                <h4>Hết hàng</h4>
+                <p><b>@ViewBag.ProductEmty.Count sản phẩm</b></p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <div class="widget-small warning coloured-icon">
             <i class="icon fa-3x bx bxs-shopping-bags"></i>
             <div class="info">
                 <h4>Tổng đơn hàng</h4>
@@ -38,9 +41,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
     <div class="col-md-6 col-lg-4">
         <div class="widget-small danger coloured-icon">
             <i class="icon fa-3x bx bxs-receipt"></i>
@@ -51,20 +51,11 @@
         </div>
     </div>
     <div class="col-md-6 col-lg-4">
-        <div class="widget-small warning coloured-icon">
-            <i class="icon fa-3x bx bxs-tag-x"></i>
-            <div class="info">
-                <h4>Hết hàng</h4>
-                <p><b>@ViewBag.ProductEmty.Count sản phẩm</b></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-4">
         <div class="widget-small primary coloured-icon">
             <i class="icon fa-3x bx bxs-chart"></i>
             <div class="info">
-                <h4>Tổng thu nhập</h4>
-                <p><b>@ViewBag.TotalPrice.ToString("#,###") đ</b></p>
+                <h4>Đơn hàng đang giao</h4>
+                <p><b>@ViewBag.shippingOrder.Count đơn hàng</b></p>
             </div>
         </div>
     </div>
@@ -125,12 +116,63 @@
                             <tr>
                                 
                                 <td>@item.Id</td>
-                                <td>@item.User.UserName</td>
+                                @if (item.User.UserName != "customer")
+                                {
+                                    
+                                    <td>@item.User.UserName</td>
+                                }
+                                else
+                                {
+                                    <td>Khách vãng lai</td>
+                                }
                                 <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                 <td>@item.TotalPrice.ToString("#,###") đ</td>
                                 <td><a asp-controller="AdminOrder" asp-action="Details" asp-route-id="@item.Id" asp-route-returnUrl = "Order">Xem đơn hàng</a></td>
                             </tr>
                         }                                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tile">
+            <div>
+                <h3 class="tile-title">ĐƠN HÀNG ĐANG GIAO</h3>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" id="sampleTable">
+
+                    <thead>
+                        <tr>
+                            <th>ID đơn hàng</th>
+                            <th>Khách hàng</th>
+                            <th>Người nhận</th>
+                            <th>Ngày giao hàng dự kiến</th>
+                            <th>Tổng tiền</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in ViewBag.shippingOrder)
+                        {
+                            <tr>
+
+                                <td>@item.Id</td>
+                                @if (item.User.UserName != "customer")
+                                {
+
+                                    <td>@item.User.UserName</td>
+                                }
+                                else
+                                {
+                                    <td>Khách vãng lai</td>
+                                }
+                                <td>@item.Receiver_FullName</td>
+                                <td>@item.ShipDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.TotalPrice.ToString("#,###") đ</td>
+                                <td><a asp-controller="AdminOrder" asp-action="Details" asp-route-id="@item.Id" asp-route-returnUrl="Order">Xem đơn hàng</a></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -176,101 +218,6 @@
         </div>
     </div>
 </div>
-
-@*<div class="row">
-    <div class="col-md-6">
-        <div class="tile">
-            <h3 class="tile-title">DỮ LIỆU HÀNG THÁNG</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-                <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="tile">
-            <h3 class="tile-title">THỐNG KÊ DOANH SỐ</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-                <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-@*<div class="text-right" style="font-size: 12px">
-    <p><b>Hệ thống quản lý V2.0 | Code by Trường</b></p>
-</div>*@
 @section Scripts{
     <script type="text/javascript" src="~/Admin/js/plugins/chart.js"></script>
-    <script type="text/javascript">
-        var data = {
-            labels: [
-                "Tháng 1",
-                "Tháng 2",
-                "Tháng 3",
-                "Tháng 4",
-                "Tháng 5",
-                "Tháng 6",
-                "Tháng 7",
-                "Tháng 8",
-                "Tháng 9",
-                "Tháng 10",
-                "Tháng 11",
-                "Tháng 12",
-            ],
-            datasets: [
-                {
-                    label: "Dữ liệu đầu tiên",
-                    fillColor: "rgba(255, 255, 255, 0.158)",
-                    strokeColor: "black",
-                    pointColor: "rgb(220, 64, 59)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "green",
-                    data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81],
-                },
-                {
-                    label: "Dữ liệu kế tiếp",
-                    fillColor: "rgba(255, 255, 255, 0.158)",
-                    strokeColor: "rgb(220, 64, 59)",
-                    pointColor: "black",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "green",
-                    data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90],
-                },
-            ],
-        };
-
-        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-        var lineChart = new Chart(ctxl).Line(data);
-
-        var ctxb = $("#barChartDemo").get(0).getContext("2d");
-        var barChart = new Chart(ctxb).Bar(data);
-    </script>
-    <!-- Google analytics script-->
-    <script type="text/javascript">
-        if (document.location.hostname == "pratikborsadiya.in") {
-            (function (i, s, o, g, r, a, m) {
-                i["GoogleAnalyticsObject"] = r;
-                (i[r] =
-                    i[r] ||
-                    function () {
-                        (i[r].q = i[r].q || []).push(arguments);
-                    }),
-                    (i[r].l = 1 * new Date());
-                (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m);
-            })(
-                window,
-                document,
-                "script",
-                "//www.google-analytics.com/analytics.js",
-                "ga"
-            );
-            ga("create", "UA-72504830-1", "auto");
-            ga("send", "pageview");
-        }
-    </script>
 }

@@ -27,8 +27,8 @@ namespace PetHouse.Areas.Admin.Controllers
             ViewBag.countOrder = _context.Orders.Count();
             ViewBag.countOrderCancel = _context.Orders.Where(x=>x.OrderStatus==-1).Count();
             ViewBag.ProductEmty = _context.Products.Where(x => x.Quantity < 5).ToList();
-			ViewBag.TotalPrice = _context.Orders.Where(x => x.OrderStatus == 2).Sum(x => x.TotalPrice);
-			ViewBag.newOrder = _context.Orders.Where(x => x.OrderStatus == 0).Include(x=>x.User).ToList();
+			ViewBag.newOrder = _context.Orders.Where(x => x.OrderStatus == 0).Include(x=>x.User).OrderByDescending(x=>x.OrderDate).ToList();
+            ViewBag.shippingOrder = _context.Orders.Where(x => x.OrderStatus == 1).Include(x => x.User).OrderByDescending(x => x.OrderDate).ToList();
             return View();
 		}
 	}
