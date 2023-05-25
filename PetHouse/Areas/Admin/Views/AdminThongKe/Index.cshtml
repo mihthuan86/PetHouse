@@ -1,0 +1,135 @@
+﻿@using PetHouse.Areas.Admin.ViewModel;
+@{
+	ViewData["Title"] = "Thống kê";
+}
+<div class="app-title">
+	<select class="" id="selected-day">		
+		<option value="0">Hôm nay</option>
+		<option value="1">Hôm qua</option>
+		<option value="2">Tuần này</option>
+		<option value="3">Tháng này</option>
+	</select>
+
+</div>
+@*<div class="app-title">
+	<div class="form-group col-md-3">
+		<label class="control-label">Tên sản phẩm </label>
+		<input id="fromDay" class="form-control" type="date" placeholder="">
+	</div>
+	<div class="form-group col-md-3">
+		<label class="control-label">Tên sản phẩm </label>
+		<input id="toDay" class="form-control" type="date" placeholder="">
+	</div>
+	<button id="btn-day" class="btn btn-save ml-3 mr-3" type="button">Tra cứu</button>
+</div>*@
+<div class="row">
+	<div class="col-md-4 col-lg-3">
+		<d iv class="widget-small primary coloured-icon">
+			<div class="info">
+				<h4>Đơn hàng đã nhận</h4>
+				<p><b>@ViewBag.OrderCount đơn hàng</b></p>
+			</div>
+		</d>
+	</div>
+	<div class="col-md-4 col-lg-3">
+		<div class="widget-small info coloured-icon">
+
+			<div class="info">
+				<h4>Thanh toán COD</h4>
+				<p><b>@ViewBag.COD đơn hàng</b></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 col-lg-3">
+		<div class="widget-small warning coloured-icon">
+
+			<div class="info">
+				<h4>Thanh toán Online</h4>
+				<p><b>@ViewBag.Onl đơn hàng</b></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 col-lg-3">
+		<div class="widget-small warning coloured-icon">
+
+			<div class="info">
+				<h4>Doanh Thu</h4>
+				<p><b>@ViewBag.TotalMoney.ToString("#,###") VNĐ</b></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div>
+				<h3 class="tile-title">TOP 5 SẢN PHẨM BÁN CHẠY</h3>
+			</div>
+			<div class="tile-body">
+				<table class="table table-hover table-bordered" id="sampleTable">
+					<thead>
+						<tr>
+							<th>Mã sản phẩm</th>
+							<th>Tên sản phẩm</th>
+							<th>Giá tiền</th>
+							<th>Số lượng hàng đã bán</th>
+							<th>Tổng tiền</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (TKProductVM item in ViewBag.Top5)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td>@item.Name</td>
+								<td>
+									@item.Price.ToString("#,###") VNĐ
+								</td>
+								<td>@item.Total</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		var element = document.getElementById("selected-day");
+		element.value = @ViewBag.stt
+	</script>
+	<script>
+		var activities = document.getElementById("selected-day");
+		activities.addEventListener("change", function () {
+			
+				var url = '@Url.Action("Index")?stt=' + activities.value;
+				window.location.href = url;
+			
+		});
+	</script>	
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$("#btn-day").click(function () {					
+					var fromDate = $(document).find('#fromDay').val();
+					var toDate = $(document).find('#toDay').val();
+					if (fromDay == null || toDay == null) {
+						alert('Vui lòng nhập ngày')
+					}
+					else {
+						$.ajax({
+							url: '/thongke/daytoday',
+							type: "POST",
+							dataType: "JSON",
+							data: {
+								fromDate: fromDate,
+								toDate: toDate
+							}
+						});
+					}
+				});
+			});
+		});
+	</script>
+}

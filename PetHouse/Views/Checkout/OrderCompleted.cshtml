@@ -1,22 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @inject UserManager<PetHouse.Models.User> UserManager;
-@if (User.Identity.IsAuthenticated)
-{
-<div class="row">
-    <div class="col-md-6 offset-3 alert alert-success text-center">
-        <h2>Order completed successfully</h2>    
-        <p>You can check all your orders in the Orders section of your profile</p>
-        <hr />
-        <p>Thank you!</p>
-    </div>
+<div class="section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="text-center order_complete">
+					<i class="fas fa-check-circle"></i>
+					<div class="heading_s1">
+						<h3>Đơn hàng của bạn đã được đặt hàng thành công!</h3>
+					</div>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<p>Vui lòng kiểm tra trong lịch sử đặt hàng</p>
+					}
+					<a asp-controller="Home" asp-action="Index" asp-area="" class="btn btn-fill-out">Continue Shopping</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-6 offset-3 alert alert-success text-center">
-            <h2>Order completed successfully</h2>
-            <p>Thank you!</p>
-        </div>
-    </div>
-}
