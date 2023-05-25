@@ -10,7 +10,7 @@
 			<div class="tile-body">
 				<div class="row element-button style=" justify-content:space-around"">
 					<div class="col-md-4 d-flex" style="">
-						<input name="keyword" type="text"
+						<input id="keyword" name="keyword" type="text"
 							   class="form-control"
 							   placeholder="Tìm kiếm..."
 							   aria-label="">
@@ -19,10 +19,10 @@
 							<i class="fas fa-search" style="font-size:20px;"></i>
 						</button>
 					</div>
-					<div class="col-md-1">					
-							<a asp-action="Create" class="btn btn-success">
-								Tạo phiếu nhập
-							</a>						
+					<div class="col-md-1">
+						<a asp-action="Create" class="btn btn-success">
+							Tạo phiếu nhập
+						</a>
 					</div>
 				</div>
 				<table class="table table-hover table-bordered" id="sampleTable">
@@ -49,7 +49,7 @@
 									<a class="btn btn-primary btn-sm trash add-to-cart" title="Thêm">
 										<i class="fas fa-edit"></i>
 										<input style="display:none" class="Id" value="@item.Id">
-									</a>									
+									</a>
 								</td>
 							</tr>
 						}
@@ -93,8 +93,8 @@
 							if (response.result == 'Redirect') {
 								window.location = response.url;
 							}
-							else {																										
-								if (clickedLink.hasClass("add-to-cart")) {								
+							else {
+								if (clickedLink.hasClass("add-to-cart")) {
 									clickedLink.removeClass("add-to-cart").addClass("remove-to-cart");
 									clickedLink.find("i.fa-edit").removeClass("fa-edit").addClass("fa-undo");
 								}
@@ -108,6 +108,11 @@
 					console.log(productid);
 				});
 			});
+
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
 			$(function () {
 				$(".remove-to-cart").click(function () {
 					var clickedLink = $(this);
@@ -140,4 +145,23 @@
 			});
 		});
 	</script>
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$("#btn-search").click(function () {
+					var keyword = $(document).find("#keyword").val();
+					var Url = '@Url.Action("Search")?keyword='+keyword;
+					window.location.href = Url;
+					//console.log(keyword)
+				});
+			});
+		})
+	</script>
+	@if(ViewBag.keyword != null)
+	{
+		<script>
+			var keyword = document.getElementById("keyword");
+			keyword.value = '@ViewBag.keyword'
+		</script>
+	}
 }

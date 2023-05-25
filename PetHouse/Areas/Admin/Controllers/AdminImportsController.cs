@@ -51,6 +51,7 @@ namespace PetHouse.Areas.Admin.Controllers
 			var products = _context.Products.OrderBy(x => x.Quantity).Where(x => x.Status != -1).AsQueryable();
 			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);
 			ViewBag.CurrentPage = pageNumber;
+			HttpContext.Session.Remove("PhieuNhap");
 			return View(paginatedProducts);
 		}
 		// GET: Admin/Imports/Create
@@ -179,6 +180,18 @@ namespace PetHouse.Areas.Admin.Controllers
 			{
 				return Json(new { success = false });
 			}
+		}
+		public ActionResult Search(string? keyword)
+		{
+			if(keyword == null)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+			int pageSize = 5;
+			var products = _context.Products.OrderBy(x => x.Quantity).Where(x => x.Status != -1 && x.Name.Contains(keyword)).AsQueryable();
+			var paginatedProducts = PaginatedList<Product>.Create(products,1, pageSize);
+			ViewBag.keyword = keyword;
+			return View("SelectProduct",paginatedProducts);
 		}
 		public IActionResult Confirm(int Id)
 		{
