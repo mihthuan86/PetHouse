@@ -132,19 +132,19 @@ namespace PetHouse.Controllers
 					var usere = await _userManager.FindByEmailAsync(taikhoan.Email);
 					if (usere != null)
 					{
-						_notyfService.Error("Email này đã được sử dụng");
+						TempData["error"] = "Email này đã được sử dụng";
 						return View(taikhoan);
 					}
 					var usern = await _userManager.FindByNameAsync(taikhoan.UserName);
 					if (usern != null)
 					{
-						_notyfService.Error("User Name này đã được sử dụng");
+						TempData["error"] = "User Name này đã được sử dụng";
 						return View(taikhoan);
 					}
 					var users = await _userManager.FindByNameAsync(taikhoan.Phone);
 					if (users != null)
 					{
-						_notyfService.Error("Số điện thoại này đã được sử dụng");
+                        TempData["error"] = "Số điện thoại này đã được sử dụng";
 						return View(taikhoan);
 					}
 					var newUser = new User()
@@ -162,8 +162,9 @@ namespace PetHouse.Controllers
 					if (newUserResponse.Succeeded)
 					{
 						await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
-						_notyfService.Success("Đăng ký thành công");
-						return RedirectToAction("Login", "Account");
+                        //_notyfService.Success("Đăng ký thành công");
+                        TempData["success"] = "Đăng ký thành công";
+						return RedirectToAction("Login", "Account",new {area = ""});
 					}
 					else
 					{
