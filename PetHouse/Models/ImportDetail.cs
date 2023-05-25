@@ -11,7 +11,7 @@ namespace PetHouse.Models
 		public int ProductId { get; set; }
 		public int Quantity { get; set; }
 		public double Price { get; set; }
-		public double Total => Price * Quantity;
+		public double Total { get; set; }
 		public Import Import { set; get; }
 		public Product Product { set; get; }
 	}

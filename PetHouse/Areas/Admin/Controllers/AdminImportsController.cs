@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PetHouse.Areas.Admin.ViewModel;
 using PetHouse.Data;
 using PetHouse.Data.Setting;
+using PetHouse.Extention;
 using PetHouse.Models;
+using PetHouse.ViewModel;
 
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "admin,staff")]
+	//[Authorize(Roles = "admin,staff")]
 	public class AdminImportsController : Controller
 	{
 		private readonly PetHouseDbContext _context;
@@ -31,7 +36,7 @@ namespace PetHouse.Areas.Admin.Controllers
 		{
 			ViewBag.PCate = _context.Categories.Where(x => x.isParent).ToList();
 			int pageSize = 10;
-			var import = _context.Imports.OrderByDescending(x => x.ImportDate).
+			var import = _context.Imports.OrderByDescending(x=>x.Id).
 				Include(x => x.User).
 				Include(x => x.Supplier).
 				AsQueryable();
@@ -40,33 +45,25 @@ namespace PetHouse.Areas.Admin.Controllers
 		}
 
 		// GET: Admin/Imports/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public IActionResult SelectProduct(int? pageNumber)
 		{
-			if (id == null || _context.Imports == null)
-			{
-				return NotFound();
-			}
-
-			var import = await _context.Imports
-				.Include(i => i.Supplier)
-				.Include(i => i.User)
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (import == null)
-			{
-				return NotFound();
-			}
-
-			return View(import);
+			int pageSize = 5;
+			var products = _context.Products.OrderBy(x => x.Quantity).Where(x => x.Status != -1).AsQueryable();
+			var paginatedProducts = PaginatedList<Product>.Create(products, pageNumber ?? 1, pageSize);
+			ViewBag.CurrentPage = pageNumber;
+			return View(paginatedProducts);
 		}
-
 		// GET: Admin/Imports/Create
 		public IActionResult Create()
 		{
 			Import item = new Import();
-			ImportDetail importDetail = new ImportDetail();
-			importDetail.Id = 1;
-			item.ImportDetails.Add(importDetail);
-			ViewBag.Product = GetProducts();
+			foreach (ImportItem importItem in PhieuNhap)
+			{
+				ImportDetail detail = new ImportDetail();
+				detail.ProductId = importItem.Product.Id;
+				detail.Product = importItem.Product;
+				item.ImportDetails.Add(detail);
+			}
 			ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name");
 			return View(item);
 		}
@@ -82,147 +79,125 @@ namespace PetHouse.Areas.Admin.Controllers
 			{
 				var user = await _userManager.FindByNameAsync("admin");
 				Import item = new Import();
-				item.SupplierId = import.SupplierId;		
+				item.SupplierId = import.SupplierId;
 				item.UserId = user.Id;
 				item.ImportDate = null;
 				item.Status = 0;
-				item.TotalMoney = import.ImportDetails.Sum(x => x.Total);
+				item.TotalMoney = 0;
 				_context.Imports.Add(item);
 				await _context.SaveChangesAsync();
 				foreach (var details in import.ImportDetails)
 				{
 					ImportDetail importDetail = new ImportDetail();
-					importDetail.Id = details.Id;
 					importDetail.ImportId = item.Id;
 					importDetail.ProductId = details.ProductId;
 					importDetail.Price = details.Price;
 					importDetail.Quantity = details.Quantity;
+					importDetail.Total = details.Price * details.Quantity;
 					_context.ImportDetails.Add(importDetail);
 					await _context.SaveChangesAsync();
-				}				
-				return RedirectToAction(nameof(Index));
+				}
+				item.TotalMoney = _context.ImportDetails.Where(x => x.ImportId == item.Id).Sum(x => x.Total);
+				_context.Update(item);
+				await _context.SaveChangesAsync();
+				HttpContext.Session.Remove("PhieuNhap");
+				var ip = _context.Imports.OrderByDescending(x => x.Id).First();
+				return RedirectToAction("Details", new { Id = ip.Id });
 			}
 			catch
 			{
-				ViewBag.Product = GetProducts();
 				ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name");
 				return View(import);
 			}
 		}
-
-		// GET: Admin/Imports/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public IActionResult Details(int Id)
 		{
-			if (id == null || _context.Imports == null)
-			{
-				return NotFound();
-			}
-
-			var import = await _context.Imports.FindAsync(id);
-			if (import == null)
-			{
-				return NotFound();
-			}
-			ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Address", import.SupplierId);
-			ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", import.UserId);
-			return View(import);
+			var Import = _context.Imports.FirstOrDefault(x => x.Id == Id);
+			ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name");
+			ViewBag.Item = _context.ImportDetails.Where(x => x.ImportId == Id).Include(x => x.Product).ToList();
+			return View(Import);
 		}
 
-		// POST: Admin/Imports/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+		public List<ImportItem> PhieuNhap
+		{
+			get
+			{
+				var gh = HttpContext.Session.Get<List<ImportItem>>("PhieuNhap");
+				if (gh == default(List<ImportItem>))
+				{
+					gh = new List<ImportItem>();
+				}
+				return gh;
+			}
+		}
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("Id,SupplierId,UserId,ImportDate,PaymentStatus,Status")] Import import)
+		[Route("api/import/add")]
+		public IActionResult AddToCart(int productID)
 		{
-			if (id != import.Id)
-			{
-				return NotFound();
-			}
+			List<ImportItem> cart = PhieuNhap;
 
-			if (ModelState.IsValid)
+			try
 			{
-				try
+				ImportItem it = cart.SingleOrDefault(p => p.Product.Id == productID);
+				if (it == null)
 				{
-					_context.Update(import);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!ImportExists(import.Id))
+					Product hh = _context.Products.SingleOrDefault(p => p.Id == productID);
+					ImportItem item = new ImportItem
 					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
+						Product = hh
+					};
+					cart.Add(item);
+					HttpContext.Session.Set<List<ImportItem>>("PhieuNhap", cart);
 				}
-				return RedirectToAction(nameof(Index));
+				return Json(new { success = true });
 			}
-			ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Address", import.SupplierId);
-			ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", import.UserId);
-			return View(import);
+			catch
+			{
+				return Json(new { success = false });
+			}
 		}
 
-		// GET: Admin/Imports/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+		[HttpPost]
+		[Route("api/import/remove")]
+		public ActionResult Remove(int productID)
 		{
-			if (id == null || _context.Imports == null)
-			{
-				return NotFound();
-			}
 
-			var import = await _context.Imports
-				.Include(i => i.Supplier)
-				.Include(i => i.User)
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (import == null)
+			try
 			{
-				return NotFound();
+				List<ImportItem> cart = PhieuNhap;
+				ImportItem item = PhieuNhap.SingleOrDefault(p => p.Product.Id == productID);
+				if (item != null)
+				{
+					cart.Remove(item);
+				}
+				//luu lai session
+				HttpContext.Session.Set<List<ImportItem>>("PhieuNhap", cart);
+				return Json(new { success = true });
 			}
-
-			return View(import);
+			catch
+			{
+				return Json(new { success = false });
+			}
 		}
-
-		// POST: Admin/Imports/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public IActionResult Confirm(int Id)
 		{
-			if (_context.Imports == null)
-			{
-				return Problem("Entity set 'PetHouseDbContext.Imports'  is null.");
-			}
-			var import = await _context.Imports.FindAsync(id);
+			var import = _context.Imports.FirstOrDefault(p => p.Id == Id);
+			var ipDetails = _context.ImportDetails.Where(x => x.ImportId == Id).ToList();
 			if (import != null)
 			{
-				_context.Imports.Remove(import);
+				import.Status = 1;
+				import.ImportDate = DateTime.Now;
+				_context.Update(import);
+				foreach (var item in ipDetails)
+				{
+					var product = _context.Products.FirstOrDefault(x => x.Id == item.ProductId);
+					product.Quantity = product.Quantity + item.Quantity;
+					_context.Update(product);
+				}
+				_context.SaveChanges();
 			}
-
-			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
-		}
-
-		private bool ImportExists(int id)
-		{
-			return (_context.Imports?.Any(e => e.Id == id)).GetValueOrDefault();
-		}
-		private List<SelectListItem> GetProducts()
-		{
-			var products = new List<SelectListItem>();
-			products = _context.Products.Select(x => new SelectListItem()
-			{
-				Value = x.Id.ToString(),
-				Text = x.Name
-			}).ToList();
-			var defItem = new SelectListItem()
-			{
-				Value = "",
-				Text = "---Chọn sản phẩm----"
-			};
-			products.Insert(0, defItem);
-			return products;
 		}
 	}
 }

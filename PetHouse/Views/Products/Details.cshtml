@@ -125,7 +125,10 @@
 								</div>
 								<div class="cart_extra m-3">
 									<div class="add-to-cart-now">
+										@if (Model.Quantity >= 1)
+										{					
 										<a class="btn btn-fill-out btn-addtocart" asp-area="" asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-productID="@Model.Id"><i class="icon-basket-loaded"></i>Mua ngay</a>
+										}
 										@*<a class="add_compare" href="#"><i class="icon-shuffle"></i></a>
 										<a class="add_wishlist" href="#"><i class="icon-heart"></i></a>*@
 									</div>
@@ -360,10 +363,14 @@
 				$(".add-to-cart").click(function () {
 					var productid = $(this).find('.Id').val();
 					var soLuong = $(document).find('#txtsoLuong').val();
+					if (soLuong > @Model.Quantity){
+						alert('Tồn kho không đủ');
+					}
+					else
 					if (soLuong < 1) {
 						alert('Vui lòng chọn lại số lượng');
 						$(document).find('#txtsoLuong').val(1)
-					}
+					}					
 					else {
 						$.ajax({
 							url: '/api/cart/add',

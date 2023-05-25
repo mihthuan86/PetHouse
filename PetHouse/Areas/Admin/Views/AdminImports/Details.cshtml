@@ -1,8 +1,9 @@
 ﻿@using PetHouse.Areas.Admin.ViewModel;
 @model PetHouse.Models.Import
-
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<PetHouse.Models.User> _usermanager
 @{
-	ViewData["Title"] = "Thêm phiếu nhập mới";
+	ViewData["Title"] = "Thông Tin phiếu nhập mới";
 }
 <div class="row">
 	<div class="col-md-12">
@@ -16,11 +17,11 @@
 				<div class="row">
 					<div class="form-group  col-md-4">
 						<label class="control-label">Nhà cung cấp:</label>
-						<select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
+						<select disabled asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
 					</div>
 					<div class="form-group  col-md-4">
 						<label class="control-label">Ngày tạo:</label>
-						<input type="date" asp-for="CreateDate" class="form-control">
+						<input readonly type="date" asp-for="CreateDate" class="form-control">
 					</div>
 					<div class="container">
 						<div class="row">
@@ -36,49 +37,47 @@
 												<th>Số lượng</th>
 												<th>Giá nhập</th>
 												<th>Thành tiền</th>
-												<th>Action</th>
+
 											</tr>
 										</thead>
 										<tbody class="list">
-											@for (int i = 0; i < Model.ImportDetails.Count; i++)
+											@foreach (var item in ViewBag.Item)
 											{
 												<tr>
 													<td>
-														<input asp-for="@Model.ImportDetails[i].ProductId" value="@Model.ImportDetails[i].Product.Id" class="form-control" />
+														@item.ProductId
 													</td>
 													<td>
-														@Model.ImportDetails[i].Product.Name
+														@item.Product.Name
 													</td>
 													<td>
-														<input asp-for="@Model.ImportDetails[i].Quantity" class="form-control" />
-														<span asp-validation-for="@Model.ImportDetails[i].Quantity" class="text-danger"></span>
+														@item.Quantity
+
 													</td>
 													<td>
-														<input asp-for="@Model.ImportDetails[i].Price" class="form-control" />
-														<span asp-validation-for="@Model.ImportDetails[i].Price" class="text-danger"></span>
+														@item.Price
 													</td>
-													@*<td>
-														<input class="form-control subprice" readonly />
+													<td>
+														@item.Total.ToString("#,###") VNĐ
 													</td>
-													<td class="remove">
-														<button onclick="DeleteItem(this)" class="removeItem btn btn-primary btn-sm trash" type="button" title="Xóa">
-															<i class="fas fa-trash-alt"></i>
-														</button>
-													</td>*@
+
 												</tr>
 											}
 										</tbody>
 									</table>
-									@*<div style="float: right;margin-right: 70px;">
-										<h3>Tổng tiền: 100000 VNĐ</h3>
-									</div>*@
+									<div style="float: right;margin-right: 70px;">
+										<h3>Tổng tiền: @Model.TotalMoney.ToString("#,###") VNĐ</h3>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<button class="btn btn-save" type="submit">Lưu lại</button>
-				<a class="btn btn-cancel" asp-action="Index">Hủy bỏ</a>
+				@if (User.IsInRole("admin")&& Model.Status==0)
+				{
+					<button class="btn btn-save" asp-action="Confirm" asp-route-Id="@Model.Id">Xác nhận</button>
+				}
+				<a class="btn btn-cancel" asp-action="Edit">Sửa chữa</a>
 			</form>
 		</div>
 	</div>

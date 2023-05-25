@@ -1,0 +1,143 @@
+﻿@using PetHouse.Data.Setting;
+@model PaginatedList<PetHouse.Models.Product>
+
+@{
+	ViewData["Title"] = "Chọn sản phẩm cần nhập";
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="tile">
+			<div class="tile-body">
+				<div class="row element-button style=" justify-content:space-around"">
+					<div class="col-md-4 d-flex" style="">
+						<input name="keyword" type="text"
+							   class="form-control"
+							   placeholder="Tìm kiếm..."
+							   aria-label="">
+						<button id="btn-search" class="btn btn-outline-secondary" type="submit" style="width:50px; height:45px;">
+
+							<i class="fas fa-search" style="font-size:20px;"></i>
+						</button>
+					</div>
+					<div class="col-md-1">					
+							<a asp-action="Create" class="btn btn-success">
+								Tạo phiếu nhập
+							</a>						
+					</div>
+				</div>
+				<table class="table table-hover table-bordered" id="sampleTable">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th width="260">Tên sản phẩm</th>
+							<th>Hình ảnh</th>
+							<th>Số lượng</th>
+							<th>Chức năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td>@item.Name</td>
+								<td>
+									<img src="@("/Admin/Img/ProductAvt/"+item.ProductImgAvt)" alt="@item.Name" width="100px">
+								</td>
+								<td>@item.Quantity</td>
+								<td class="table-td-center">
+									<a class="btn btn-primary btn-sm trash add-to-cart" title="Thêm">
+										<i class="fas fa-edit"></i>
+										<input style="display:none" class="Id" value="@item.Id">
+									</a>									
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("SelectProduct", new { pageNumber = Model.PageIndex - 1 })">Previous</a>
+						</li>
+						@for (int i = 1; i <= Model.TotalPages; i++)
+						{
+							<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+								<a class="page-link" href="@Url.Action("SelectProduct", new { pageNumber = i })">@i</a>
+							</li>
+						}
+						<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+							<a class="page-link" href="@Url.Action("SelectProduct", new { pageNumber = Model.PageIndex + 1 })">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$(".add-to-cart").click(function () {
+					var clickedLink = $(this);
+					var productid = $(this).find('.Id').val();
+					$.ajax({
+						url: '/api/import/add',
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							productID: productid,
+						},
+						success: function (response) {
+							if (response.result == 'Redirect') {
+								window.location = response.url;
+							}
+							else {																										
+								if (clickedLink.hasClass("add-to-cart")) {								
+									clickedLink.removeClass("add-to-cart").addClass("remove-to-cart");
+									clickedLink.find("i.fa-edit").removeClass("fa-edit").addClass("fa-undo");
+								}
+								alert('Thêm vào phiếu nhập thành công');
+							}
+						},
+						error: function (error) {
+							alert("There was an error posting the data to the server: " + error.responseText);
+						}
+					});
+					console.log(productid);
+				});
+			});
+			$(function () {
+				$(".remove-to-cart").click(function () {
+					var clickedLink = $(this);
+					var productid = clickedLink.find('.Id').val();
+					$.ajax({
+						url: '/api/import/remove',
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							productID: productid,
+						},
+						success: function (response) {
+							if (response.result == 'Redirect') {
+								window.location = response.url;
+							}
+							else {
+								if (clickedLink.hasClass("remove-to-cart")) {
+									clickedLink.removeClass("remove-to-cart").addClass("add-to-cart");
+									clickedLink.find("i.fa-undo").removeClass("fa-undo").addClass("fa-edit");
+								}
+								alert('Xóa khỏi phiếu nhập thành công');
+							}
+						},
+						error: function (error) {
+							alert("There was an error posting the data to the server: " + error.responseText);
+						}
+					});
+					console.log(productid)
+				});
+			});
+		});
+	</script>
+}

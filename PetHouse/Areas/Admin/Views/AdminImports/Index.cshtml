@@ -12,7 +12,7 @@
 				<div class="row element-button">
 					<div class="col-sm-2">
 
-						<a class="btn btn-add btn-sm" asp-action="Create" title="Thêm">
+						<a class="btn btn-add btn-sm" asp-action="SelectProduct" title="Thêm">
 							<i class="fas fa-plus"></i>
 							Tạo phiếu nhập hàng mới
 						</a>
@@ -43,15 +43,10 @@
 									if (item.Status == 0)
 									{
 										<td><span class="badge bg-secondary">Chờ xác nhận</span></td>
-									}
-									else if (item.Status == 2)
-									{
-										<td><span class="badge bg-success">Hoàn thành</span></td>
-									}
-
+									}								
 									else if(item.Status == 1)
 									{
-										<td><span class="badge bg-primary">Đã xác nhận</span></td>
+										<td><span class="badge bg-primary">Đã nhập</span></td>
 									}
 									else
 									{
