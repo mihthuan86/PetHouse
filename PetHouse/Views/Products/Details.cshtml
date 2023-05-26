@@ -247,39 +247,35 @@
 						<div class="heading_s1">
 							<h3>Sản phẩm liên quan</h3>
 						</div>
-						<div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
-							<div class="item">
-								@foreach (var item in ViewBag.SameProduct)
-								{
-
-									<div class="product">
-										<div class="product_img">
-											<a href="shop-product-detail.html">
-												<img src="@("/Admin/Img/ProductAvt/"+item.ProductImgAvt)" alt="@item.Name">
-											</a>
-											<div class="product_action_box">
-												<ul class="list_none pr_action_btn">
-													<li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-													<li><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id"><i class="icon-magnifier-add"></i></a></li>
-												</ul>
-											</div>
-										</div>
-										<div class="product_info">
-											<h6 class="product_title"><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id">@item.Name</a></h6>
-											<div class="product_price">
-												<span class="price">@item.OrderPrice.ToString("#.###")</span>
-											</div>
-											<div class="rating_wrap">
-												<div class="rating">
-													<div class="product_rate" style="width:80%"></div>
-												</div>
-												<span class="rating_num">(21)</span>
-											</div>
+						<div class="d-flex flex-wrap">
+							@foreach (var item in ViewBag.SameProduct)
+							{
+								<div class="product col-6 col-md-3">
+									<div class="product_img">
+										<a href="shop-product-detail.html">
+											<img src="@("/Admin/Img/ProductAvt/"+item.ProductImgAvt)" alt="@item.Name">
+										</a>
+										<div class="product_action_box">
+											<ul class="list_none pr_action_btn">
+												<li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+												<li><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id"><i class="icon-magnifier-add"></i></a></li>
+											</ul>
 										</div>
 									</div>
-								}
-
-							</div>
+									<div class="product_info">
+										<h6 class="product_title"><a asp-area="" asp-controller="Products" asp-action="Details" asp-route-Id="@item.Id">@item.Name</a></h6>
+										<div class="product_price">
+											<span class="price">@item.OrderPrice.ToString("#.###")</span>
+										</div>
+										<div class="rating_wrap">
+											<div class="rating">
+												<div class="product_rate" style="width:80%"></div>
+											</div>
+											<span class="rating_num">(21)</span>
+										</div>
+									</div>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
