@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/page-auth.css">
     <!-- END: Page CSS-->
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    @*<link rel="stylesheet" type="text/css" href="~/assets/css/style.css">*@
     <!-- END: Custom CSS-->
 
 </head>
@@ -120,7 +120,8 @@
             }
         })
         
-    </script>  
+    </script>
+    @await Component.InvokeAsync("Notyf")
 </body>
 <!-- END: Body-->
 

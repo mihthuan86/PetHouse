@@ -10,6 +10,8 @@ using System.Data;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "admin,staff")]
+
 	public class AdminMenusController : Controller
 	{
 		

@@ -13,7 +13,7 @@ using PetHouse.Models;
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	[Authorize(Roles = "admin")]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminSuppliersController : Controller
     {
         private readonly PetHouseDbContext _context;

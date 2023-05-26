@@ -11,19 +11,22 @@ using PetHouse.ViewModel;
 using PetHouse.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace PetHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	[Authorize(Roles = "admin")]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminProductsController : Controller
     {
         private readonly PetHouseDbContext _context;
 		private readonly IWebHostEnvironment _webHostEnvironment;
-		public AdminProductsController(PetHouseDbContext context, IWebHostEnvironment webHostEnvironment)
+        private INotyfService _notyfService { get; set; }
+		public AdminProductsController(PetHouseDbContext context, IWebHostEnvironment webHostEnvironment,INotyfService notyfService)
 		{
 			_context = context;
 			_webHostEnvironment = webHostEnvironment;
+            _notyfService = notyfService;
 		}
 		[Route("Admin/sanpham.cshtml")]
 		// GET: Admin/Products
@@ -95,15 +98,28 @@ namespace PetHouse.Areas.Admin.Controllers
                 product.Status = 1;
 				_context.Add(product);
 				await _context.SaveChangesAsync();
+                _notyfService.Success("Tạo sản phẩm thành công");
 				return RedirectToAction(nameof(Index));
 			}
 			ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
 			ViewData["CategoryId"] = new SelectList(_context.Categories.Where(c => c.isParent == true), "Id", "Name");
 			return View(product);
         }
-
-        // GET: Admin/Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		public ActionResult Search(string? keyword)
+		{
+			ViewBag.CategoryParent = _context.Categories.Where(x => x.isParent).ToList();
+			if (keyword == null)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+			int pageSize = 5;
+			var products = _context.Products.Where(x => x.Name.Contains(keyword)).Include(x=>x.Category).Include(x=>x.Brand).AsQueryable();
+			var paginatedProducts = PaginatedList<Product>.Create(products, 1, pageSize);
+			ViewBag.keyword = keyword;
+			return View("Index", paginatedProducts);
+		}
+		// GET: Admin/Products/Edit/5
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
             {
@@ -146,6 +162,7 @@ namespace PetHouse.Areas.Admin.Controllers
                     model.OrderPrice = product.OrderPrice;
                     model.UpdateDate = DateTime.Now;
                     _context.Update(model);
+                    _notyfService.Success("Đã chỉnh sửa sản phẩm");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -156,6 +173,7 @@ namespace PetHouse.Areas.Admin.Controllers
                     }
                     else
                     {
+                        _notyfService.Error("Hệ thống bị lỗi");
                         throw;
                     }
                 }
@@ -204,7 +222,9 @@ namespace PetHouse.Areas.Admin.Controllers
 			}
 
 			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
+            _notyfService.Information("Đã khóa sản phẩm");
+
+            return RedirectToAction(nameof(Index));
 		}
 		public async Task<IActionResult> ActiveConfirmed(int id)
 		{
@@ -220,7 +240,9 @@ namespace PetHouse.Areas.Admin.Controllers
 			}
 
 			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
+            _notyfService.Information("Đã kích hoạt sản phẩm");
+
+            return RedirectToAction(nameof(Index));
 		}
 
 		private bool ProductExists(int id)
