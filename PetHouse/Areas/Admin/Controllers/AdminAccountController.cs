@@ -57,13 +57,15 @@ namespace PetHouse.Areas.Admin.Controllers
 					if (usern != null)
 					{
 						_notyfService.Error("User Name này đã được sử dụng");
-						return View(taikhoan);
+						return RedirectToAction("CreateNV");
+
 					}
 					var users = await _userManager.FindByNameAsync(taikhoan.Phone);
 					if (users != null)
 					{
 						_notyfService.Error("Số điện thoại này đã được sử dụng");
-						return View(taikhoan);
+						return RedirectToAction("CreateNV");
+						
 					}
 					var newUser = new User()
 					{
@@ -85,18 +87,19 @@ namespace PetHouse.Areas.Admin.Controllers
 					}
 					else
 					{
-						_notyfService.Error(newUserResponse.Errors.ToString());
-						return View("CreateNV.cshtml",taikhoan);
+						_notyfService.Error("Sai định dạng mật khẩu");
+						return RedirectToAction("CreateNV");
 					}
 				}
 				else
 				{
-					return View("CreateNV.cshtml", taikhoan);
+					_notyfService.Error("Đã có lỗi xảy ra");
+					return RedirectToAction("CreateNV");
 				}
 			}
 			catch
 			{
-				return View("CreateNV.cshtml", taikhoan);
+				return View(taikhoan);
 			}
 		}
 		[Authorize(Roles = "admin")]
@@ -198,6 +201,8 @@ namespace PetHouse.Areas.Admin.Controllers
 				userEdit.UpdateDate = staff.UpdateDate;
 				_context.Users.Update(userEdit);
 				await _context.SaveChangesAsync();
+				_notyfService.Success("Chỉnh sửa thành công");
+
 				return RedirectToAction(nameof(IndexNV));
 			}
 			return View(staff);

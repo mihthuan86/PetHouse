@@ -7,18 +7,13 @@ using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using PetHouse.Models;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddNotyf(configure =>
-{
-    configure.DurationInSeconds = 5;
-    configure.IsDismissable = true;
-    configure.Position = NotyfPosition.BottomRight;
-});
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 builder.Services.AddDbContext<PetHouseDbContext>(option => option.UseSqlServer(
@@ -49,7 +44,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseNotyf();
 app.UseRouting();
 app.UseSession();
 

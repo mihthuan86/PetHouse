@@ -26,7 +26,7 @@
 						</a>
 					</div>
 					<div class="col-md-4 d-flex" style="">
-						<input name="keyword" type="text"
+						<input id="keyword" name="keyword" type="text"
 							   class="form-control"
 							   placeholder="Tìm kiếm..."
 							   aria-label="">
@@ -138,18 +138,37 @@
 		function toDelete(element) {
 			let choice = confirm("Bạn có muốn khoá?")
 			if (choice == true) {
-				var url = '@Url.Action("DeleteConfirmed", "Products")?id=' + element.id;
+				var url = '@Url.Action("DeleteConfirmed", "AdminProducts")?id=' + element.id;
 				window.location.href = url;
 			}
 		}
 		function toActive(element) {
 			let choice = confirm("Bạn có muốn kích hoạt?")
 			if (choice == true) {
-				var url = '@Url.Action("ActiveConfirmed", "Products")?id=' + element.id;
+				var url = '@Url.Action("ActiveConfirmed", "AdminProducts")?id=' + element.id;
 				window.location.href = url;
 			}
 		}
 	</script>
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$("#btn-search").click(function () {
+					var keyword = $(document).find("#keyword").val();
+					var Url = '@Url.Action("Search")?keyword=' + keyword;
+					window.location.href = Url;
+					//console.log(keyword)
+				});
+			});
+		})
+	</script>
+	@if (ViewBag.keyword != null)
+	{
+		<script>
+			var keyword = document.getElementById("keyword");
+			keyword.value = '@ViewBag.keyword'
+		</script>
+	}
 }
 <script>
 	const searchFocus = document.getElementById('search-focus');

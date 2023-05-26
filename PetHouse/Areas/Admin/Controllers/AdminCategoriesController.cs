@@ -16,7 +16,7 @@ using PetHouse.ViewModel;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "admin")]
+	[Authorize(Roles = "admin,staff")]
 
 	public class AdminCategoriesController : Controller
 	{

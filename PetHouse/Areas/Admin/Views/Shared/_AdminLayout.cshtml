@@ -60,8 +60,7 @@
 					<i class="app-menu__icon bx bx-home-alt"></i><span class="app-menu__label">Trang chủ</span>
 				</a>
 			</li>
-			@if (User.IsInRole("admin"))
-			{
+			
 				<li>
 					<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
 						<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
@@ -103,48 +102,14 @@
 						<i class="app-menu__icon bx bx-group"></i><span class="app-menu__label">Quản lí nhà cung cấp</span>
 					</a>
 				</li>
+			@if (User.IsInRole("admin"))
+			{
 				<li>
 					<a class="app-menu__item" asp-controller="AdminThongKe" asp-action="Index">
 						<i class="app-menu__icon bx bx-bar-chart-alt-2"></i><span class="app-menu__label">Thống Kê</span>
 					</a>
 				</li>
 			}
-			else
-			{
-				<li>
-					<a class="app-menu__item" asp-controller="AdminAccount" asp-action="IndexKH">
-						<i class="app-menu__icon bx bx-user-voice"></i><span class="app-menu__label">Quản lý tài khoản</span>
-					</a>
-				</li>
-				<li>
-					<a class="app-menu__item" asp-controller="AdminOrder" asp-action="Index">
-						<i class="app-menu__icon bx bx-task"></i><span class="app-menu__label">Quản lý đơn hàng</span>
-					</a>
-				</li>
-				<li>
-					<a class="app-menu__item" href="form-danhgia.html">
-						<i class="app-menu__icon bx bx-star"></i><span class="app-menu__label">Quản lý đánh giá</span>
-					</a>
-				</li>
-				<li>
-					<a class="app-menu__item" asp-controller="AdminPosts" asp-action="Index">
-						<i class="app-menu__icon bx bx-bookmark"></i><span class="app-menu__label">Quản lý bài đăng</span>
-					</a>
-				</li>
-				<li>
-					<a class="app-menu__item" href="">
-						<i class="app-menu__icon bx bx-chat"></i><span class="app-menu__label">Tư vấn khách hàng</span>
-					</a>
-				</li>
-
-				<li>
-					<a class="app-menu__item" asp-controller="AdminImports" asp-action="Index">
-						<i class="app-menu__icon bx bx-import"></i><span class="app-menu__label">Quản lí nhập hàng</span>
-					</a>
-				</li>
-			}
-
-
 		</ul>
 	</aside>
 	<main class="app-content">
@@ -155,6 +120,7 @@
 				</li>
 			</ul>
 		</div>
+		<partial name="_Notification" />
 		@RenderBody()
 
 	</main>
@@ -181,7 +147,7 @@
 	<!--===============================================================================================-->
 	@*<script type="text/javascript" src="js/plugins/chart.js"></script>*@
 	<!--===============================================================================================-->
-	@await RenderSectionAsync("Scripts", required: false)
 	@await Component.InvokeAsync("Notyf")
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

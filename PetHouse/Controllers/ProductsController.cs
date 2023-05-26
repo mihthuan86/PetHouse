@@ -26,7 +26,7 @@ namespace PetHouse.Controllers
 			ViewBag.CateName = "Tất cả sản phẩm";
 			ViewData["stt"] = 0;
 			int pageSize = 9;
-			var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).OrderByDescending(x => x.CreateDate).AsQueryable();
+			var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).Where(x=>x.Status==1&&x.Quantity>0).OrderByDescending(x => x.CreateDate).AsQueryable();
 			if(sort != null)
 			{
 				if (sort == 1)
@@ -70,7 +70,7 @@ namespace PetHouse.Controllers
 				products = _context.Products.
 					Include(p => p.Brand).
 					Include(p => p.Category).
-					Where(p => p.Category.ParentId == cateId).
+					Where(p => p.Category.ParentId == cateId&&p.Quantity>0 && p.Status==1).
 					AsQueryable();
 			}
 			else
@@ -78,7 +78,7 @@ namespace PetHouse.Controllers
 				products = _context.Products.
 					Include(p => p.Brand).
 					Include(p => p.Category).
-					Where(p => p.Category.Id == cateId).
+					Where(p => p.Category.Id == cateId && p.Quantity > 0 && p.Status == 1).
 					AsQueryable();
 			}
 			products = products.OrderByDescending(x => x.CreateDate);
@@ -98,7 +98,7 @@ namespace PetHouse.Controllers
             }
 			ls = _context.Products.AsNoTracking()
 								  .Include(a => a.Category)
-								  .Where(x => x.Name.Contains(keyword))
+								  .Where(x => x.Name.Contains(keyword) && x.Quantity > 0 && x.Status == 1)
 								  .OrderByDescending(x => x.Name)
 								  .AsQueryable();
             ViewBag.CateName = "Tìm kiếm cho ' " + keyword + " '";

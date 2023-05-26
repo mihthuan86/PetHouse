@@ -41,7 +41,7 @@ namespace PetHouse.Controllers
 			{
 				if (user.Status == 0)
 				{
-					_notyfService.Error("Bạn đã bị chặn khỏi hệ thống");
+                    _notyfService.Error("Bạn đã bị chặn khỏi hệ thống");
 					return View(loginVM);
 				}
 				var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
@@ -78,6 +78,7 @@ namespace PetHouse.Controllers
 						}
 					}
 				}
+				// TempData["error"] = "Bạn đã nhập sai mật khẩu, vui lòng thử lại!!!";
 				_notyfService.Error("Bạn đã nhập sai mật khẩu, vui lòng thử lại!!!");
 				return View(loginVM);
 			}
@@ -132,19 +133,19 @@ namespace PetHouse.Controllers
 					var usere = await _userManager.FindByEmailAsync(taikhoan.Email);
 					if (usere != null)
 					{
-						TempData["error"] = "Email này đã được sử dụng";
+						_notyfService.Error("Email này đã được sử dụng");
 						return View(taikhoan);
 					}
 					var usern = await _userManager.FindByNameAsync(taikhoan.UserName);
 					if (usern != null)
 					{
-						TempData["error"] = "User Name này đã được sử dụng";
+						_notyfService.Error("User Name này đã được sử dụng");
 						return View(taikhoan);
 					}
 					var users = await _userManager.FindByNameAsync(taikhoan.Phone);
 					if (users != null)
 					{
-                        TempData["error"] = "Số điện thoại này đã được sử dụng";
+                        _notyfService.Error("Số điện thoại này đã được sử dụng");
 						return View(taikhoan);
 					}
 					var newUser = new User()
@@ -162,8 +163,8 @@ namespace PetHouse.Controllers
 					if (newUserResponse.Succeeded)
 					{
 						await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
-                        //_notyfService.Success("Đăng ký thành công");
-                        TempData["success"] = "Đăng ký thành công";
+                        _notyfService.Success("Đăng ký thành công");
+                        
 						return RedirectToAction("Login", "Account",new {area = ""});
 					}
 					else

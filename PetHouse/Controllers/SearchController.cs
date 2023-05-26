@@ -22,7 +22,7 @@ namespace PetHouse.Controllers
 			}
 			ls = _context.Products.AsNoTracking()
 								  .Include(a => a.Category)
-								  .Where(x => x.Name.Contains(keyword))
+								  .Where(x => x.Name.Contains(keyword)&&x.Quantity>0&&x.Status!=-1)
 								  .OrderByDescending(x => x.Name)
 								  .Take(10)
 								  .ToList();

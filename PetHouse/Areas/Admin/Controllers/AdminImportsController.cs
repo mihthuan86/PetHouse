@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,15 +20,18 @@ using PetHouse.ViewModel;
 namespace PetHouse.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize(Roles = "admin,staff")]
+	[Authorize(Roles = "admin,staff")]
 	public class AdminImportsController : Controller
 	{
 		private readonly PetHouseDbContext _context;
 		private readonly UserManager<User> _userManager;
-		public AdminImportsController(PetHouseDbContext context, UserManager<User> userManager)
+        public INotyfService _notyfService { get; }
+
+        public AdminImportsController(PetHouseDbContext context, UserManager<User> userManager,INotyfService notyfService)
 		{
 			_context = context;
 			_userManager = userManager;
+			_notyfService = notyfService;
 		}
 
 		// GET: Admin/Imports
@@ -103,6 +107,7 @@ namespace PetHouse.Areas.Admin.Controllers
 				await _context.SaveChangesAsync();
 				HttpContext.Session.Remove("PhieuNhap");
 				var ip = _context.Imports.OrderByDescending(x => x.Id).First();
+				_notyfService.Success("Đã tạo phiếu nhập");
 				return RedirectToAction("Details", new { Id = ip.Id });
 			}
 			catch
@@ -150,6 +155,7 @@ namespace PetHouse.Areas.Admin.Controllers
 					};
 					cart.Add(item);
 					HttpContext.Session.Set<List<ImportItem>>("PhieuNhap", cart);
+					_notyfService.Success("Thêm vào phiếu nhập thành công");
 				}
 				return Json(new { success = true });
 			}
@@ -185,7 +191,7 @@ namespace PetHouse.Areas.Admin.Controllers
 		{
 			if(keyword == null)
 			{
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(SelectProduct));
 			}
 			int pageSize = 5;
 			var products = _context.Products.OrderBy(x => x.Quantity).Where(x => x.Status != -1 && x.Name.Contains(keyword)).AsQueryable();
@@ -210,6 +216,7 @@ namespace PetHouse.Areas.Admin.Controllers
 				}
 				_context.SaveChanges();
 			}
+			_notyfService.Success("Đã nhập hàng");
 			return RedirectToAction(nameof(Index));
 		}
 	}
